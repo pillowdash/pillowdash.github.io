@@ -1,0 +1,885 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+<!--nothing yet -->
+<div>
+    what is the output here
+    <br>
+<pre><code class="language-clike language-c">
+        int b =1000;
+        printf("%d",printf("\n%d",b));
+        printf("\n");
+
+        int a = 10;
+        printf("a=%d",printf("c=%d",a));
+        printf("\n");
+
+        if(b = -125) {
+           printf("TRUE\n");
+        }
+        else 
+           printf("FALSE\n");
+   
+
+        // IS THIS CORRECT STATEMENT ??
+        // if( 1000 = b ) print("WHAT??\n");   
+</code></pre>
+</div>
+<hr>
+<div>
+    what would happen with the code below
+    <br>
+<pre><code class="language-clike language-c">
+        int i = 1;
+
+        for(printf("Hi %d\n",i); i <= 3; i++) {
+           printf("Hello buddy %d\n", i);
+        }
+</code></pre>
+</div>
+
+<hr>
+<div>
+    what is the output here
+    <br>
+<pre><code class="language-clike language-c">
+#include &lt;stdio.h&gt;
+#define x 5+2
+int main() {
+    printf("%d\n", x * x * x);
+    return 0;
+}
+// Macros are replaced textually by the preprocessor. This means x is replaced with 5+2 wherever it appears in the code.
+</code></pre>
+</div>
+<hr>
+
+
+<div>
+    Anything wrong with the code below? ( compile error, or runtime error )
+    <br>
+<pre><code class="language-clike language-c">
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *p = malloc(sizeof(int));  // No cast
+    if (p) {
+        *p = 42;                   // Dereference as int*
+        printf("%d\n", *p);        // Prints 42
+        free(p);                   // Clean up
+        p = NULL;
+	
+    }
+    return 0;
+}
+</code></pre>
+</div>
+<hr>
+<div>
+    what is the output here in case x = -100 or x = 500?
+    <br>
+<pre><code class="language-clike language-c">
+if (0 <= x <= 9) {
+    printf("This will not print\n");
+} else {
+    printf("This will print\n");
+}
+</code></pre>
+</div>
+<hr>
+
+<div>
+    what is the output here?
+    <br>
+<pre><code class="language-clike language-c">
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+int main() {
+    char a[5] = {0};
+    printf("Length: %zu\n", strlen(a));  // Prints 0 (empty string)
+    printf("a is: %s\n", a);
+    for (int i = 0; i < 5; i++) {
+        printf("a[%d] = %d\n", i, a[i]);  // Prints 0 for all
+    }
+
+    //int b[3] = {0, 1, 2, 3};  // This line fails to compile
+    int b[3] = {0, 1, 23};  // This line OK
+    for (int i = 0; i < 3; i++) {
+        printf("b[%d] = %d\n", i, b[i]);
+    }
+	   
+    char arr [5] = { 'a' , 'x' , '0' , 'x' };
+    printf ( "arr length: %d \n " , strlen ( arr ) ) ;
+    return 0;
+}
+</code></pre>
+</div>
+<hr>
+
+<div>
+    what would happen with the input pointer after this function below being called?
+    <br>
+<pre><code class="language-clike language-c">
+void updateDataWith_ConstantPointer(const int* a){
+      int y = 7;
+      a = &y;
+}
+</code></pre>
+</div>
+<hr>
+
+<div>
+    what would happen with the input pointer after this function below being called?
+    <br>
+<pre><code class="language-clike language-c">
+void updateDataWith_ConstantPointer(const int* a) {
+    int *z = malloc(sizeof(int));
+    *z = -7;
+    a = z;
+}
+</code></pre>
+</div>
+<hr>
+
+
+<div>
+    what is the output here?
+    <br>
+<pre><code class="language-clike language-c">
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void updateDataWith_ConstantPointer(const int** a) {
+    int *z = malloc(sizeof(int));
+    *z = -7;
+    *a = z;  // Updates the caller's pointer
+    // the caller’s pointer to point to the new heap memory
+}
+
+int main() {
+    int x = 5;
+    const int* ptr = &x;
+    printf("Before: ptr points to %p, value = %d\n", (void*)ptr, *ptr);
+    const int* ptr = &x;
+    updateDataWith_ConstantPointer(&ptr);
+    printf("After: ptr points to %p, value = %d\n", (void*)ptr, *ptr);
+    free(ptr);
+    ptr = NULL;
+    return 0;
+}
+</code></pre>
+</div>
+<hr>
+
+<div>
+	    For an array int arr[5], if arr starts at address 1000 and sizeof(int) is 4:
+<ul>
+  <li>arr + 1 = 1000 + 4 = 1004 (address of arr[1]).  </li>
+  <li>&arr + 1 = 1000 + (5 * 4) = 1020 (one past the end of the array).</li>
+</ul>
+                
+<pre><code class="language-clike language-c">
+#include &lt;stdio.h&gt;
+
+// arr + 1: Advances by the size of one element (e.g., 4 bytes for an int on many systems).
+// &arr + 1: Advances by the size of the whole array (e.g., 20 bytes for an array of 5 ints).
+
+// arr: When an array name like 'arr' is used in most expressions (except as an operand of sizeof or the unary & operator), it "decays" to a pointer to its first element.
+// &arr: The & operator applied to the array name gives the address of the entire array
+
+int main() {
+    int arr[5] = {10, 20, 30, 40, 50};
+
+    // Pointer to the first element
+    int* ptr1 = arr + 1;
+    // Pointer to one past the entire array
+    int (*ptr2)[5] = &arr + 1;
+
+    printf("Base address of arr: %p\n", (void*)arr);
+    printf("arr + 1: %p (Value: %d)\n", (void*)ptr1, *ptr1);
+    printf("&arr + 1: %p\n", (void*)ptr2);
+
+    // Difference in bytes
+    printf("Bytes between arr and arr + 1: %ld\n", (char*)ptr1 - (char*)arr);
+    printf("Bytes between arr and &arr + 1: %ld\n", (char*)ptr2 - (char*)arr);
+
+    return 0;
+}
+</code></pre>
+<br>
+<br>
+</div>
+
+<div>
+Question:
+<br>
+Given the following code in C:
+<pre><code class="language-clike language-c">
+int a = 5;
+int b = a++;
+</code></pre>
+
+<br>
+What are the values of a and b after execution?
+<br>
+<br>
+&nbsp;a) a = 5, b = 5
+<br>
+&nbsp;b) a = 6, b = 5
+<br>
+&nbsp;c) a = 6, b = 6
+<br>
+&nbsp;d) a = 5, b = 6  
+<br>
+<br>
+</div>
+<hr>
+<div>
+    What will be the output of the following code? Explain why.
+    <br>
+<pre><code class="language-clike language-c">
+#include &lt;stdio.h&gt;
+
+void gunc() {
+    int g = 10;
+    printf("%d\n", g);
+    g++;
+}
+
+
+void func() {
+    static int x = 10;
+    printf("%d\n", x);
+    x++;
+}
+
+int main() {
+    func();
+    func();
+
+    gunc();
+    gunc();
+    return 0;
+}
+</code></pre>
+</div>
+
+<hr>
+<div>
+    What will be the output of the following code? Explain why.
+    <br>
+<pre><code class="language-clike language-c">
+    int x = 0, y = 1, z = 2;
+    if (x++ && y++ || z++) {
+        printf("True\n");
+    } else {
+        printf("False\n");
+    }
+    printf("x = %d, y = %d, z = %d\n", x, y, z);
+</code></pre>
+</div>
+<hr>
+<div>
+    What will be the output of the following code? Explain why.
+    <br>
+<pre><code class="language-clike language-c">
+	int a = 1, b = 0, c = 1;
+	int result = (a || b) && (b || c);
+	printf("Result: %d\n", result);
+</code></pre>
+</div>
+
+<hr>
+
+<div>
+	What is the output of the following code snippet, and explain why?
+	<br>
+<pre><code class="language-clike language-c">
+#include &lt;stdio.h&gt;
+
+int f1() {
+    printf("f1 called\n");
+    return 0;
+}
+
+int f2() {
+    printf("f2 called\n");
+    return 1;
+}
+
+int main() {
+    int result = f1() && f2();
+    printf("result: %d\n", result);
+    return 0;
+}
+</code></pre>
+</div>
+<hr>
+
+<div>
+    What will be the output of the following code? Explain why.
+    <br>
+<pre><code class="language-clike language-c">
+	int x = 5, y = 0;
+	if (x > 0 || y++ > 0) {
+	    printf("True\n");
+	} else {
+	    printf("False\n");
+	}
+	printf("y = %d\n", y);
+</code></pre>
+</div>
+<hr>
+<div>
+Consider the code as below
+<pre><code class="language-clike language-c">
+	int x = 0;
+	if (x != 0 && y / x > 10) {
+	    printf(".....\n");
+	}
+</code></pre>
+<br>
+<br>
+What are the follwing statement(s) true?
+<br>
+<br>
+&nbsp;a) The expression y / x > 10 is evaluated and a division-by-zero error occurs.
+<br>
+&nbsp;b) The expression y / x > 10 is not evaluated due to short circuiting.
+<br>
+&nbsp;c) The expression y / x > 10 is evaluated, but the result is undefined.
+<br>
+&nbsp;d) The expression y / x > 10 is not evaluated, but a warning is issued.
+<br>
+<br>
+</div>
+
+<hr>
+<div>
+Given the following code, what will be the output? Explain why.
+
+<pre><code class="language-clike language-c">
+int arr[] = {5, 10, 15, 20, 25};
+int* ptr = arr + 2;
+printf("%d\n", ptr[-1]);
+</code></pre>
+<br>
+<br>
+
+
+<hr>
+<div>
+Given the following code, what will be the output? Explain why.
+
+<pre><code class="language-clike language-c">
+int arr[] = {1, 2, 3, 4, 5};
+int* ptr1 = arr;
+int* ptr2 = arr + 4;
+printf("%ld\n", ptr2 - ptr1);
+</code></pre>
+<br>
+<br>
+
+
+<hr>
+<div>
+Given the following code, what will be the output? Explain why.
+
+<pre><code class="language-clike language-c">
+int arr[] = {10, 20, 30, 40, 50};
+int* ptr = arr;
+printf("%d\n", *(ptr++));
+printf("%d\n", *ptr);
+</code></pre>
+<br>
+<br>
+
+
+<hr>
+<div>
+Given the following code, what will be the output? Explain why.
+
+<pre><code class="language-clike language-c">
+int arr[] = {1, 2, 3, 4, 5};
+int* ptr = arr + 5;
+printf("%d\n", *(ptr - 2));
+</code></pre>
+<br>
+<br>
+
+<hr>
+
+<br>
+<pre><code class="language-clike language-c"> // program to show octal escape sequence
+#include &lt;stdio.h&gt;
+
+// converts an uppercase character to lowercase
+char to_lowercase(char letter) 
+{
+	// 'A' is 65, 'Z' is 90, 'a' is 95
+	if (('A' <= letter) && (letter <= 'Z'))
+	  letter = letter - 'A' + 'a';
+	return letter;
+}
+
+int main()
+{
+        /*
+        INT_MAX: 2147483647
+        INT_MIN: -2147483648
+        absu(INT_MIN): 2147483648
+
+        -INT_MIN == INT_MIN
+	*/
+
+        char c = 'A';
+        printf("As a lower case character: '%c'\n", to_lowercase(c));
+
+        int a = 025;
+        int b = 063;
+        int c = 0b111;
+        int d = 0x111;
+        //int e = 08; // invalid digit "8" in octal constant
+        //int e = 0738; // invalid digit "8" in octal constant
+        printf("Decimal of 25(Octal) is %d , Octal of 25(Octal) is %o\n", a, a);
+        printf("Decimal of 63(Octal) is %d \n", b);
+        printf("Decimal of 111(binary) is %d \n", c);
+        printf("Decimal of 111(hex) is %d \n", d);
+
+
+        char str[] = "31\01267\012";
+        printf("%s", str);
+
+        char str1[] = "31\12367";
+        printf("%s", str1);
+        printf("\n");
+        char str2[] = "11\77967";
+        printf("%s", str2);
+
+        return 0;
+}
+
+/*
+ * In C octal escape sequence is represented by \ followed by three octal digits. Note that one or two octal digits are also allowed. An octal sequence ends either ends after three octal digits following \ or when a digit after \ is not an octal digit.
+ *
+ *
+ *If we look at the output then after 31 a newline character is printed and then 67 is printed. This is because \012 is interpreted as \n or new line character.Actually, \012 represents octal escape sequence for \n or newline. Octal value of 12 in decimal is 10 and in ASCII it represents newline.
+ *
+ */
+
+
+
+/*
+ *In str \123 is interpreted as octal escape sequence and value of octal 123 is 83 and character corresponding to it in my machine is ‘S’ as my machine uses ASCII. It can be different if character set used is not ASCII.
+In str2 \77 is interpreted as an octal escape sequence and not \779. So, the value of 77 is 63 in decimal and in ASCII it is ‘?’.
+ */ 
+</code></pre>
+<!--<img src="Question3_1.png" alt="First Screen">
+<br><br>
+&nbsp; &nbsp; <img src="Question3_2.png" alt="Second Screen">
+<br><br>
+&nbsp; &nbsp; <img src="Question3_02.png" alt="Third Screen">
+<br><br>
+&nbsp; &nbsp; <img src="Question3_4.png" alt="Fourth Screen">
+<br><br>
+&nbsp; &nbsp; <img src="Question3_6.png" alt="Fifth Screen">
+<br><br>
+&nbsp; &nbsp; <img src="Question3_8.png" alt="Sixth Screen">
+
+-->
+<hr>
+<p>
+<div id="main-content" class="wiki-content">
+
+        <p>The logical AND and logical OR operators (<code>&amp;&amp;</code> and <code>||</code>, respectively) exhibit "short-circuit" operation. That is, the second operand is not evaluated if the result can be deduced solely by evaluating the first operand.</p><p>Programmers should exercise caution if the second operand contains side effects because it may not be apparent whether the side effects actually occur.</p><p>In the following code, the value of <code>i</code> is incremented only when <code>i &gt;= 0</code>:</p><div class="code panel pdl conf-macro output-block" style="border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl">
+<div><div id="highlighter_316486" class="syntaxhighlighter sh-confluence nogutter  java"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container" title="Hint: double-click to select code"><div class="line number1 index0 alt2" data-bidi-marker="true"><code class="java keyword">enum</code> <code class="java plain">{ max = </code><code class="java value">15</code> <code class="java plain">};</code></div><div class="line number2 index1 alt1" data-bidi-marker="true"><code class="java keyword">int</code> <code class="java plain">i = </code><code class="java comments">/* Initialize to user-supplied value */</code><code class="java plain">;</code></div><div class="line number3 index2 alt2" data-bidi-marker="true">&nbsp;</div><div class="line number4 index3 alt1" data-bidi-marker="true"><code class="java keyword">if</code> <code class="java plain">( (i &gt;= </code><code class="java value">0</code><code class="java plain">) &amp;&amp; ( (i++) &lt;= max) ) {</code></div><div class="line number5 index4 alt2" data-bidi-marker="true"><code class="java spaces">&nbsp;&nbsp;</code><code class="java comments">/* Code */</code></div><div class="line number6 index5 alt1" data-bidi-marker="true"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+</div></div><p>Although the behavior is well defined, it is not immediately obvious whether or not&nbsp;<code>i</code> gets incremented.</p><h2 id="EXP02C.BeawareoftheshortcircuitbehaviorofthelogicalANDandORoperators-NoncompliantCodeExample">Noncompliant Code Example</h2><p>In this noncompliant code example, the second operand of the logical OR operator invokes a function that results in side effects:</p><div class="code panel pdl conf-macro output-block" style="background-color: #ffcccc;border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl" style="background-color: #ffcccc;">
+<div><div id="highlighter_586238" class="syntaxhighlighter sh-confluence nogutter  c"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container" title="Hint: double-click to select code"><div class="line number1 index0 alt2" data-bidi-marker="true"><code class="c color1 bold">char</code> <code class="c plain">*p = </code><code class="c comments">/* Initialize; may or may not be NULL */</code></div><div class="line number2 index1 alt1" data-bidi-marker="true">&nbsp;</div><div class="line number3 index2 alt2" data-bidi-marker="true"><code class="c keyword bold">if</code> <code class="c plain">(p || (p = (</code><code class="c color1 bold">char</code> <code class="c plain">*) </code><code class="c functions bold">malloc</code><code class="c plain">(BUF_SIZE)) ) {</code></div><div class="line number4 index3 alt1" data-bidi-marker="true"><code class="c spaces">&nbsp;&nbsp;</code><code class="c comments">/* Perform some computation based on p */</code></div><div class="line number5 index4 alt2" data-bidi-marker="true"><code class="c spaces">&nbsp;&nbsp;</code><code class="c functions bold">free</code><code class="c plain">(p);</code></div><div class="line number6 index5 alt1" data-bidi-marker="true"><code class="c spaces">&nbsp;&nbsp;</code><code class="c plain">p = NULL;</code></div><div class="line number7 index6 alt2" data-bidi-marker="true"><code class="c plain">} </code><code class="c keyword bold">else</code> <code class="c plain">{</code></div><div class="line number8 index7 alt1" data-bidi-marker="true"><code class="c spaces">&nbsp;&nbsp;</code><code class="c comments">/* Handle malloc() error */</code></div><div class="line number9 index8 alt2" data-bidi-marker="true"><code class="c spaces">&nbsp;&nbsp;</code><code class="c keyword bold">return</code><code class="c plain">;</code></div><div class="line number10 index9 alt1" data-bidi-marker="true"><code class="c plain">}</code></div></div></td></tr></tbody></table></div></div>
+</div></div><p>Because <code>malloc()</code> is called only if <code>p</code> is <code>NULL</code> when entering the <code>if</code> clause, <code>free()</code> might be called with a pointer to local data not allocated by <code>malloc()</code>.  This behavior is partially due to the uncertainty of whether or not&nbsp;<code>malloc()</code> is actually called.</p><h2 id="EXP02C.BeawareoftheshortcircuitbehaviorofthelogicalANDandORoperators-CompliantSolution">Compliant Solution</h2><p>In this compliant solution, a second pointer, <code>q</code>, is used to indicate whether <code>malloc()</code> is called; if not, <code>q</code> remains set to <code>NULL</code>. Passing <code>NULL</code> to <code>free()</code> is guaranteed to safely do nothing.</p><div class="code panel pdl conf-macro output-block" style="background-color: #ccccff;border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl" style="background-color: #ccccff;">
+<div><div id="highlighter_613" class="syntaxhighlighter sh-confluence nogutter  c"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container" title="Hint: double-click to select code"><div class="line number1 index0 alt2" data-bidi-marker="true"><code class="c color1 bold">char</code> <code class="c plain">*p = </code><code class="c comments">/* Initialize; may or may not be NULL */</code></div><div class="line number2 index1 alt1" data-bidi-marker="true"><code class="c color1 bold">char</code> <code class="c plain">*q = NULL;</code></div><div class="line number3 index2 alt2" data-bidi-marker="true"><code class="c keyword bold">if</code> <code class="c plain">(p == NULL) {</code></div><div class="line number4 index3 alt1" data-bidi-marker="true"><code class="c spaces">&nbsp;&nbsp;</code><code class="c plain">q = (</code><code class="c color1 bold">char</code> <code class="c plain">*) </code><code class="c functions bold">malloc</code><code class="c plain">(BUF_SIZE);</code></div><div class="line number5 index4 alt2" data-bidi-marker="true"><code class="c spaces">&nbsp;&nbsp;</code><code class="c plain">p = q;</code></div><div class="line number6 index5 alt1" data-bidi-marker="true"><code class="c plain">}</code></div><div class="line number7 index6 alt2" data-bidi-marker="true"><code class="c keyword bold">if</code> <code class="c plain">(p == NULL) {</code></div><div class="line number8 index7 alt1" data-bidi-marker="true"><code class="c spaces">&nbsp;&nbsp;</code><code class="c comments">/* Handle malloc() error */</code></div><div class="line number9 index8 alt2" data-bidi-marker="true"><code class="c spaces">&nbsp;&nbsp;</code><code class="c keyword bold">return</code><code class="c plain">;</code></div><div class="line number10 index9 alt1" data-bidi-marker="true"><code class="c plain">}</code></div><div class="line number11 index10 alt2" data-bidi-marker="true">&nbsp;</div><div class="line number12 index11 alt1" data-bidi-marker="true"><code class="c comments">/* Perform some computation based on p */</code></div><div class="line number13 index12 alt2" data-bidi-marker="true"><code class="c functions bold">free</code><code class="c plain">(q);</code></div><div class="line number14 index13 alt1" data-bidi-marker="true"><code class="c plain">q = NULL;</code></div></div></td></tr></tbody></table></div></div>
+</div></div>
+
+</p>
+<hr>
+<div>
+	where struct  stored in C programming? in Stack or Heap ? 
+	<br>
+	<br>
+	it depends on the context:
+
+	<br>
+	<ul>
+   <li> Data segment: Global or static struct variables.</li>
+
+   <li> Text segment: Rarely applies to struct variables directly. : part of the program’s code (like a constant or literal), it’s not really "stored" as a variable but resides in the text segment</li>
+
+   <li> Stack: Local struct variables with automatic storage. -- The stack is used for automatic variables that exist only during the function’s execution</li>
+
+   <li> Heap: Dynamically allocated struct variables.  -- dynamically allocated using malloc() or calloc() (e.g., struct MyStruct *s = malloc(sizeof(struct MyStruct));), it’s stored on the heap. The heap is for memory allocated at runtime that persists until explicitly freed.</li>
+
+</ul>
+</div>
+<hr>
+<div>
+	Given int arr[2][3] = {{1, 2, 3}, {4, 5, 6}}; and int *p = arr[0];, what is the value of *(p + 4)?
+	<ul>
+
+<li>A) 4</li>
+<li>B) 5</li>
+<li>C) 6</li>
+<li>D) Undefined</li>
+</ul>
+</div>
+<hr>
+
+<div>
+For int arr[3][2];, which of these is equivalent to arr[1][1]?
+	<ul>
+<li>A) *(*(arr + 1) + 1)</li>
+<li>B) *(arr + 1) + 1</li>
+<li>C) arr + 1 + 1</li>
+<li>D) *arr + 1</li>
+</ul>
+</div>
+<hr>
+
+<div>
+In C, a 2D array int arr[3][4] is stored in memory as:
+	<ul>
+<li>A) A collection of 3 pointers to 4-element arrays</li>
+<li>B) A single contiguous block of 12 integers</li>
+<li>C) A collection of 4 pointers to 3-element arrays</li>
+<li>D) A disjoint set of 12 integers scattered in memory</li>
+</ul>
+</div>
+<hr>
+<div>
+
+True or False :	the code provided below will not result in a dangling pointer.
+    <br>
+<pre><code class="language-clike language-c">
+	#include &lt;stdio.h&gt;
+
+	int *get_pointer(void) {
+	    int x = 10;         // Local variable on the stack
+	    		        // 'x' is automatically destroyed when the function returns.  The memory it occupied on the stack is then available to be used for other purposes.
+
+	    return &x;          // Return its address (dangerous!)
+	}
+
+	int main(void) {
+	    int *ptr = get_pointer();    // ptr points to x’s address
+	    printf("Value: %d\n", *ptr); // Undefined behavior: x is out of scope
+	    return 0;
+	}
+</code></pre>
+</div>
+<hr>
+
+True or False :	the code provided below will not result in a dangling pointer.
+    <br>
+<pre><code class="language-clike language-c">
+	#include &lt;stdio.h&gt;
+	#include &lt;stdlib.h&lt; // Added for malloc/free 
+
+	int *get_pointer(void) {
+	    int *ptr;
+	    // Allocate memory dynamically
+	    ptr = (int *)malloc(sizeof(int));
+	    int x = 10; // Local variable on the stack
+	    
+	    ptr = &x;   // Reassign ptr to point to x --This is the crucial mistake. The address of the local variable x is assigned to ptr. The memory allocated by malloc is now lost (memory leak). The value of the pointer allocated by malloc is overwritten by the address of x. You no longer have a pointer to the malloc'd memory.
+
+	    return ptr; // Return its address (dangerous!)
+	}
+
+	int main(void) {
+	    int *ptr = get_pointer(); // The returned address (the address of x) is assigned to ptr
+	    printf("Value: %d\n", *ptr); 
+	    free(ptr);                // Free the pointer -- Attempting to free stack memory leads to undefined behavior (likely a crash).
+
+	    ptr = NULL;               // Set to NULL
+	    printf("Value: %d\n", *ptr); // Attempt to dereference NULL
+	    return 0;
+	}
+</code></pre>
+</div>
+<hr>
+
+True or False :	the code provided below will not result in a dangling pointer.
+    <br>
+<pre><code class="language-clike language-c">
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+	int *get_pointer(void) {
+	    int *ptr = malloc(sizeof(int)); // Allocate memory
+	    if (ptr) {
+		*ptr = 10;                  // Store value in heap memory
+	    }
+	    return ptr;                     // Return heap memory pointer
+	}
+
+	int main(void) {
+	    int *ptr = get_pointer();
+	    if (ptr) {
+		printf("Value: %d\n", *ptr); // Prints: Value: 10
+		free(ptr);                   // Free heap memory
+		ptr = NULL;                  // Safe nulling
+	    }
+	    return 0;
+	}
+</code></pre>
+</div>
+<hr>
+
+<div>
+	What is the output of the following code?
+    <br>
+<pre><code class="language-clike language-c">
+	int x = 10;
+	void *p = &x;
+	printf("%d\n", *p);
+</code></pre>
+
+	<ul>
+<li>A) 10</li>
+<li>B) Compile-time error</li>
+<li>C) Runtime error </li>
+<li>D) Garbage value </li>
+</ul>
+</div>
+<hr>
+
+
+<div>
+	Which of these is a valid way to access an int value through a void pointer?
+    <br>
+	<ul>
+<li>A) *vp (where vp is void*) </li>
+<li>B) *(int*)vp </li>
+<li>C) vp->value</li>
+<li>D) (int)vp</li>
+</ul>
+</div>
+
+<hr>
+
+<div>
+	brief explanation the purpose of 'requires' and 'effects' function documentation in C.
+    <br>
+<pre><code class="language-clike language-c">
+/**
+ * Requires: ptr != NULL and n > 0
+ * Effects: Allocates an array of n integers and returns a pointer to it
+ */
+int *createArray(int *ptr, int n) {
+    return malloc(n * sizeof(int));
+}
+</code></pre>
+Together, they form a contract, improving code clarity, maintainability, and debugging by explicitly stating expectations and behavior in the absence of formal language support for contracts in C.
+	<ul>
+		<li>A) <b>Requires</b>: What the caller must guarantee (inputs/conditions).</li>
+		<li>B) <b>Effects</b>: What the function promises to do (outputs/side effects).</li>
+</ul>
+</div>
+
+
+
+<hr>
+
+<div>
+Give the output of the following C program, Explain your answer.	
+    <br>
+<pre><code class="language-clike language-c">
+#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt;
+void f(int i) {
+    ++i;
+    if (i > INT_MAX) {
+        printf("OVERFLOW\n");
+    } else {
+        printf("NO OVERFLOW\n");
+    }
+}
+int main(void) {
+    f(INT_MAX);
+    printf("DONE!\n");
+    return 0;
+}
+</code></pre>
+</div>
+
+
+<hr>
+
+<div>
+in the following C code , the  assignment operator appears only once. true or false?
+bool nisfive = ( n == 5); 
+    <br>
+<pre><code class="language-clike language-c"> #include &lt;stdio.h&gt;
+#include &lt;stdbool.h&gt;
+
+int main() {
+    int n = 5;              // For context, assume n is defined
+    bool nisfive = (n == 5); // One assignment operator
+    printf("%d\n", nisfive); // Prints 1 (true)
+    return 0;
+}
+</code></pre>
+</div>
+<hr>
+<div>
+Winter 2014 midterm Exam , Question 3 to correct mistakes in the code . the code below is corrected version
+    <br>
+<pre><code class="language-clike language-c"> #include &lt;stdio.h&gt;
+#include &lt;stdbool.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+struct Circle {
+    int x_centre;
+    int y_centre;
+    int r; // Radius
+};
+
+bool point_in_circle(struct Point *p, struct Circle *c) {
+    int dx = c->x_centre - p->x;
+    int dy = c->y_centre - p->y;
+    return (dx*dx + dy*dy) <= (c->r * c->r);
+}
+
+bool compare_circles(struct Circle *c1, struct Circle *c2) {
+    return (c1->x_centre == c2->x_centre &&
+            c1->y_centre == c2->y_centre &&
+            c1->r == c2->r);
+}
+
+bool compare_points(struct Point *p1, struct Point *p2) {
+    return (p1->x == p2->x) && (p1->y == p2->y);
+}
+
+void update_f(struct Circle *c, int new_r) {
+    c->r = new_r;
+}
+
+int main(void) {
+    struct Circle c1 = {0, 0, 10};
+    struct Circle c2 = {0, 10, 10};
+    struct Circle c3 = {0, 10, 20};
+    struct Point p1 = {2, 2};
+    //struct Point p2 = {1, 2}; // Fixed initialization
+    struct Point p2 = {12, 23}; // Fixed initialization
+
+    printf("%d\n", point_in_circle(&p1, &c1));
+    printf("%d\n", compare_circles(&c1, &c2));
+    printf("%d\n", compare_points(&p1, &p2));
+
+    update_f(&c2, 20);
+    printf("%d\n", compare_circles(&c2, &c3));
+
+    return 0;
+}
+</code></pre>
+</div>
+
+<hr>
+<div>
+
+First print the output of the program below:
+<pre><code class="language-clike language-c">
+#include &lt;stdio.h&gt;
+
+void exchange(int *a, int *b) ; // Forward declaration
+
+int main() {
+    int a = 5, b = 10;
+    printf("in main: ");
+    printf("a = %d, b = %d\n", a, b);
+    exchange(&a, &b);
+    printf("a = %d, b = %d\n", a, b);
+    return 0;
+}
+
+void exchange(int *pa, int *pb) {
+    int temp;
+    temp = *pa;
+    *pa = *pb;
+    *pb = temp;
+    printf("in exchange: ");
+    printf("a = %d, b = %d\n", *pa, *pb);
+}
+
+
+</code></pre>
+Then draw the call stack immediately after "In exchange: " is printed
+<br>
+<br>
+Call Stack Drawing (Following the Format):
+<br>
+<pre><code>
+exchange:
+    pa: 0x1000 -> [value: 10]  (points to 'a' in main, now 10)
+    pb: 0x1004 -> [value: 5]   (points to 'b' in main, now 5)
+    temp: 5
+    return addr: main: 13
+
+main:
+    a: 10
+    b: 5
+    return addr: (none, end of program)
+</code></pre>
+</div>
+
+<hr>
+<div>
+
+please write a function pyramid(int n) to print the format as below  with n lines , for pyramid(7) would print as below(assume n is odd  number in the range of [3-99] inclusive, and use the placeholder "%3d" to printf each integer, for example  :     printf("%3d", x);  
+<pre><code>
+1
+2  3
+3  4  5
+4  5  6  7
+3  4  5
+2  3
+1
+</code></pre>
+<br>The code to solve the problem with <i>pyramid</i> function<br>
+<pre><code class="language-clike language-c">
+#include &lt;stdio.h&gt;
+
+void pyramid(int n) {
+    int middle = (n + 1) / 2;
+
+    for (int i = 1; i <= n; i++) {
+        int count, start;
+        if (i <= middle) {
+            count = i;
+            start = i;
+        } else {
+            count = 2 * middle - i;
+            start = 2 * middle - i;
+        }
+
+        // Print numbers for current line
+        for (int j = 0; j < count; j++) {
+                if( j == start )
+                        printf("%d", start);
+                else
+                        printf("%3d", start + j);
+
+        }
+        printf("\n");
+    }
+}
+
+// Example usage
+int main() {
+    //pyramid(7);
+    pyramid(9);
+    return 0;
+</code></pre>
+
