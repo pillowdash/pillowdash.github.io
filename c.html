@@ -5,6 +5,26 @@
     what is the output here
     <br>
 <pre><code class="language-clike language-c">
+#include &lt;stdio.h&gt;
+
+void f(int *p, int* q) {
+    p = q;
+    *p = 2;
+}
+
+int i = 0, j = 1;
+
+int main() {
+    f(&i, &j);
+    printf("%d %d\n", i, j);
+}
+</code></pre>
+</div>
+<hr>
+<div>
+    what is the output here
+    <br>
+<pre><code class="language-clike language-c">
         int b =1000;
         printf("%d",printf("\n%d",b));
         printf("\n");
