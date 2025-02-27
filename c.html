@@ -30,15 +30,19 @@
     <br>
 <pre><code class="language-clike language-c">
         int i = 1;
-
         for(printf("Hi %d\n",i); i <= 3; i++) {
            printf("Hello buddy %d\n", i);
         }
 
         int j = 1;
-
         for(printf("Hi %d\n",j); j <= 3; printf("Hello \n")) {
            j++;
+        }
+
+        int k = 1;
+        for(printf("Hi %d\n",k); k < printf("OK\n",k); printf("increment \n")) {
+           printf("for block Body %d\n", k);
+           k++;
         }
 </code></pre>
 </div>
