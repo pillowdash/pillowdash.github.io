@@ -1,0 +1,176 @@
+<!doctype html>
+</html>
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .imgbox {
+            display: grid;
+            height: 100%;
+        }
+        .center-fit {
+            max-width: 100%;
+            max-height: 100vh;
+            margin: auto;
+        }
+    </style>
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.sstatic.net/Shared/Channels/channels.css?v=5981bb1a5bd7">
+
+
+        <script src="https://cdn.sstatic.net/Js/third-party/citation-helper.js?v=a4ec380e29ba"></script>
+
+
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                "HTML-CSS": {
+                    preferredFont: "TeX",
+                    availableFonts: ["STIX", "TeX"],
+                    linebreaks: { automatic: true },
+                    EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+                },
+                tex2jax: {
+                    inlineMath: [["$", "$"], ["\\\\(","\\\\)"]],
+                    displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+                    processEscapes: true,
+                    ignoreClass: "tex2jax_ignore|dno"
+                },
+                TeX: {
+                    extensions: ["begingroup.js"],
+                    noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+                    Macros: { href: "{}" }
+                },
+                messageStyle: "none",
+                styles: { ".MathJax_Display, .MathJax_Preview, .MathJax_Preview > *": { "background": "inherit" } },
+                SEEditor: "mathjaxEditing"
+            });
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+
+
+</head>
+<body>
+<div>
+	<p>
+
+
+Let’s solve the problem from the provided image step by step. The problem states:
+Problem 1: Use the sequential characterization of continuity to show that the function
+f(x) = \begin{cases} 
+1, & x \geq 0 \\
+0, & x < 0 
+\end{cases}
+
+is NOT continuous at 
+x = 0
+.
+Step-by-Step Solution
+Step 1: Understand the sequential characterization of continuity
+A function ( f ) is continuous at a point 
+x = a
+ if, for every sequence 
+\{x_n\}
+ converging to ( a ) (i.e., 
+\lim_{n \to \infty} x_n = a
+), the sequence of function values 
+\{f(x_n)\}
+ converges to ( f(a) ) (i.e., 
+\lim_{n \to \infty} f(x_n) = f(a)
+). If we can find a sequence 
+\{x_n\}
+ converging to ( a ) such that 
+\lim_{n \to \infty} f(x_n) \neq f(a)
+, then ( f ) is not continuous at ( a ).
+Here, 
+a = 0
+, and we need to check continuity at 
+x = 0
+. First, compute ( f(0) ):
+
+    Since 
+    0 \geq 0
+    , 
+    f(0) = 1
+    .
+
+Step 2: Construct a sequence converging to 
+x = 0
+To test discontinuity, we need a sequence 
+\{x_n\}
+ that approaches 0 from different sides (since the function definition changes at 
+x = 0
+). Let’s consider a sequence approaching 0 from the left (where 
+x < 0
+) and another from the right (where 
+x \geq 0
+).
+
+    Define a sequence 
+    \{x_n\}
+     where 
+    x_n = -\frac{1}{n}
+     for 
+    n = 1, 2, 3, \ldots
+    .
+        For all ( n ), 
+        x_n < 0
+         because 
+        -\frac{1}{n} < 0
+        .
+        As 
+        n \to \infty
+        , 
+        x_n = -\frac{1}{n} \to 0
+         (since the negative sign is fixed, and the magnitude 
+        \frac{1}{n} \to 0
+        ).
+
+Step 3: Evaluate 
+f(x_n)
+
+    Since 
+    x_n = -\frac{1}{n} < 0
+    , we use the second part of the piecewise definition:
+    f(x_n) = f\left(-\frac{1}{n}\right) = 0 \quad \text{for all } n.
+    Thus, the sequence 
+    \{f(x_n)\}
+     is 
+    \{0, 0, 0, \ldots\}
+    , which converges to 0 as 
+    n \to \infty
+    .
+
+Step 4: Compare with ( f(0) )
+
+    We have 
+    f(0) = 1
+    .
+    The limit of 
+    f(x_n)
+     as 
+    n \to \infty
+     is 0.
+    Since 
+    \lim_{n \to \infty} f(x_n) = 0 \neq 1 = f(0)
+    , the sequential characterization of continuity is violated.
+
+Step 5: Conclusion
+The existence of a sequence 
+\{x_n\} = \{-\frac{1}{n}\}
+ converging to 0 such that 
+\lim_{n \to \infty} f(x_n) = 0 \neq f(0) = 1
+ demonstrates that ( f ) is not continuous at 
+x = 0
+.
+Final Answer
+The function ( f(x) ) is NOT continuous at 
+x = 0
+, as shown using the sequential characterization of continuity.
+
+</p>
+</div>
+</body>
+</html>
