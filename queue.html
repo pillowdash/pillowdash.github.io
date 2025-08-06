@@ -1,0 +1,612 @@
+<!doctype html>
+</html>
+
+<head>
+	
+	
+	<style id="draftjs-styles_0">
+    .draftjs-styles_0 .public-DraftEditorPlaceholder-root {
+      color: #71767B;
+    }
+
+    .draftjs-styles_0 .public-DraftEditorPlaceholder-hasFocus {
+      color: #71767B;
+    }
+
+    
+  </style><style id="draftjs-styles">
+     .DraftEditor-editorContainer, .DraftEditor-root, .public-DraftEditor-content {
+        height: inherit;
+        max-height: inherit;
+        min-height: inherit;
+        text-align: initial;
+    }
+
+    .public-DraftEditor-content[contenteditable=true] {
+        -moz-user-modify: read-write-plaintext-only;
+        -webkit-user-modify: read-write-plaintext-only;
+    }
+
+    .format-inline .public-DraftEditor-content[contenteditable=true] {
+      -moz-user-modify: read-write;
+      -webkit-user-modify: read-write;
+    }
+
+    .DraftEditor-root {
+        width: 100%;
+        position: relative;
+        -webkit-user-select: none;
+    }
+
+    .DraftEditor-editorContainer {
+        background-color: rgba(255, 255, 255, 0);
+        border-left: .1px solid transparent;
+        position: relative;
+        z-index: 1;
+    }
+
+    .public-DraftEditor-block {
+        position: relative;
+    }
+
+    .DraftEditor-alignLeft .public-DraftStyleDefault-block {
+        text-align: left;
+    }
+
+    .DraftEditor-alignLeft .public-DraftEditorPlaceholder-root {
+        left: 0;
+        text-align: left;
+    }
+
+    .DraftEditor-alignCenter .public-DraftStyleDefault-block {
+        text-align: center
+    }
+
+    .DraftEditor-alignCenter .public-DraftEditorPlaceholder-root {
+        margin: 0 auto;
+        text-align: center;
+        width: 100%
+    }
+
+    .DraftEditor-alignRight .public-DraftStyleDefault-block {
+        text-align: right;
+    }
+
+    .DraftEditor-alignRight .public-DraftEditorPlaceholder-root {
+        right: 0;
+        text-align: right;
+    }
+
+    .public-DraftEditorPlaceholder-root {
+        padding-bottom: 2px;
+        padding-top: 2px;
+        position: absolute;
+        z-index: 1;
+    }
+
+    .public-DraftEditorPlaceholder-inner {
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .DraftEditorPlaceholder-hidden {
+        display: none;
+    }
+
+    .public-DraftStyleDefault-block {
+        overflow:hidden;
+        padding-bottom: 2px;
+        padding-top: 2px;
+        position: relative;
+        white-space: pre-wrap;
+    }
+
+    /* Only a handful of CSS rules work on br tags and user-select isn't one */
+    div:only-child > .public-DraftStyleDefault-block > span > br::selection {
+        background: transparent;
+    }
+
+    /*
+       Safari doesn't let you change ::selection on br elements,
+       but Chrome needs it here
+    */
+    div:only-child > .public-DraftStyleDefault-block > span:has(br)::selection {
+        background: transparent;
+    }
+
+    .public-DraftStyleDefault-ltr {
+        direction: ltr;
+        text-align: left;
+    }
+
+    .public-DraftStyleDefault-rtl {
+        direction: rtl;
+        text-align: right;
+    }
+
+    .DraftEditor-editorContainer a {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        margin-bottom: inherit;
+        margin-top: inherit;
+    }
+
+    .singleline .public-DraftStyleDefault-block {
+        overflow-x: auto;
+        scrollbar-width: none;
+        white-space: nowrap;
+        -ms-overflow-style: none;
+    }
+
+    .singleline .public-DraftStyleDefault-block::-webkit-scrollbar {
+        display: none;
+    }
+  </style><style>input::placeholder { user-select: none; -webkit-user-select: none; } iframe { color-scheme: auto; }button { text-align: inherit; font-size: inherit; font-family: inherit; color: inherit }</style><style>@font-face {
+  font-family: TwitterChirp;
+  src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Light.3a18e64a.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Light.7a5673aa.woff) format('woff');
+  font-weight: 300;
+  font-style: 'normal';
+  font-display: 'swap';
+}
+@font-face {
+  font-family: TwitterChirp;
+  src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Regular.80fda27a.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Regular.60b215ba.woff) format('woff');
+  font-weight: 400;
+  font-style: 'normal';
+  font-display: 'swap';
+}
+@font-face {
+  font-family: TwitterChirp;
+  src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Medium.f8e2739a.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Medium.20fc288a.woff) format('woff');
+  font-weight: 500;
+  font-style: 'normal';
+  font-display: 'swap';
+}
+@font-face {
+  font-family: TwitterChirp;
+  src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Bold.ebb56aba.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Bold.a573679a.woff) format('woff');
+  font-weight: 700;
+  font-style: 'normal';
+  font-display: 'swap';
+}
+@font-face {
+  font-family: TwitterChirp;
+  src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Heavy.f44ae4ea.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Heavy.d70ec7ca.woff) format('woff');
+  font-weight: 800;
+  font-style: 'normal';
+  font-display: 'swap';
+}
+@font-face {
+  font-family: TwitterChirpExtendedHeavy;
+  src: url(https://abs.twimg.com/fonts/v1/chirp-extended-heavy-web.woff2) format('woff2'), url(https://abs.twimg.com/fonts/v1/chirp-extended-heavy-web.woff) format('woff');
+  font-weight: 800;
+  font-style: 'normal';
+  font-display: 'swap';
+}</style>
+ <style>html,body{height: 100%;}::cue{white-space:normal}</style><style id="react-native-stylesheet">[stylesheet-group="0"]{}
+body{margin:0;}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
+html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
+[stylesheet-group="1"]{}
+.css-146c3p1{background-color:rgba(0,0,0,0.00);border:0 solid black;box-sizing:border-box;color:rgba(0,0,0,1.00);display:inline;font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;list-style:none;margin:0px;padding:0px;position:relative;text-align:start;text-decoration:none;white-space:pre-wrap;word-wrap:break-word;}
+.css-175oi2r{align-items:stretch;background-color:rgba(0,0,0,0.00);border:0 solid black;box-sizing:border-box;display:flex;flex-basis:auto;flex-direction:column;flex-shrink:0;list-style:none;margin:0px;min-height:0px;min-width:0px;padding:0px;position:relative;text-decoration:none;z-index:0;}
+.css-1jxf684{background-color:rgba(0,0,0,0.00);border:0 solid black;box-sizing:border-box;color:inherit;display:inline;font:inherit;list-style:none;margin:0px;padding:0px;position:relative;text-align:inherit;text-decoration:none;white-space:inherit;word-wrap:break-word;}
+.css-9pa8cd{bottom:0px;height:100%;left:0px;opacity:0;position:absolute;right:0px;top:0px;width:100%;z-index:-1;}
+[stylesheet-group="2"]{}
+.r-13awgt0{flex:1;}
+.r-1adg3ll{display:block;}
+.r-1jkafct{border-bottom-left-radius:2px;border-bottom-right-radius:2px;border-top-left-radius:2px;border-top-right-radius:2px;}
+.r-1phboty{border-bottom-style:solid;border-left-style:solid;border-right-style:solid;border-top-style:solid;}
+.r-1udh08x{overflow-x:hidden;overflow-y:hidden;}
+.r-4iw3lz{border-bottom-width:0;border-left-width:0;border-right-width:0;border-top-width:0;}
+.r-4qtqp9{display:inline-block;}
+.r-6koalj{display:flex;}
+.r-bztko3{overflow-x:visible;overflow-y:visible;}
+.r-crgep1{margin:0px;}
+.r-hvic4v{display:none;}
+.r-krxsd3{display:-webkit-box;}
+.r-rs99b7{border-bottom-width:1px;border-left-width:1px;border-right-width:1px;border-top-width:1px;}
+.r-sdzlij{border-bottom-left-radius:9999px;border-bottom-right-radius:9999px;border-top-left-radius:9999px;border-top-right-radius:9999px;}
+.r-t60dpp{padding:0px;}
+.r-wwvuq4{padding:0;}
+.r-xoduu5{display:inline-flex;}
+.r-ywje51{margin:auto;}
+.r-z2wwpe{border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-top-left-radius:4px;border-top-right-radius:4px;}
+[stylesheet-group="2.1"]{}
+.r-1559e4e{padding-bottom:2px;padding-top:2px;}
+.r-1fkl15p{padding-left:32px;padding-right:32px;}
+.r-3o4zer{padding-left:12px;padding-right:12px;}
+.r-3pj75a{padding-left:16px;padding-right:16px;}
+.r-cxgwc0{padding-left:24px;padding-right:24px;}
+.r-dd0y9b{padding-bottom:20px;padding-top:20px;}
+.r-ddtstp{margin-bottom:0px;margin-top:0px;}
+.r-dp7rxi{padding-bottom:40px;padding-top:40px;}
+.r-f8sm7e{margin-left:auto;margin-right:auto;}
+.r-n7gxbd{padding-left:4px;padding-right:4px;}
+.r-s49dbf{margin-bottom:1px;margin-top:1px;}
+.r-sjygvo{padding-left:1em;padding-right:1em;}
+[stylesheet-group="2.2"]{}
+.r-1ca1ndr{margin-left:0.5em;}
+.r-1ez5h0i{margin-left:4px;}
+.r-1gs4q39{margin-right:4px;}
+.r-1kkk96v{margin-left:8px;}
+.r-1kpi4qh{margin-left:0.075em;}
+.r-1l2kgy{margin-right:0.5em;}
+.r-1q6cnnd{right:-2px;}
+.r-1wron08{margin-right:8px;}
+.r-3t4u6i{margin-left:2px;}
+.r-45ll9u{left:50%;}
+.r-5f1w11{left:-2px;}
+.r-k4bwe5{margin-right:0.075em;}
+.r-o59np7{padding-right:8px;}
+.r-ocobd0{right:50%;}
+.r-qjj4hq{padding-left:8px;}
+.r-x1x4zq{margin-right:2px;}
+[stylesheet-group="3"]{}
+.r-105ug2t{pointer-events:auto!important;}
+.r-109y4c4{height:1px;}
+.r-10ptun7{height:16px;}
+.r-10v3vxq{transform:scaleX(-1);}
+.r-117bsoe{margin-bottom:20px;}
+.r-11c0sde{margin-top:24px;}
+.r-11j9u27{visibility:hidden;}
+.r-12181gd{box-shadow:0 0 2px rgba(0,0,0,0.03) inset;}
+.r-12sks89{min-height:22px;}
+.r-12vffkv>*{pointer-events:auto;}
+.r-12vffkv{pointer-events:none!important;}
+.r-12ym1je{width:18px;}
+.r-135wba7{line-height:24px;}
+.r-13qz1uu{width:100%;}
+.r-13wfysu{-webkit-text-decoration-line:none;text-decoration-line:none;}
+.r-146iojx{max-width:300px;}
+.r-1472mwg{height:24px;}
+.r-14j79pv{color:rgba(83,100,113,1.00);}
+.r-14lw9ot{background-color:rgba(255,255,255,1.00);}
+.r-15ysp7h{min-height:32px;}
+.r-16dba41{font-weight:400;}
+.r-16y2uox{flex-grow:1;}
+.r-176fswd{transform:translateX(-50%) translateY(-50%);}
+.r-1777fci{justify-content:center;}
+.r-17bb2tj{animation-duration:0.75s;}
+.r-17leim2{background-repeat:repeat;}
+.r-17s6mgv{justify-content:flex-end;}
+.r-18jsvk2{color:rgba(15,20,25,1.00);}
+.r-18tzken{width:56px;}
+.r-18u37iz{flex-direction:row;}
+.r-18yzcnr{height:22px;}
+.r-19wmn03{width:20px;}
+.r-19yznuf{min-height:52px;}
+.r-1abnn5w{animation-play-state:paused;}
+.r-1acpoxo{width:36px;}
+.r-1ad0z5i{word-break:break-all;}
+.r-1awozwy{align-items:center;}
+.r-1b43r93{font-size:14px;}
+.r-1betnmo{max-width:672px;}
+.r-1blnp2b{width:72px;}
+.r-1blvdjr{font-size:23px;}
+.r-1ceczpf{min-height:24px;}
+.r-1cwl3u0{line-height:16px;}
+.r-1d2f490{left:0px;}
+.r-1ddef8g{-webkit-text-decoration-line:underline;text-decoration-line:underline;}
+.r-1ebb2ja{list-style:none;}
+.r-1ff274t{text-align:right;}
+.r-1gkfh8e{font-size:11px;}
+.r-1h0z5md{justify-content:flex-start;}
+.r-1h8ys4a{padding-top:4px;}
+.r-1hjwoze{height:18px;}
+.r-1iln25a{word-wrap:normal;}
+.r-1inkyih{font-size:17px;}
+.r-1ipicw7{width:300px;}
+.r-1iusvr4{flex-basis:0px;}
+.r-1janqcz{width:16px;}
+.r-1jaylin{width:-webkit-max-content;width:-moz-max-content;width:max-content;}
+.r-1k78y06{font-family:Tahoma, Arial, sans-serif;}
+.r-1kihuf0{align-self:center;}
+.r-1ldzwu0{animation-timing-function:linear;}
+.r-1loqt21{cursor:pointer;}
+.r-1mlwlqe{flex-basis:auto;}
+.r-1mrlafo{background-position:0;}
+.r-1muvv40{animation-iteration-count:infinite;}
+.r-1mwlp6a{height:56px;}
+.r-1nao33i{color:rgba(231,233,234,1.00);}
+.r-1niwhzg{background-color:rgba(0,0,0,0.00);}
+.r-1ny4l3l{outline-style:none;}
+.r-1oifz5y{background-color:rgba(170,17,0,1.00);}
+.r-1oszu61{align-items:stretch;}
+.r-1otgn73{touch-action:manipulation;}
+.r-1p0dtai{bottom:0px;}
+.r-1pi2tsx{height:100%;}
+.r-1ps3wis{min-width:44px;}
+.r-1qd0xha{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.r-1qi8awa{min-width:36px;}
+.r-1r5jyh0{min-height:130px;}
+.r-1r8g8re{height:36px;}
+.r-1s2hp8q{min-height:26px;}
+.r-1sxrcry{background-size:auto;}
+.r-1tl8opc{font-family:"Segoe UI",Meiryo,system-ui,-apple-system,BlinkMacSystemFont,sans-serif;}
+.r-1to6hqq{background-color:rgba(255,212,0,1.00);}
+.r-1ttztb7{text-align:inherit;}
+.r-1udbk01{text-overflow:ellipsis;}
+.r-1v2oles{top:50%;}
+.r-1vmecro{direction:rtl;}
+.r-1vr29t4{font-weight:800;}
+.r-1wb8bfx{text-decoration-thickness:2px;}
+.r-1wbh5a2{flex-shrink:1;}
+.r-1wyyakw{z-index:-1;}
+.r-1xcajam{position:fixed;}
+.r-1xk2f4g{clip:rect(1px, 1px, 1px, 1px);}
+.r-1xnzce8{-moz-user-select:text;-webkit-user-select:text;user-select:text;}
+.r-1xvli5t{height:1.25em;}
+.r-1y7e96w{min-width:22px;}
+.r-1ye8kvj{max-width:600px;}
+.r-1yef0xd{animation-name:r-11cv4x;}
+.r-1yjpyg1{font-size:31px;}
+.r-1ykxob0{top:60%;}
+.r-2o02ov{margin-top:40px;}
+.r-2tavb8{background-color:rgba(0,0,0,0.60);}
+.r-2yi16{min-height:36px;}
+.r-36ujnk{font-style:italic;}
+.r-37tt59{line-height:32px;}
+.r-3s2u2q{white-space:nowrap;}
+.r-417010{z-index:0;}
+.r-4gszlv{background-size:cover;}
+.r-4wgw6l{min-width:32px;}
+.r-54znze{color:rgba(239,243,244,1.00);}
+.r-56xrmm{line-height:12px;}
+.r-6026j{background-color:rgba(255,255,255,0.85);}
+.r-633pao{pointer-events:none!important;}
+.r-6416eg{-moz-transition-property:background-color, box-shadow;-webkit-transition-property:background-color, box-shadow;transition-property:background-color, box-shadow;}
+.r-64el8z{min-width:52px;}
+.r-7q8q6z{cursor:default;}
+.r-8akbws{-webkit-box-orient:vertical;}
+.r-8jfcpp{top:-2px;}
+.r-92ng3h{width:1px;}
+.r-a023e6{font-size:15px;}
+.r-adyw6z{font-size:20px;}
+.r-agouwx{transform:translateZ(0);}
+.r-ah5dr5>*{pointer-events:none;}
+.r-ah5dr5{pointer-events:auto!important;}
+.r-aqfbo4{backface-visibility:hidden;}
+.r-b88u0q{font-weight:700;}
+.r-bcqeeo{min-width:0px;}
+.r-bnwqim{position:relative;}
+.r-bt1l66{min-height:20px;}
+.r-bvlit7{margin-bottom:-12px;}
+.r-deolkf{box-sizing:border-box;}
+.r-dflpy8{height:1.2em;}
+.r-dnmrzs{max-width:100%;}
+.r-ehq7j7{background-size:contain;}
+.r-emqnss{transform:translateZ(0px);}
+.r-eqz5dr{flex-direction:column;}
+.r-ero68b{min-height:40px;}
+.r-fdjqy7{text-align:left;}
+.r-fm7h5w{font-family:"TwitterChirpExtendedHeavy","Verdana",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.r-h9hxbl{width:1.2em;}
+.r-icoktb{opacity:0.5;}
+.r-ifefl9{min-height:0px;}
+.r-impgnl{transform:translateX(50%) translateY(-50%);}
+.r-iphfwy{padding-bottom:4px;}
+.r-ipm5af{top:0px;}
+.r-jmul1s{transform:scale(1.1);}
+.r-jwli3a{color:rgba(255,255,255,1.00);}
+.r-kemksi{background-color:rgba(0,0,0,1.00);}
+.r-lp5zef{min-width:24px;}
+.r-lrsllp{width:24px;}
+.r-lrvibr{-moz-user-select:none;-webkit-user-select:none;user-select:none;}
+.r-m6rgpd{vertical-align:text-bottom;}
+.r-majxgm{font-weight:500;}
+.r-n6v787{font-size:13px;}
+.r-nwxazl{line-height:40px;}
+.r-o7ynqc{transition-duration:0.2s;}
+.r-peo1c{min-height:44px;}
+.r-poiln3{font-family:inherit;}
+.r-pp5qcn{vertical-align:-20%;}
+.r-q4m81j{text-align:center;}
+.r-qlhcfr{font-size:0.001px;}
+.r-qvk6io{line-height:0px;}
+.r-qvutc0{word-wrap:break-word;}
+.r-rjixqe{line-height:20px;}
+.r-rki7wi{bottom:12px;}
+.r-sb58tz{max-width:1000px;}
+.r-tjvw6i{text-decoration-thickness:1px;}
+.r-u6sd8q{background-repeat:no-repeat;}
+.r-u8s1d{position:absolute;}
+.r-ueyrd6{line-height:36px;}
+.r-uho16t{font-size:34px;}
+.r-vkv6oe{min-width:40px;}
+.r-vlxjld{color:rgba(247,249,249,1.00);}
+.r-vqxq0j{border:0 solid black;}
+.r-vrz42v{line-height:28px;}
+.r-vvn4in{background-position:center;}
+.r-wy61xf{height:72px;}
+.r-x3cy2q{background-size:100% 100%;}
+.r-x572qd{background-color:rgba(247,249,249,1.00);}
+.r-xigjrr{-webkit-filter:blur(4px);filter:blur(4px);}
+.r-yc9v9c{width:22px;}
+.r-yfoy6g{background-color:rgba(21,32,43,1.00);}
+.r-yy2aun{font-size:26px;}
+.r-yyyyoo{fill:currentcolor;}
+.r-z7pwl0{max-width:700px;}
+.r-z80fyv{height:20px;}
+.r-zchlnj{right:0px;}
+@-webkit-keyframes r-11cv4x{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+@keyframes r-11cv4x{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+.r-efm9vo{position:absolute;visibility:hidden;top:0;width:50px;pointer-events:none}
+.r-efm9vo.loaded{visibility:visible;top:50vh;width:50px}</style><title>Queue in O(1) </title><meta content="https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png" property="og:image" data-rh="true">
+</head>
+
+
+<body style="background-color: rgb(0, 0, 0); scrollbar-color: rgb(62, 65, 68) rgb(22, 24, 28);">
+	<noscript><style>
+    body {
+      -ms-overflow-style: scrollbar;
+      overflow-y: scroll;
+      overscroll-behavior-y: none;
+    }
+
+    .errorContainer {
+      background-color: #FFF;
+      color: #0F1419;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 10%;
+      font-family: Helvetica, sans-serif;
+      font-size: 16px;
+    }
+
+    .errorButton {
+      margin: 3em 0;
+    }
+
+    .errorButton a {
+      background: #1DA1F2;
+      border-radius: 2.5em;
+      color: white;
+      padding: 1em 2em;
+      text-decoration: none;
+    }
+
+    .errorButton a:hover,
+    .errorButton a:focus {
+      background: rgb(26, 145, 218);
+    }
+
+    .errorFooter {
+      color: #657786;
+      font-size: 80%;
+      line-height: 1.5;
+      padding: 1em 0;
+    }
+
+    .errorFooter a,
+    .errorFooter a:visited {
+      color: #657786;
+      text-decoration: none;
+      padding-right: 1em;
+    }
+
+    .errorFooter a:hover,
+    .errorFooter a:active {
+      text-decoration: underline;
+    }
+
+      #placeholder,
+      #react-root {
+        display: none !important;
+      }
+      body {
+        background-color: #FFF !important;
+      }
+    </style>
+ </noscript>
+<div>
+	<div dir="ltr" class="css-146c3p1 r-bcqeeo r-1ttztb7 r-qvutc0 r-37j5jr r-rjixqe r-16dba41 r-imh66m" style="color: rgb(231, 233, 234);"><div class="css-175oi2r" style="display: block;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1adg3ll r-1g7jtus r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Here's an implementation of a queue using a linked list in C with O(1) enqueue and dequeue operations. The key is to maintain pointers to both the front and rear of the queue for constant-time operations.</span></span></span></span><div class="css-175oi2r r-1adg3ll r-ag158w r-dnmrzs r-1yx7oqi r-13qz1uu"><div class="css-175oi2r r-dnmrzs r-1adg3ll r-13qz1uu" data-testid="markdown-code-block"><div class="css-175oi2r r-1awozwy r-1fkb3t2 r-1fs5b29 r-1idry7j r-6413gk r-43g30s r-l4nmg1 r-1u658rm r-2dysd3 r-vmopo1 r-13qz1uu r-gtdqiz r-1fhadnw r-184en5c"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-1aiqnjv r-n6v787"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">c</span></span><div class="css-175oi2r r-xoduu5 r-1ybcz0z"><button aria-label="复制到剪贴板" role="button" class="css-175oi2r r-xoduu5 r-sdzlij r-1phboty r-rs99b7 r-lrvibr r-1ceczpf r-lp5zef r-1loqt21 r-o7ynqc r-6416eg r-1ny4l3l" style="background-color: rgba(0, 0, 0, 0); border-color: rgba(0, 0, 0, 0);" type="button"><span class="css-1jxf684 r-bcqeeo r-qvutc0 r-poiln3 r-q4m81j r-b88u0q r-1awozwy r-6koalj r-18u37iz r-16y2uox r-1777fci" style="color: rgb(239, 243, 244);"><svg viewBox="0 0 24 24" aria-hidden="true" class="r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-lrvibr r-m6rgpd r-10ptun7 r-1janqcz" style="color: rgb(239, 243, 244);"><g><path d="M19.5 2C20.88 2 22 3.12 22 4.5v11c0 1.21-.86 2.22-2 2.45V4.5c0-.28-.22-.5-.5-.5H6.05c.23-1.14 1.24-2 2.45-2h11zm-4 4C16.88 6 18 7.12 18 8.5v11c0 1.38-1.12 2.5-2.5 2.5h-11C3.12 22 2 20.88 2 19.5v-11C2 7.12 3.12 6 4.5 6h11zM4 19.5c0 .28.22.5.5.5h11c.28 0 .5-.22.5-.5v-11c0-.28-.22-.5-.5-.5h-11c-.28 0-.5.22-.5.5v11z"></path></g></svg><span class="css-1jxf684 r-dnmrzs r-1udh08x r-1udbk01 r-3s2u2q r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1b43r93 r-1cwl3u0" style="border-bottom: 2px solid rgb(239, 243, 244);"></span></span></button></div></div><pre style="color: rgb(212, 212, 212); font-size: 13px; text-shadow: none; font-family: monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.3; tab-size: 4; hyphens: none; padding: 12px; margin: 0px 0px 0.5em; overflow: auto; background: rgb(22, 24, 28); display: block; width: 100%; box-sizing: border-box; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;"><code class="language-c" style="color: rgb(212, 212, 212); font-size: 13px; text-shadow: none; font-family: Menlo, Monaco, Consolas, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Courier New&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 4; hyphens: none;"><span class="token macro directive-hash" style="color: rgb(156, 220, 254);">#</span><span class="token macro directive" style="color: rgb(86, 156, 214);">include</span><span class="token macro" style="color: rgb(156, 220, 254);"> </span><span class="token macro" style="color: rgb(206, 145, 120);">&lt;stdio.h&gt;</span><span>
+</span><span></span><span class="token macro directive-hash" style="color: rgb(156, 220, 254);">#</span><span class="token macro directive" style="color: rgb(86, 156, 214);">include</span><span class="token macro" style="color: rgb(156, 220, 254);"> </span><span class="token macro" style="color: rgb(206, 145, 120);">&lt;stdlib.h&gt;</span><span>
+</span>
+<span></span><span class="token" style="color: rgb(106, 153, 85);">// Node structure for the linked list</span><span>
+</span><span></span><span class="token" style="color: rgb(86, 156, 214);">typedef</span><span> </span><span class="token" style="color: rgb(86, 156, 214);">struct</span><span> </span><span class="token" style="color: rgb(78, 201, 176);">Node</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>    </span><span class="token" style="color: rgb(86, 156, 214);">int</span><span> data</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    </span><span class="token" style="color: rgb(86, 156, 214);">struct</span><span> </span><span class="token" style="color: rgb(78, 201, 176);">Node</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span> next</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span></span><span class="token" style="color: rgb(212, 212, 212);">}</span><span> Node</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span>
+<span></span><span class="token" style="color: rgb(106, 153, 85);">// Queue structure</span><span>
+</span><span></span><span class="token" style="color: rgb(86, 156, 214);">typedef</span><span> </span><span class="token" style="color: rgb(86, 156, 214);">struct</span><span> </span><span class="token" style="color: rgb(78, 201, 176);">Queue</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>    Node</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span> front</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span> </span><span class="token" style="color: rgb(106, 153, 85);">// Points to the first node</span><span>
+</span><span>    Node</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span> rear</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>  </span><span class="token" style="color: rgb(106, 153, 85);">// Points to the last node</span><span>
+</span><span></span><span class="token" style="color: rgb(212, 212, 212);">}</span><span> Queue</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span>
+<span></span><span class="token" style="color: rgb(106, 153, 85);">// Initialize an empty queue</span><span>
+</span><span>Queue</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span> </span><span class="token" style="color: rgb(220, 220, 170);">createQueue</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>    Queue</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span> queue </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>Queue</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(220, 220, 170);">malloc</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(86, 156, 214);">sizeof</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>Queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>front </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> </span><span class="token" style="color: rgb(156, 220, 254);">NULL</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>rear </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> </span><span class="token" style="color: rgb(156, 220, 254);">NULL</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    </span><span class="token" style="color: rgb(86, 156, 214);">return</span><span> queue</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span></span><span class="token" style="color: rgb(212, 212, 212);">}</span><span>
+</span>
+<span></span><span class="token" style="color: rgb(106, 153, 85);">// Check if the queue is empty</span><span>
+</span><span></span><span class="token" style="color: rgb(86, 156, 214);">int</span><span> </span><span class="token" style="color: rgb(220, 220, 170);">isEmpty</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>Queue</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span> queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>    </span><span class="token" style="color: rgb(86, 156, 214);">return</span><span> queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>front </span><span class="token" style="color: rgb(212, 212, 212);">==</span><span> </span><span class="token" style="color: rgb(156, 220, 254);">NULL</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span></span><span class="token" style="color: rgb(212, 212, 212);">}</span><span>
+</span>
+<span></span><span class="token" style="color: rgb(106, 153, 85);">// Enqueue: Add an element to the rear (O(1))</span><span>
+</span><span></span><span class="token" style="color: rgb(86, 156, 214);">void</span><span> </span><span class="token" style="color: rgb(220, 220, 170);">enqueue</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>Queue</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span> queue</span><span class="token" style="color: rgb(212, 212, 212);">,</span><span> </span><span class="token" style="color: rgb(86, 156, 214);">int</span><span> data</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>    Node</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span> newNode </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>Node</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(220, 220, 170);">malloc</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(86, 156, 214);">sizeof</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>Node</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    newNode</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>data </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> data</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    newNode</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>next </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> </span><span class="token" style="color: rgb(156, 220, 254);">NULL</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span>    
+<span>    </span><span class="token" style="color: rgb(86, 156, 214);">if</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(220, 220, 170);">isEmpty</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>        queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>front </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> newNode</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>        queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>rear </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> newNode</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    </span><span class="token" style="color: rgb(212, 212, 212);">}</span><span> </span><span class="token" style="color: rgb(86, 156, 214);">else</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>        queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>rear</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>next </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> newNode</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>        queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>rear </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> newNode</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    </span><span class="token" style="color: rgb(212, 212, 212);">}</span><span>
+</span><span></span><span class="token" style="color: rgb(212, 212, 212);">}</span><span>
+</span>
+<span></span><span class="token" style="color: rgb(106, 153, 85);">// Dequeue: Remove and return the front element (O(1))</span><span>
+</span><span></span><span class="token" style="color: rgb(86, 156, 214);">int</span><span> </span><span class="token" style="color: rgb(220, 220, 170);">dequeue</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>Queue</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span> queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>    </span><span class="token" style="color: rgb(86, 156, 214);">if</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(220, 220, 170);">isEmpty</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>        </span><span class="token" style="color: rgb(220, 220, 170);">printf</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(206, 145, 120);">"Queue is empty\n"</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>        </span><span class="token" style="color: rgb(86, 156, 214);">return</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">-</span><span class="token" style="color: rgb(181, 206, 168);">1</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span> </span><span class="token" style="color: rgb(106, 153, 85);">// Or handle error as needed</span><span>
+</span><span>    </span><span class="token" style="color: rgb(212, 212, 212);">}</span><span>
+</span>    
+<span>    Node</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span> temp </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>front</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    </span><span class="token" style="color: rgb(86, 156, 214);">int</span><span> data </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> temp</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>data</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>front </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>front</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>next</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span>    
+<span>    </span><span class="token" style="color: rgb(86, 156, 214);">if</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>front </span><span class="token" style="color: rgb(212, 212, 212);">==</span><span> </span><span class="token" style="color: rgb(156, 220, 254);">NULL</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>        queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>rear </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> </span><span class="token" style="color: rgb(156, 220, 254);">NULL</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span> </span><span class="token" style="color: rgb(106, 153, 85);">// Queue is now empty</span><span>
+</span><span>    </span><span class="token" style="color: rgb(212, 212, 212);">}</span><span>
+</span>    
+<span>    </span><span class="token" style="color: rgb(220, 220, 170);">free</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>temp</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    </span><span class="token" style="color: rgb(86, 156, 214);">return</span><span> data</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span></span><span class="token" style="color: rgb(212, 212, 212);">}</span><span>
+</span>
+<span></span><span class="token" style="color: rgb(106, 153, 85);">// Peek: View the front element without removing it (O(1))</span><span>
+</span><span></span><span class="token" style="color: rgb(86, 156, 214);">int</span><span> </span><span class="token" style="color: rgb(220, 220, 170);">peek</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>Queue</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span> queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>    </span><span class="token" style="color: rgb(86, 156, 214);">if</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(220, 220, 170);">isEmpty</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>        </span><span class="token" style="color: rgb(220, 220, 170);">printf</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(206, 145, 120);">"Queue is empty\n"</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>        </span><span class="token" style="color: rgb(86, 156, 214);">return</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">-</span><span class="token" style="color: rgb(181, 206, 168);">1</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span> </span><span class="token" style="color: rgb(106, 153, 85);">// Or handle error as needed</span><span>
+</span><span>    </span><span class="token" style="color: rgb(212, 212, 212);">}</span><span>
+</span><span>    </span><span class="token" style="color: rgb(86, 156, 214);">return</span><span> queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>front</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>data</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span></span><span class="token" style="color: rgb(212, 212, 212);">}</span><span>
+</span>
+<span></span><span class="token" style="color: rgb(106, 153, 85);">// Free the queue and all its nodes</span><span>
+</span><span></span><span class="token" style="color: rgb(86, 156, 214);">void</span><span> </span><span class="token" style="color: rgb(220, 220, 170);">freeQueue</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>Queue</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span> queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>    </span><span class="token" style="color: rgb(86, 156, 214);">while</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(212, 212, 212);">!</span><span class="token" style="color: rgb(220, 220, 170);">isEmpty</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>        </span><span class="token" style="color: rgb(220, 220, 170);">dequeue</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    </span><span class="token" style="color: rgb(212, 212, 212);">}</span><span>
+</span><span>    </span><span class="token" style="color: rgb(220, 220, 170);">free</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span></span><span class="token" style="color: rgb(212, 212, 212);">}</span><span>
+</span>
+<span></span><span class="token" style="color: rgb(106, 153, 85);">// Example usage</span><span>
+</span><span></span><span class="token" style="color: rgb(86, 156, 214);">int</span><span> </span><span class="token" style="color: rgb(220, 220, 170);">main</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>    Queue</span><span class="token" style="color: rgb(212, 212, 212);">*</span><span> queue </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> </span><span class="token" style="color: rgb(220, 220, 170);">createQueue</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span>    
+<span>    </span><span class="token" style="color: rgb(220, 220, 170);">enqueue</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">,</span><span> </span><span class="token" style="color: rgb(181, 206, 168);">1</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    </span><span class="token" style="color: rgb(220, 220, 170);">enqueue</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">,</span><span> </span><span class="token" style="color: rgb(181, 206, 168);">2</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    </span><span class="token" style="color: rgb(220, 220, 170);">enqueue</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">,</span><span> </span><span class="token" style="color: rgb(181, 206, 168);">3</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span>    
+<span>    </span><span class="token" style="color: rgb(220, 220, 170);">printf</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(206, 145, 120);">"Front element: %d\n"</span><span class="token" style="color: rgb(212, 212, 212);">,</span><span> </span><span class="token" style="color: rgb(220, 220, 170);">peek</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span> </span><span class="token" style="color: rgb(106, 153, 85);">// Output: 1</span><span>
+</span><span>    </span><span class="token" style="color: rgb(220, 220, 170);">printf</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(206, 145, 120);">"Dequeued: %d\n"</span><span class="token" style="color: rgb(212, 212, 212);">,</span><span> </span><span class="token" style="color: rgb(220, 220, 170);">dequeue</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>   </span><span class="token" style="color: rgb(106, 153, 85);">// Output: 1</span><span>
+</span><span>    </span><span class="token" style="color: rgb(220, 220, 170);">printf</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(206, 145, 120);">"Dequeued: %d\n"</span><span class="token" style="color: rgb(212, 212, 212);">,</span><span> </span><span class="token" style="color: rgb(220, 220, 170);">dequeue</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>   </span><span class="token" style="color: rgb(106, 153, 85);">// Output: 2</span><span>
+</span><span>    </span><span class="token" style="color: rgb(220, 220, 170);">printf</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span class="token" style="color: rgb(206, 145, 120);">"Front element: %d\n"</span><span class="token" style="color: rgb(212, 212, 212);">,</span><span> </span><span class="token" style="color: rgb(220, 220, 170);">peek</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span> </span><span class="token" style="color: rgb(106, 153, 85);">// Output: 3</span><span>
+</span>    
+<span>    </span><span class="token" style="color: rgb(220, 220, 170);">freeQueue</span><span class="token" style="color: rgb(212, 212, 212);">(</span><span>queue</span><span class="token" style="color: rgb(212, 212, 212);">)</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    </span><span class="token" style="color: rgb(86, 156, 214);">return</span><span> </span><span class="token" style="color: rgb(181, 206, 168);">0</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span></span><span class="token" style="color: rgb(212, 212, 212);">}</span></code></pre></div></div><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-adyw6z r-135wba7 r-b88u0q" style="display: block; margin-top: 1.5em; margin-bottom: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Explanation:</span></span></span></span><ul dir="ltr" style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0px 1.25em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-b88u0q r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Structure</span></span></span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">: </span></span></span><ul style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0.75em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Node</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> represents a single element in the linked list with data and a pointer to the next node.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Queue</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> maintains </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">front</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> (head) and </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> (tail) pointers for O(1) access.</span></span></span></li></ul></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-b88u0q r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Enqueue (O(1))</span></span></span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">:</span></span></span><ul style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0.75em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Creates a new node and adds it to the rear.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Updates </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> to point to the new node.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">If the queue is empty, sets both </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">front</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> and </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> to the new node.</span></span></span></li></ul></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-b88u0q r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Dequeue (O(1))</span></span></span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">:</span></span></span><ul style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0.75em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Removes the front node, returns its data, and updates </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">front</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> to the next node.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">If the queue becomes empty, sets </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> to NULL.</span></span></span></li></ul></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-b88u0q r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Peek (O(1))</span></span></span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">: Returns the front element without removing it.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-b88u0q r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Memory Management</span></span></span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">:</span></span></span><ul style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0.75em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">createQueue</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> allocates memory for the queue.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">freeQueue</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> deallocates all nodes and the queue structure.</span></span></span></li></ul></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-b88u0q r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Error Handling</span></span></span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">: Checks for empty queue in </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">dequeue</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> and </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">peek</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">.</span></span></span></li></ul><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1adg3ll r-1x3r274 r-p1pxzi"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">This implementation ensures both enqueue and dequeue operations are O(1) by directly accessing the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">front</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> and </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointers, avoiding traversal of the linked list.</span></span></span></span></div></div>
+
+<div><hr>-------------------------</div>
+<div dir="ltr" class="css-146c3p1 r-bcqeeo r-1ttztb7 r-qvutc0 r-37j5jr r-rjixqe r-16dba41 r-imh66m" style="color: rgb(231, 233, 234);"><div class="css-175oi2r" style="display: block;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1adg3ll r-1g7jtus r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Let's break down the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">else</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> block in the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">enqueue</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> function to clarify why both </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear-&gt;next = newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> and </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear = newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> are necessary:</span></span></span></span><div class="css-175oi2r r-1adg3ll r-ag158w r-dnmrzs r-1yx7oqi r-13qz1uu"><div class="css-175oi2r r-dnmrzs r-1adg3ll r-13qz1uu" data-testid="markdown-code-block"><div class="css-175oi2r r-1awozwy r-1fkb3t2 r-1fs5b29 r-1idry7j r-6413gk r-43g30s r-l4nmg1 r-1u658rm r-2dysd3 r-vmopo1 r-13qz1uu r-gtdqiz r-1fhadnw r-184en5c"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-1aiqnjv r-n6v787"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">c</span></span><div class="css-175oi2r r-xoduu5 r-1ybcz0z"><button aria-label="复制到剪贴板" role="button" class="css-175oi2r r-xoduu5 r-sdzlij r-1phboty r-rs99b7 r-lrvibr r-1ceczpf r-lp5zef r-1loqt21 r-o7ynqc r-6416eg r-1ny4l3l" style="background-color: rgba(0, 0, 0, 0); border-color: rgba(0, 0, 0, 0);" type="button"><span class="css-1jxf684 r-bcqeeo r-qvutc0 r-poiln3 r-q4m81j r-b88u0q r-1awozwy r-6koalj r-18u37iz r-16y2uox r-1777fci" style="color: rgb(239, 243, 244);"><svg viewBox="0 0 24 24" aria-hidden="true" class="r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-lrvibr r-m6rgpd r-10ptun7 r-1janqcz" style="color: rgb(239, 243, 244);"><g><path d="M19.5 2C20.88 2 22 3.12 22 4.5v11c0 1.21-.86 2.22-2 2.45V4.5c0-.28-.22-.5-.5-.5H6.05c.23-1.14 1.24-2 2.45-2h11zm-4 4C16.88 6 18 7.12 18 8.5v11c0 1.38-1.12 2.5-2.5 2.5h-11C3.12 22 2 20.88 2 19.5v-11C2 7.12 3.12 6 4.5 6h11zM4 19.5c0 .28.22.5.5.5h11c.28 0 .5-.22.5-.5v-11c0-.28-.22-.5-.5-.5h-11c-.28 0-.5.22-.5.5v11z"></path></g></svg><span class="css-1jxf684 r-dnmrzs r-1udh08x r-1udbk01 r-3s2u2q r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1b43r93 r-1cwl3u0" style="border-bottom: 2px solid rgb(239, 243, 244);"></span></span></button></div></div><pre style="color: rgb(212, 212, 212); font-size: 13px; text-shadow: none; font-family: monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.3; tab-size: 4; hyphens: none; padding: 12px; margin: 0px 0px 0.5em; overflow: auto; background: rgb(22, 24, 28); display: block; width: 100%; box-sizing: border-box; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;"><code class="language-c" style="color: rgb(212, 212, 212); font-size: 13px; text-shadow: none; font-family: Menlo, Monaco, Consolas, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Courier New&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 4; hyphens: none;"><span class="token" style="color: rgb(86, 156, 214);">else</span><span> </span><span class="token" style="color: rgb(212, 212, 212);">{</span><span>
+</span><span>    queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>rear</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>next </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> newNode</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span>    queue</span><span class="token" style="color: rgb(212, 212, 212);">-&gt;</span><span>rear </span><span class="token" style="color: rgb(212, 212, 212);">=</span><span> newNode</span><span class="token" style="color: rgb(212, 212, 212);">;</span><span>
+</span><span></span><span class="token" style="color: rgb(212, 212, 212);">}</span></code></pre></div></div><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-adyw6z r-135wba7 r-b88u0q" style="display: block; margin-top: 1.5em; margin-bottom: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Context</span></span></span></span><ul dir="ltr" style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0px 1.25em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">The </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">enqueue</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> function adds a new node (with data) to the end of the queue, which is implemented as a singly linked list.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">The </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Queue</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> structure maintains two pointers:</span></span></span><ul style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0.75em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">front</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">: Points to the first node (head) of the queue.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">: Points to the last node (tail) of the queue.</span></span></span></li></ul></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">The </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> is the newly created node to be added to the queue, with its </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">next</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointer set to </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">NULL</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> (since it will be the last node).</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">The </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">else</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> block executes when the queue is </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-b88u0q r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">not empty</span></span></span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">, meaning there is at least one node already in the queue.</span></span></span></li></ul><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-adyw6z r-135wba7 r-b88u0q" style="display: block; margin-top: 1.5em; margin-bottom: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Why both assignments are needed</span></span></span></span><ol dir="ltr" start="1" style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0px 1.25em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-b88u0q r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear-&gt;next = newNode</span></span></span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">:</span></span></span><ul style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0.75em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">The </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointer points to the current last node of the queue.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">To add the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> to the end of the queue, we need to link the current last node to the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Setting </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear-&gt;next = newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> updates the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">next</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointer of the current last node to point to the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">, effectively appending </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> to the linked list.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">This maintains the linked list structure, ensuring the new node is connected to the existing chain.</span></span></span></li></ul></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-b88u0q r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear = newNode</span></span></span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">:</span></span></span><ul style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0.75em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">After linking the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> to the current last node, the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> becomes the new last node of the queue.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">To reflect this, we update the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointer to point to </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">This ensures that the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointer always points to the last node, which is critical for O(1) enqueue operations in future calls (since we can directly access the last node to append a new one).</span></span></span></li></ul></li></ol><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-adyw6z r-135wba7 r-b88u0q" style="display: block; margin-top: 1.5em; margin-bottom: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Why both are necessary</span></span></span></span><ul dir="ltr" style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0px 1.25em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">The first assignment (</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear-&gt;next = newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">) connects the new node to the linked list, preserving the chain of nodes.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">The second assignment (</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear = newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">) updates the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointer to reflect that the new node is now the last node in the queue.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">If we only did </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear-&gt;next = newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> without updating </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">, the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointer would still point to the previous last node, and future </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">enqueue</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> operations would incorrectly append nodes after the old </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">, breaking the queue structure.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">If we only did </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear = newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> without setting </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear-&gt;next</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">, the new node would not be linked to the existing list, effectively detaching the queue's previous nodes (causing a memory leak and breaking the queue).</span></span></span></li></ul><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-adyw6z r-135wba7 r-b88u0q" style="display: block; margin-top: 1.5em; margin-bottom: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Example Walkthrough</span></span></span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1adg3ll r-1x3r274 r-p1pxzi"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Suppose the queue has two nodes: </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">[1 -&gt; 2]</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">, where </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">front</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> points to node </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">1</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">, and </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> points to node </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">2</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">. The node </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">2</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> has </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">next = NULL</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">.</span></span></span></span><ul dir="ltr" style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0px 1.25em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">We want to enqueue a new node with data </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">3</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> (</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">).</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">In the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">else</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> block:</span></span></span><ol start="1" style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0.75em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear-&gt;next = newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">: The </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">next</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointer of node </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">2</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> (the current </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">) is set to point to </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> (node </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">3</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">). Now the list is </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">[1 -&gt; 2 -&gt; 3]</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">, with node </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">3</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> having </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">next = NULL</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear = newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">: The </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointer is updated to point to node </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">3</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">, the new last node.</span></span></span></li></ol></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Result: The queue is now </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">[1 -&gt; 2 -&gt; 3]</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">, with </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">front</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointing to </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">1</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> and </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointing to </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">3</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">.</span></span></span></li></ul><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-adyw6z r-135wba7 r-b88u0q" style="display: block; margin-top: 1.5em; margin-bottom: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Summary</span></span></span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1adg3ll r-1g7jtus r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">Both assignments in the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">else</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> block are essential:</span></span></span></span><ul dir="ltr" style="display: block; padding-inline-start: 2em; list-style-type: disc; margin-block: 0px 1.25em;"><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0px;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear-&gt;next = newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> links the new node to the existing list.</span></span></span></li><li style="font-family: &quot;TwitterChirp&quot;, System; margin-top: 0.5em;"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">queue-&gt;rear = newNode</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> updates the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointer to maintain the queue's structure for O(1) operations.</span></span></span></li></ul><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1adg3ll r-1x3r274 r-p1pxzi"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">This ensures the linked list remains properly connected and the </span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-dyfej2 r-z2wwpe r-15gepa6 r-1471scf r-1aiqnjv r-1hq4qhi r-16dba41 r-ilng1c r-trst2h r-1noe1sz r-njp1lv"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3">rear</span></span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3 r-1x3r274"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3"> pointer always points to the last node, enabling constant-time enqueue operations.</span></span></span></span></div></div>
+
+
+
+
+</div>
+</body>
+</html>
