@@ -1,0 +1,804 @@
+<html>
+<head>
+    <script charset="utf-8" src="https://hmcdn.baidu.com/static/tongji/plugins/UrlChangeTracker.js"></script><script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-YXD8W70SZP&amp;cx=c&amp;gtm=45He5860h2v9183970613za200&amp;tag_exp=101509157~103116026~103200004~103233427~104684208~104684211~105087538~105087540~105103161~105103163~105135705~105135707"></script><script src="https://hm.baidu.com/hm.js?358cae4815e85d48f7e8ab7f3680a74b"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-NT26Q3C9"></script><script type="module" crossorigin="" src="//statics.moonshot.cn/kimi-web-seo/assets/polyfills-Cd9iWziS.js"></script>
+
+    <meta charset="UTF-8">
+    <!--default-seo-->
+    <title>Final Exam Cheat-Sheet: Memory, Pointers, and Data Structures - Kimi</title>
+    <meta name="keywords" content="Final Exam Cheat-Sheet: Memory, Pointers, and Data Structures,Kimi,Kimi.com,K2,KimiK2,MoonshotAI,Moonshot,Moonshot AI,Large Language Model,Natural Language Processing,AI Large Model,AI Chatbot,AI Chat,AI Creation,Domestic Model Company,AI Assistant,Context Window,context,long,extra-long">
+    <meta name="description" content="Try Kimi K2 now, the open‑source trillion‑parameter MoE model, smarter coding, and agentic task automation.">
+    <!--default-seo-->
+    <style cssr-id="vueuc/binder">.v-binder-follower-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: auto;
+}
+
+.v-binder-follower-content {
+  position: absolute;
+  z-index: auto;
+}
+
+.v-binder-follower-content > * {
+  pointer-events: all;
+}</style><style cssr-id="n-global">body {
+
+ margin: 0;
+ font-size: 14px;
+ font-family: v-sans, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+ line-height: 1.6;
+ -webkit-text-size-adjust: 100%;
+ -webkit-tap-highlight-color: transparent;
+
+}
+
+body input {
+
+ font-family: inherit;
+ font-size: inherit;
+ 
+}</style><style cssr-id="n-popover">.n-popover {
+
+ transition:
+ box-shadow .3s var(--n-bezier),
+ background-color .3s var(--n-bezier),
+ color .3s var(--n-bezier);
+ position: relative;
+ font-size: var(--n-font-size);
+ color: var(--n-text-color);
+ box-shadow: var(--n-box-shadow);
+ word-break: break-word;
+ 
+}
+
+.n-popover > .n-scrollbar {
+
+ height: inherit;
+ max-height: inherit;
+ 
+}
+
+.n-popover:not(.n-popover--raw) {
+
+ background-color: var(--n-color);
+ border-radius: var(--n-border-radius);
+ 
+}
+
+.n-popover:not(.n-popover--raw):not(.n-popover--scrollable):not(.n-popover--show-header-or-footer) {
+padding: var(--n-padding);
+}
+
+.n-popover .n-popover__header {
+
+ padding: var(--n-padding);
+ border-bottom: 1px solid var(--n-divider-color);
+ transition: border-color .3s var(--n-bezier);
+ 
+}
+
+.n-popover .n-popover__footer {
+
+ padding: var(--n-padding);
+ border-top: 1px solid var(--n-divider-color);
+ transition: border-color .3s var(--n-bezier);
+ 
+}
+
+.n-popover.n-popover--scrollable .n-popover__content, .n-popover.n-popover--show-header-or-footer .n-popover__content {
+
+ padding: var(--n-padding);
+ 
+}
+
+.n-popover-shared {
+
+ transform-origin: inherit;
+ 
+}
+
+.n-popover-shared .n-popover-arrow-wrapper {
+
+ position: absolute;
+ overflow: hidden;
+ pointer-events: none;
+ 
+}
+
+.n-popover-shared .n-popover-arrow-wrapper .n-popover-arrow {
+
+ transition: background-color .3s var(--n-bezier);
+ position: absolute;
+ display: block;
+ width: calc(var(--n-arrow-height) * 1.414);
+ height: calc(var(--n-arrow-height) * 1.414);
+ box-shadow: 0 0 8px 0 rgba(0, 0, 0, .12);
+ transform: rotate(45deg);
+ background-color: var(--n-color);
+ pointer-events: all;
+ 
+}
+
+.n-popover-shared.popover-transition-enter-from, .n-popover-shared.popover-transition-leave-to {
+
+ opacity: 0;
+ transform: scale(.85);
+ 
+}
+
+.n-popover-shared.popover-transition-enter-to, .n-popover-shared.popover-transition-leave-from {
+
+ transform: scale(1);
+ opacity: 1;
+ 
+}
+
+.n-popover-shared.popover-transition-enter-active {
+
+ transition:
+ box-shadow .3s var(--n-bezier),
+ background-color .3s var(--n-bezier),
+ color .3s var(--n-bezier),
+ opacity .15s var(--n-bezier-ease-out),
+ transform .15s var(--n-bezier-ease-out);
+ 
+}
+
+.n-popover-shared.popover-transition-leave-active {
+
+ transition:
+ box-shadow .3s var(--n-bezier),
+ background-color .3s var(--n-bezier),
+ color .3s var(--n-bezier),
+ opacity .15s var(--n-bezier-ease-in),
+ transform .15s var(--n-bezier-ease-in);
+ 
+}
+
+[v-placement="top-start"] > .n-popover-shared {
+
+ margin-bottom: var(--n-space);
+ 
+}
+
+[v-placement="top-start"] > .n-popover-shared.n-popover-shared--show-arrow {
+
+ margin-bottom: var(--n-space-arrow);
+ 
+}
+
+[v-placement="top-start"] > .n-popover-shared.n-popover-shared--overlap {
+
+ margin: 0;
+ 
+}
+
+[v-placement="top-start"] > .n-popover-shared > .n-popover-arrow-wrapper {
+
+ right: 0;
+ left: 0;
+ top: 0;
+ bottom: 0;
+ top: 100%;
+ bottom: auto;
+ height: var(--n-space-arrow);
+ 
+}
+
+[v-placement="top-start"] > .n-popover-shared > .n-popover-arrow-wrapper .n-popover-arrow {
+
+ top: calc(var(--n-arrow-height) * 1.414 / -2);
+ left: calc(var(--n-arrow-offset) - var(--v-offset-left));
+ 
+}
+
+[v-placement="top"] > .n-popover-shared {
+
+ margin-bottom: var(--n-space);
+ 
+}
+
+[v-placement="top"] > .n-popover-shared.n-popover-shared--show-arrow {
+
+ margin-bottom: var(--n-space-arrow);
+ 
+}
+
+[v-placement="top"] > .n-popover-shared.n-popover-shared--overlap {
+
+ margin: 0;
+ 
+}
+
+[v-placement="top"] > .n-popover-shared > .n-popover-arrow-wrapper {
+
+ right: 0;
+ left: 0;
+ top: 0;
+ bottom: 0;
+ top: 100%;
+ bottom: auto;
+ height: var(--n-space-arrow);
+ 
+}
+
+[v-placement="top"] > .n-popover-shared > .n-popover-arrow-wrapper .n-popover-arrow {
+
+ top: calc(var(--n-arrow-height) * 1.414 / -2);
+ transform: translateX(calc(var(--n-arrow-height) * 1.414 / -2)) rotate(45deg);
+ left: 50%;
+ 
+}
+
+[v-placement="top-end"] > .n-popover-shared {
+
+ margin-bottom: var(--n-space);
+ 
+}
+
+[v-placement="top-end"] > .n-popover-shared.n-popover-shared--show-arrow {
+
+ margin-bottom: var(--n-space-arrow);
+ 
+}
+
+[v-placement="top-end"] > .n-popover-shared.n-popover-shared--overlap {
+
+ margin: 0;
+ 
+}
+
+[v-placement="top-end"] > .n-popover-shared > .n-popover-arrow-wrapper {
+
+ right: 0;
+ left: 0;
+ top: 0;
+ bottom: 0;
+ top: 100%;
+ bottom: auto;
+ height: var(--n-space-arrow);
+ 
+}
+
+[v-placement="top-end"] > .n-popover-shared > .n-popover-arrow-wrapper .n-popover-arrow {
+
+ top: calc(var(--n-arrow-height) * 1.414 / -2);
+ right: calc(var(--n-arrow-offset) + var(--v-offset-left));
+ 
+}
+
+[v-placement="bottom-start"] > .n-popover-shared {
+
+ margin-top: var(--n-space);
+ 
+}
+
+[v-placement="bottom-start"] > .n-popover-shared.n-popover-shared--show-arrow {
+
+ margin-top: var(--n-space-arrow);
+ 
+}
+
+[v-placement="bottom-start"] > .n-popover-shared.n-popover-shared--overlap {
+
+ margin: 0;
+ 
+}
+
+[v-placement="bottom-start"] > .n-popover-shared > .n-popover-arrow-wrapper {
+
+ right: 0;
+ left: 0;
+ top: 0;
+ bottom: 0;
+ bottom: 100%;
+ top: auto;
+ height: var(--n-space-arrow);
+ 
+}
+
+[v-placement="bottom-start"] > .n-popover-shared > .n-popover-arrow-wrapper .n-popover-arrow {
+
+ bottom: calc(var(--n-arrow-height) * 1.414 / -2);
+ left: calc(var(--n-arrow-offset) - var(--v-offset-left));
+ 
+}
+
+[v-placement="bottom"] > .n-popover-shared {
+
+ margin-top: var(--n-space);
+ 
+}
+
+[v-placement="bottom"] > .n-popover-shared.n-popover-shared--show-arrow {
+
+ margin-top: var(--n-space-arrow);
+ 
+}
+
+[v-placement="bottom"] > .n-popover-shared.n-popover-shared--overlap {
+
+ margin: 0;
+ 
+}
+
+[v-placement="bottom"] > .n-popover-shared > .n-popover-arrow-wrapper {
+
+ right: 0;
+ left: 0;
+ top: 0;
+ bottom: 0;
+ bottom: 100%;
+ top: auto;
+ height: var(--n-space-arrow);
+ 
+}
+
+[v-placement="bottom"] > .n-popover-shared > .n-popover-arrow-wrapper .n-popover-arrow {
+
+ bottom: calc(var(--n-arrow-height) * 1.414 / -2);
+ transform: translateX(calc(var(--n-arrow-height) * 1.414 / -2)) rotate(45deg);
+ left: 50%;
+ 
+}
+
+[v-placement="bottom-end"] > .n-popover-shared {
+
+ margin-top: var(--n-space);
+ 
+}
+
+[v-placement="bottom-end"] > .n-popover-shared.n-popover-shared--show-arrow {
+
+ margin-top: var(--n-space-arrow);
+ 
+}
+
+[v-placement="bottom-end"] > .n-popover-shared.n-popover-shared--overlap {
+
+ margin: 0;
+ 
+}
+
+[v-placement="bottom-end"] > .n-popover-shared > .n-popover-arrow-wrapper {
+
+ right: 0;
+ left: 0;
+ top: 0;
+ bottom: 0;
+ bottom: 100%;
+ top: auto;
+ height: var(--n-space-arrow);
+ 
+}
+
+[v-placement="bottom-end"] > .n-popover-shared > .n-popover-arrow-wrapper .n-popover-arrow {
+
+ bottom: calc(var(--n-arrow-height) * 1.414 / -2);
+ right: calc(var(--n-arrow-offset) + var(--v-offset-left));
+ 
+}
+
+[v-placement="left-start"] > .n-popover-shared {
+
+ margin-right: var(--n-space);
+ 
+}
+
+[v-placement="left-start"] > .n-popover-shared.n-popover-shared--show-arrow {
+
+ margin-right: var(--n-space-arrow);
+ 
+}
+
+[v-placement="left-start"] > .n-popover-shared.n-popover-shared--overlap {
+
+ margin: 0;
+ 
+}
+
+[v-placement="left-start"] > .n-popover-shared > .n-popover-arrow-wrapper {
+
+ right: 0;
+ left: 0;
+ top: 0;
+ bottom: 0;
+ left: 100%;
+ right: auto;
+ width: var(--n-space-arrow);
+ 
+}
+
+[v-placement="left-start"] > .n-popover-shared > .n-popover-arrow-wrapper .n-popover-arrow {
+
+ left: calc(var(--n-arrow-height) * 1.414 / -2);
+ top: calc(var(--n-arrow-offset-vertical) - var(--v-offset-top));
+ 
+}
+
+[v-placement="left"] > .n-popover-shared {
+
+ margin-right: var(--n-space);
+ 
+}
+
+[v-placement="left"] > .n-popover-shared.n-popover-shared--show-arrow {
+
+ margin-right: var(--n-space-arrow);
+ 
+}
+
+[v-placement="left"] > .n-popover-shared.n-popover-shared--overlap {
+
+ margin: 0;
+ 
+}
+
+[v-placement="left"] > .n-popover-shared > .n-popover-arrow-wrapper {
+
+ right: 0;
+ left: 0;
+ top: 0;
+ bottom: 0;
+ left: 100%;
+ right: auto;
+ width: var(--n-space-arrow);
+ 
+}
+
+[v-placement="left"] > .n-popover-shared > .n-popover-arrow-wrapper .n-popover-arrow {
+
+ left: calc(var(--n-arrow-height) * 1.414 / -2);
+ transform: translateY(calc(var(--n-arrow-height) * 1.414 / -2)) rotate(45deg);
+ top: 50%;
+ 
+}
+
+[v-placement="left-end"] > .n-popover-shared {
+
+ margin-right: var(--n-space);
+ 
+}
+
+[v-placement="left-end"] > .n-popover-shared.n-popover-shared--show-arrow {
+
+ margin-right: var(--n-space-arrow);
+ 
+}
+
+[v-placement="left-end"] > .n-popover-shared.n-popover-shared--overlap {
+
+ margin: 0;
+ 
+}
+
+[v-placement="left-end"] > .n-popover-shared > .n-popover-arrow-wrapper {
+
+ right: 0;
+ left: 0;
+ top: 0;
+ bottom: 0;
+ left: 100%;
+ right: auto;
+ width: var(--n-space-arrow);
+ 
+}
+
+[v-placement="left-end"] > .n-popover-shared > .n-popover-arrow-wrapper .n-popover-arrow {
+
+ left: calc(var(--n-arrow-height) * 1.414 / -2);
+ bottom: calc(var(--n-arrow-offset-vertical) + var(--v-offset-top));
+ 
+}
+
+[v-placement="right-start"] > .n-popover-shared {
+
+ margin-left: var(--n-space);
+ 
+}
+
+[v-placement="right-start"] > .n-popover-shared.n-popover-shared--show-arrow {
+
+ margin-left: var(--n-space-arrow);
+ 
+}
+
+[v-placement="right-start"] > .n-popover-shared.n-popover-shared--overlap {
+
+ margin: 0;
+ 
+}
+
+[v-placement="right-start"] > .n-popover-shared > .n-popover-arrow-wrapper {
+
+ right: 0;
+ left: 0;
+ top: 0;
+ bottom: 0;
+ right: 100%;
+ left: auto;
+ width: var(--n-space-arrow);
+ 
+}
+
+[v-placement="right-start"] > .n-popover-shared > .n-popover-arrow-wrapper .n-popover-arrow {
+
+ right: calc(var(--n-arrow-height) * 1.414 / -2);
+ top: calc(var(--n-arrow-offset-vertical) - var(--v-offset-top));
+ 
+}
+
+[v-placement="right"] > .n-popover-shared {
+
+ margin-left: var(--n-space);
+ 
+}
+
+[v-placement="right"] > .n-popover-shared.n-popover-shared--show-arrow {
+
+ margin-left: var(--n-space-arrow);
+ 
+}
+
+[v-placement="right"] > .n-popover-shared.n-popover-shared--overlap {
+
+ margin: 0;
+ 
+}
+
+[v-placement="right"] > .n-popover-shared > .n-popover-arrow-wrapper {
+
+ right: 0;
+ left: 0;
+ top: 0;
+ bottom: 0;
+ right: 100%;
+ left: auto;
+ width: var(--n-space-arrow);
+ 
+}
+
+[v-placement="right"] > .n-popover-shared > .n-popover-arrow-wrapper .n-popover-arrow {
+
+ right: calc(var(--n-arrow-height) * 1.414 / -2);
+ transform: translateY(calc(var(--n-arrow-height) * 1.414 / -2)) rotate(45deg);
+ top: 50%;
+ 
+}
+
+[v-placement="right-end"] > .n-popover-shared {
+
+ margin-left: var(--n-space);
+ 
+}
+
+[v-placement="right-end"] > .n-popover-shared.n-popover-shared--show-arrow {
+
+ margin-left: var(--n-space-arrow);
+ 
+}
+
+[v-placement="right-end"] > .n-popover-shared.n-popover-shared--overlap {
+
+ margin: 0;
+ 
+}
+
+[v-placement="right-end"] > .n-popover-shared > .n-popover-arrow-wrapper {
+
+ right: 0;
+ left: 0;
+ top: 0;
+ bottom: 0;
+ right: 100%;
+ left: auto;
+ width: var(--n-space-arrow);
+ 
+}
+
+[v-placement="right-end"] > .n-popover-shared > .n-popover-arrow-wrapper .n-popover-arrow {
+
+ right: calc(var(--n-arrow-height) * 1.414 / -2);
+ bottom: calc(var(--n-arrow-offset-vertical) + var(--v-offset-top));
+ 
+}
+
+[v-placement="right-start"] > .n-popover-shared.n-popover-shared--center-arrow .n-popover-arrow {
+top: calc(max(calc((var(--v-target-height, 0px) - var(--n-arrow-height) * 1.414) / 2), var(--n-arrow-offset-vertical)) - var(--v-offset-top));
+}
+
+[v-placement="left-start"] > .n-popover-shared.n-popover-shared--center-arrow .n-popover-arrow {
+top: calc(max(calc((var(--v-target-height, 0px) - var(--n-arrow-height) * 1.414) / 2), var(--n-arrow-offset-vertical)) - var(--v-offset-top));
+}
+
+[v-placement="top-end"] > .n-popover-shared.n-popover-shared--center-arrow .n-popover-arrow {
+right: calc(max(calc((var(--v-target-width, 0px) - var(--n-arrow-height) * 1.414) / 2), var(--n-arrow-offset)) + var(--v-offset-left));
+}
+
+[v-placement="bottom-end"] > .n-popover-shared.n-popover-shared--center-arrow .n-popover-arrow {
+right: calc(max(calc((var(--v-target-width, 0px) - var(--n-arrow-height) * 1.414) / 2), var(--n-arrow-offset)) + var(--v-offset-left));
+}
+
+[v-placement="right-end"] > .n-popover-shared.n-popover-shared--center-arrow .n-popover-arrow {
+bottom: calc(max(calc((var(--v-target-height, 0px) - var(--n-arrow-height) * 1.414) / 2), var(--n-arrow-offset-vertical)) + var(--v-offset-top));
+}
+
+[v-placement="left-end"] > .n-popover-shared.n-popover-shared--center-arrow .n-popover-arrow {
+bottom: calc(max(calc((var(--v-target-height, 0px) - var(--n-arrow-height) * 1.414) / 2), var(--n-arrow-offset-vertical)) + var(--v-offset-top));
+}
+
+[v-placement="top-start"] > .n-popover-shared.n-popover-shared--center-arrow .n-popover-arrow {
+left: calc(max(calc((var(--v-target-width, 0px) - var(--n-arrow-height) * 1.414) / 2), var(--n-arrow-offset)) - var(--v-offset-left));
+}
+
+[v-placement="bottom-start"] > .n-popover-shared.n-popover-shared--center-arrow .n-popover-arrow {
+left: calc(max(calc((var(--v-target-width, 0px) - var(--n-arrow-height) * 1.414) / 2), var(--n-arrow-offset)) - var(--v-offset-left));
+}</style><link rel="shortcut icon" href="//statics.moonshot.cn/kimi-web-seo/favicon.ico">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Kimi">
+    <meta name="format-detection" content="telephone=no,email=no">
+    <meta name="msvalidate.01" content="38E0A3C40C0983D8FED5BD0B59E78653">
+    <meta name="baidu-site-verification" content="codeva-w8jRQyIVVM">
+    <meta name="sogou_site_verification" content="ZbupFZEZFQ">
+    <!--preload-links-->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YXD8W70SZP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag("js", new Date())
+      gtag("config", "G-YXD8W70SZP")
+    </script>
+    <script>
+      ;(function (w, d, s, l, i) {
+        w[l] = w[l] || []
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" })
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : ""
+        j.async = true
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl
+        f.parentNode.insertBefore(j, f)
+      })(window, document, "script", "dataLayer", "GTM-NT26Q3C9")
+    </script>
+    <script>
+      var _hmt = _hmt || []
+      ;(function () {
+        var hm = document.createElement("script")
+        hm.src = "https://hm.baidu.com/hm.js?358cae4815e85d48f7e8ab7f3680a74b"
+        var s = document.getElementsByTagName("script")[0]
+        s.parentNode.insertBefore(hm, s)
+      })()
+    </script>
+    <script type="module"  src="//statics.moonshot.cn/kimi-web-seo/assets/index-CkliyxRy.js"></script>
+    <link rel="modulepreload" href="//statics.moonshot.cn/kimi-web-seo/assets/common-BwL9sfCd.js">
+    <link rel="stylesheet"  href="assets/DEXDdST.css">
+    <link rel="stylesheet"  href="assets/index-lFOivUif.css">
+  <script type="text/javascript" async="" src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16537538002/?random=1754560065471&amp;cv=11&amp;fst=1754560065471&amp;bg=ffffff&amp;guid=ON&amp;async=1&amp;en=gtag.config&amp;gtm=45je5851v9166950704z89183970613za200zb9183970613zd9183970613xec&amp;gcd=13l3l3l3l1l1&amp;dma=0&amp;tag_exp=101509157~103116026~103200004~103233427~104527907~104528500~104684208~104684211~104948813~105087538~105087540~105103161~105103163~105135708~105135710&amp;u_w=1366&amp;u_h=768&amp;url=https%3A%2F%2Fwww.kimi.com%2F&amp;ref=https%3A%2F%2Fwww.google.com%2F&amp;hn=www.googleadservices.com&amp;frm=0&amp;tiba=Kimi%20-%20%E4%BC%9A%E6%8E%A8%E7%90%86%E8%A7%A3%E6%9E%90%EF%BC%8C%E8%83%BD%E6%B7%B1%E5%BA%A6%E6%80%9D%E8%80%83%E7%9A%84AI%E5%8A%A9%E6%89%8B&amp;npa=0&amp;pscdl=noapi&amp;auid=1193968010.1753214039&amp;fdr=QA&amp;data=event%3Dgtag.config&amp;rfmt=3&amp;fmt=4"></script><script src="https://lf3-data.volccdn.com/obj/data-static/log-sdk/collect/5.0/collect-rangers-v5.1.12.js" async=""></script><link rel="modulepreload" as="script" crossorigin="" href="//statics.moonshot.cn/kimi-web-seo/assets/Index-CknMIOvM.js"><link rel="stylesheet" crossorigin="" href="//statics.moonshot.cn/kimi-web-seo/assets/Index-DPhJhXf0.css"><script type="text/javascript" async="" src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16537538002/?random=1754560359906&amp;cv=11&amp;fst=1754560359906&amp;bg=ffffff&amp;guid=ON&amp;async=1&amp;en=page_view&amp;gtm=45je5851v9166950704za200zb9183970613zd9183970613xec&amp;gcd=13l3l3l3l1l1&amp;dma=0&amp;tag_exp=101509157~103116026~103200004~103233427~104527907~104528500~104684208~104684211~104948813~105087538~105087540~105103161~105103163~105135708~105135710&amp;u_w=1366&amp;u_h=768&amp;url=https%3A%2F%2Fwww.kimi.com%2Fchat%2Fd2a7epjduqb0er7j9hng&amp;ref=https%3A%2F%2Fwww.kimi.com%2F&amp;hn=www.googleadservices.com&amp;frm=0&amp;tiba=Unnamed%20Chat%20-%20Kimi&amp;npa=0&amp;pscdl=noapi&amp;auid=1193968010.1753214039&amp;fdr=QA&amp;data=event%3Dpage_view&amp;rfmt=3&amp;fmt=4"></script></head>
+	<body>
+<div data-v-3a4aba44="" data-v-47a25a29="" class="markdown-container"><div data-v-3a4aba44="" class="markdown"><div class="paragraph">Below are <strong>all questions from the PDF</strong>, each followed by its <strong>answer with explanation</strong>.<br>Questions are grouped exactly as they appear and formatted for clarity.</div><hr><h3 class="">1. Dynamic-array Allocation Strategy</h3><div class="paragraph"><strong>Question:</strong><br>What strategy improves average run-time when dynamically allocating an array of unknown length?</div><ul start="1"><li><div class="paragraph">a. Wrapper</div></li><li><div class="paragraph">b. Functional</div></li><li><div class="paragraph">c. Augmentation</div></li><li><div class="paragraph">d. Doubling</div></li></ul><div class="paragraph"><strong>Answer:</strong><br><strong>d. Doubling Strategy</strong></div><ul start="1"><li><div class="paragraph">Doubling the capacity when full keeps the <strong>amortized cost per insertion O(1)</strong>, because the expensive O(n) resize happens only every n/2 steps.</div></li></ul><hr><h3 class="">2. C Strings vs. Char Arrays</h3><div class="paragraph"><strong>Question:</strong><br>Which statement is <strong>true</strong>?</div><ul start="1"><li><div class="paragraph">a. C strings always live in read-only memory.</div></li><li><div class="paragraph">b. Arrays cannot be initialized with <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">"..."</code>.</div></li><li><div class="paragraph">c. Array stores its length.</div></li><li><div class="paragraph">d. C strings are null-terminated.</div></li><li><div class="paragraph">e. No difference.</div></li></ul><div class="paragraph"><strong>Answer:</strong><br><strong>d. C strings are null-terminated.</strong></div><ul start="1"><li><div class="paragraph">The null byte <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">'\0'</code> marks the end; arrays can be initialized with <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">"..."</code> and can reside anywhere (stack, heap, read-only). Arrays do <strong class="">not</strong> store length.</div></li></ul><hr><h3 class="">3. Linked-list Add-to-back Technique</h3><div class="paragraph"><strong>Question:</strong><br>To add efficiently to the back, we should:</div><ul start="1"><li><div class="paragraph">a. Augmentation</div></li><li><div class="paragraph">b. Recursion in <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">add_to_back</code></div></li><li><div class="paragraph">c. Iteration in <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">add_to_back</code></div></li><li><div class="paragraph">d. Wrapper</div></li></ul><div class="paragraph"><strong>Answer:</strong><br><strong>a. Augmentation</strong></div><ul start="1"><li><div class="paragraph">Storing a <strong class="">tail pointer</strong> inside the list (augmenting the node) makes insertion <strong class="">O(1)</strong>.</div></li></ul><hr><h3 class="">4. BST Height in O(1)</h3><div class="paragraph"><strong>Question:</strong><br>How can we obtain height in <strong>O(1)</strong>?</div><ul start="1"><li><div class="paragraph">a. Augment node with subtree height.</div></li><li><div class="paragraph">b. Recurse down longest path.</div></li><li><div class="paragraph">c. Return ⌊log₂ n⌋ + 1.</div></li><li><div class="paragraph">d. Impossible.</div></li></ul><div class="paragraph"><strong>Answer:</strong><br><strong>a. Augment node with subtree height</strong></div><ul start="1"><li><div class="paragraph">Maintain <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">height</code> field during every insertion/deletion; query is then <strong class="">O(1)</strong>.</div></li></ul><hr><h3 class="">5. ADT Usage Scenarios</h3><h4 class="">(a) Dictionary</h4><div class="paragraph"><strong class="">Scenario:</strong> Word frequency counter.<br><strong class="">Why:</strong> Fast key→value look-ups for counts.</div><h4 class="">(b) Stack</h4><div class="paragraph"><strong class="">Scenario:</strong> Undo functionality in editor.<br><strong class="">Why:</strong> LIFO matches last action first.</div><h4 class="">(c) Queue</h4><div class="paragraph"><strong class="">Scenario:</strong> Print job scheduler.<br><strong class="">Why:</strong> FIFO ensures jobs print in arrival order.</div><hr><h3 class="">6. Complexity Multiple-Choice</h3><div class="paragraph"><strong class="">(a) Recursive list-max</strong></div><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">scheme</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">list-max</span> lon<span class="token punctuation">)</span> ...<span class="token punctuation">)</span></code></pre></div></div> <div data-v-47a25a29=""></div><div class="paragraph"><strong>Answer:</strong> <strong>b. O(n²)</strong></div><ul start="1"><li><div class="paragraph">Recalculates <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">list-max(rest lon)</code> twice per call → quadratic.</div></li></ul><div class="paragraph"><strong class="">(b) Last letter loop</strong></div><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">for</span> <span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span><span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span></code></pre></div></div> <div data-v-47a25a29=""></div><div class="paragraph"><strong>Answer:</strong> <strong>c. O(n)</strong></div><ul start="1"><li><div class="paragraph"><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">strlen</code> inside loop makes it O(n²) naïvely, but if <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">strlen</code> cached, O(n). <strong class="">Worst-case</strong> stated is <strong class="">O(n)</strong> (intended answer).</div></li></ul><div class="paragraph"><strong class="">(c) Racket part-sum</strong></div><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">scheme</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">part-sum</span> lon<span class="token punctuation">)</span> ...<span class="token punctuation">)</span></code></pre></div></div> <div data-v-47a25a29=""></div><div class="paragraph"><strong>Answer:</strong> <strong>a. O(1)</strong></div><ul start="1"><li><div class="paragraph">Only inspects first three elements regardless of list length.</div></li></ul><hr><h3 class="">7. Memory Regions</h3><div class="paragraph"><strong class="">Code snippet:</strong></div><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">char</span> <span class="token operator">*</span>str <span class="token operator">=</span> <span class="token string">"hello"</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> c <span class="token operator">=</span> <span class="token char">'A'</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> myvar <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> <span class="token operator">*</span>newstr <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></div> <div data-v-47a25a29=""></div><div class="paragraph"><strong>Answer:</strong></div><ul start="1"><li><div class="paragraph"><strong>str</strong>: <strong class="">read-only</strong> segment (string literal).</div></li><li><div class="paragraph"><strong>c</strong>: <strong>stack</strong>.</div></li><li><div class="paragraph"><strong>myvar</strong>: <strong>stack</strong>.</div></li><li><div class="paragraph"><strong>newstr</strong>: pointer on <strong>stack</strong>, points to <strong>heap</strong>.</div></li></ul><hr><h3 class="">8. Racket &amp; malloc/free</h3><div class="paragraph"><strong class="">Question:</strong><br>Why does Racket rarely use explicit <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">malloc</code>/<code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">free</code>?<br><strong class="">Answer:</strong><br>Racket has <strong class="">automatic garbage collection</strong>; memory is reclaimed when unreachable, eliminating most manual management.</div><hr><h3 class="">9. Augmentation for O(1) Length</h3><div class="paragraph"><strong>Question:</strong><br>Explain how to get O(1) length for linked lists.<br><strong>Answer:</strong><br>Augment the list structure with an <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">int length</code> field.</div><ul start="1"><li><div class="paragraph">Increment on insert, decrement on delete.</div></li><li><div class="paragraph">Return <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">length</code> directly.</div></li></ul><hr><h3 class="">10. malloc &amp; sizeof</h3><div class="paragraph"><strong class="">Question:</strong><br>Why always pass <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">sizeof(type)</code> to malloc?<br><strong class="">Answer:</strong><br>Ensures <strong class="">correct size</strong> regardless of platform (32 vs 64-bit) and improves <strong>readability &amp; maintainability</strong>.</div><hr><h3 class="">11. Memory Leak Check</h3><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token operator">*</span>q <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+q <span class="token operator">=</span> <span class="token operator">&amp;</span>i<span class="token punctuation">;</span></code></pre></div></div> <div data-v-47a25a29=""></div><div class="paragraph"><strong>Answer:</strong><br><strong>Yes, leak.</strong></div><ul start="1"><li><div class="paragraph">Original malloc’ed block is lost.</div></li><li><div class="paragraph">Fix: <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">free(q);</code> <strong class="">before</strong> assigning address of <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">i</code>.</div></li></ul><hr><h3 class="">12. Big-O Ordering</h3><div class="paragraph"><strong class="">Question:</strong><br>Sort: O(2ⁿ), O(n), O(log n), O(n²), O(1), O(n log n).<br><strong class="">Answer:</strong><br>O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(2ⁿ)</div><hr><h3 class="">13. Declaration vs Definition</h3><div class="paragraph"><strong>Answer:</strong></div><ul start="1"><li><div class="paragraph"><strong>Declaration</strong>: tells compiler signature exists elsewhere.</div><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></div> <div data-v-47a25a29=""></div></li><li><div class="paragraph"><strong>Definition</strong>: provides actual body.</div><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> x<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre></div></div> <div data-v-47a25a29=""></div></li></ul><hr><h3 class="">14. Opaque Structure</h3><div class="paragraph"><strong class="">Answer:</strong><br>Incomplete struct exposed only as pointer.</div><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token comment">// list.h</span>
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">list</span> <span class="token operator">*</span>List<span class="token punctuation">;</span></code></pre></div></div> <div data-v-47a25a29=""></div><div class="paragraph">Client cannot access internals → <strong>enforces encapsulation</strong>.</div><hr><h3 class="">15. Circle 3 Errors in Code</h3><div class="paragraph"><strong class="">Code snippet (condensed):</strong></div><ol start="1"><li><div class="paragraph"><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">malloc(sizeof(MyArray))</code> should be <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">malloc(sizeof(struct myarray))</code>.</div></li><li><div class="paragraph">Line 25 <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">array: alloc(...)</code> typo; should be <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">realloc</code>.</div></li><li><div class="paragraph"><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">destroy_MyArray</code> frees <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">myArray</code> but <strong class="">not</strong> <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">myArray-&gt;array</code> → memory leak.</div></li></ol><hr><h3 class="">16. BST Search</h3><div class="paragraph"><strong class="">(a) Recursive</strong></div><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c">bool <span class="token function">bst_search</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">bstnode</span> <span class="token operator">*</span>bst<span class="token punctuation">,</span> <span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>bst<span class="token punctuation">)</span> <span class="token keyword">return</span> false<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> bst<span class="token operator">-&gt;</span>key<span class="token punctuation">)</span> <span class="token keyword">return</span> true<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> i <span class="token operator">&lt;</span> bst<span class="token operator">-&gt;</span>key <span class="token operator">?</span> <span class="token function">bst_search</span><span class="token punctuation">(</span>bst<span class="token operator">-&gt;</span>left<span class="token punctuation">,</span> i<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">bst_search</span><span class="token punctuation">(</span>bst<span class="token operator">-&gt;</span>right<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></div></div> <div data-v-47a25a29=""></div><div class="paragraph"><strong class="">(b) Iterative</strong></div><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c">bool <span class="token function">bst_search</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">bstnode</span> <span class="token operator">*</span>bst<span class="token punctuation">,</span> <span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>bst<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> bst<span class="token operator">-&gt;</span>key<span class="token punctuation">)</span> <span class="token keyword">return</span> true<span class="token punctuation">;</span>
+        bst <span class="token operator">=</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> bst<span class="token operator">-&gt;</span>key<span class="token punctuation">)</span> <span class="token operator">?</span> bst<span class="token operator">-&gt;</span>left <span class="token operator">:</span> bst<span class="token operator">-&gt;</span>right<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> false<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></div></div> <div data-v-47a25a29=""></div><hr><h3 class="">17. Filter Array</h3><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">filter</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span><span class="token operator">*</span>arr<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">,</span> <span class="token function">bool</span> <span class="token punctuation">(</span><span class="token operator">*</span>pred<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> write <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> read <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> read <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>read<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">pred</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">*</span>arr<span class="token punctuation">)</span><span class="token punctuation">[</span>read<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token punctuation">(</span><span class="token operator">*</span>arr<span class="token punctuation">)</span><span class="token punctuation">[</span>write<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">*</span>arr<span class="token punctuation">)</span><span class="token punctuation">[</span>read<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">int</span> <span class="token operator">*</span>tmp <span class="token operator">=</span> <span class="token function">realloc</span><span class="token punctuation">(</span><span class="token operator">*</span>arr<span class="token punctuation">,</span> write <span class="token operator">*</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>tmp<span class="token punctuation">)</span> <span class="token operator">*</span>arr <span class="token operator">=</span> tmp<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> write<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></div></div> <div data-v-47a25a29=""></div><hr><h3 class="">18. Reverse String In-Place</h3><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">reverse_string</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>str<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">char</span> tmp <span class="token operator">=</span> str<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        str<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> str<span class="token punctuation">[</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        str<span class="token punctuation">[</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> tmp<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre></div></div> <div data-v-47a25a29=""></div><hr><h3 class="">19. Robot ADT</h3><div class="paragraph"><strong class="">Header &amp; Implementation Sketch</strong></div><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">instruction</span> <span class="token punctuation">{</span>
+    <span class="token keyword">char</span> cmd<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">instruction</span> <span class="token operator">*</span>next<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> Instr<span class="token punctuation">;</span>
+
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">robot</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">,</span> y<span class="token punctuation">;</span>
+    Instr <span class="token operator">*</span>head<span class="token punctuation">,</span> <span class="token operator">*</span>tail<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token operator">*</span>Robot<span class="token punctuation">;</span>
+
+Robot <span class="token function">create_Robot</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Robot r <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">robot</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r<span class="token operator">-&gt;</span>x <span class="token operator">=</span> r<span class="token operator">-&gt;</span>y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    r<span class="token operator">-&gt;</span>head <span class="token operator">=</span> r<span class="token operator">-&gt;</span>tail <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> r<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">store_instruction</span><span class="token punctuation">(</span>Robot r<span class="token punctuation">,</span> <span class="token keyword">char</span> c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Instr <span class="token operator">*</span>n <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Instr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    n<span class="token operator">-&gt;</span>cmd <span class="token operator">=</span> c<span class="token punctuation">;</span> n<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>r<span class="token operator">-&gt;</span>head<span class="token punctuation">)</span> r<span class="token operator">-&gt;</span>head <span class="token operator">=</span> r<span class="token operator">-&gt;</span>tail <span class="token operator">=</span> n<span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token punctuation">{</span> r<span class="token operator">-&gt;</span>tail<span class="token operator">-&gt;</span>next <span class="token operator">=</span> n<span class="token punctuation">;</span> r<span class="token operator">-&gt;</span>tail <span class="token operator">=</span> n<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">go</span><span class="token punctuation">(</span>Robot r<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>Instr <span class="token operator">*</span>p <span class="token operator">=</span> r<span class="token operator">-&gt;</span>head<span class="token punctuation">;</span> p<span class="token punctuation">;</span> p <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">switch</span><span class="token punctuation">(</span>p<span class="token operator">-&gt;</span>cmd<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">case</span> <span class="token char">'u'</span><span class="token operator">:</span> r<span class="token operator">-&gt;</span>y<span class="token operator">++</span><span class="token punctuation">;</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> <span class="token char">'d'</span><span class="token operator">:</span> r<span class="token operator">-&gt;</span>y<span class="token operator">--</span><span class="token punctuation">;</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> <span class="token char">'l'</span><span class="token operator">:</span> r<span class="token operator">-&gt;</span>x<span class="token operator">--</span><span class="token punctuation">;</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> <span class="token char">'r'</span><span class="token operator">:</span> r<span class="token operator">-&gt;</span>x<span class="token operator">++</span><span class="token punctuation">;</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"(%d,%d)\n"</span><span class="token punctuation">,</span> r<span class="token operator">-&gt;</span>x<span class="token punctuation">,</span> r<span class="token operator">-&gt;</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">destroy_Robot</span><span class="token punctuation">(</span>Robot r<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Instr <span class="token operator">*</span>p <span class="token operator">=</span> r<span class="token operator">-&gt;</span>head<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token punctuation">{</span> Instr <span class="token operator">*</span>n <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span> <span class="token function">free</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span> p <span class="token operator">=</span> n<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token function">free</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></div></div> <div data-v-47a25a29=""></div><hr><div class="paragraph">All questions and answers are now complete.</div></div></div>
+
+<hr><hr>
+<hr>
+<div data-v-3a4aba44="" data-v-47a25a29="" class="markdown-container"><div data-v-3a4aba44="" class="markdown"><div class="paragraph">Below is <strong class="">every single question</strong> from the PDF, <strong class="">re-typed verbatim</strong> (or paraphrased for clarity where the original is truncated), followed by <strong class="">an explicit answer and explanation</strong> in an easy-to-read Markdown format.</div><hr><h3 class="">1. Advantages of Modularization</h3><div class="paragraph"><strong>Q:</strong> Give three advantages of using modularization and describe each.<br><strong>A:</strong></div><ul start="1"><li><div class="paragraph"><strong>Reusability</strong>: A module can be reused in many programs without rewriting code.</div></li><li><div class="paragraph"><strong>Maintainability</strong>: Bugs are localized; fixing one module does not disturb others.</div></li><li><div class="paragraph"><strong>Abstraction</strong>: Clients only need the interface, hiding implementation details.</div></li></ul><hr><h3 class="">2. True / False about Modules</h3><div class="paragraph"><strong class="">Q:</strong> Which statement(s) are true?<br>a. Clients may require functions from modules.<br>b. Clients provide implementation to modules.<br>c. Modules provide functions to clients.</div><div class="paragraph"><strong>A:</strong></div><ul start="1"><li><div class="paragraph"><strong class="">a. True</strong> – clients call functions that modules export.</div></li><li><div class="paragraph"><strong class="">b. False</strong> – modules provide the implementation; clients only use it.</div></li><li><div class="paragraph"><strong class="">c. True</strong> – modules expose functions to clients.</div></li></ul><hr><h3 class="">3. Compilation &amp; Linking</h3><div class="paragraph"><strong class="">Q:</strong> Which statements are true?<br>a. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">.o</code> files are compiled machine code.<br>b. Only one module is allowed per program.<br>c. Multiple <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">.o</code> files can be combined.<br>d. A program must have exactly one function called <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">main</code>.</div><div class="paragraph"><strong>A:</strong></div><ul start="1"><li><div class="paragraph"><strong class="">a. True</strong> – <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">.o</code> is object code.</div></li><li><div class="paragraph"><strong class="">b. False</strong> – many modules can coexist.</div></li><li><div class="paragraph"><strong class="">c. True</strong> – the linker combines them.</div></li><li><div class="paragraph"><strong class="">d. True</strong> – exactly one <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">main</code> is required.</div></li></ul><hr><h3 class="">4. Declaration vs Definition</h3><div class="paragraph"><strong>Q:</strong> Discuss declaration vs definition.<br><strong>A:</strong></div><ul start="1"><li><div class="paragraph"><strong class="">Declaration</strong> tells the compiler “this identifier exists somewhere” (type + name).</div></li><li><div class="paragraph"><strong class="">Definition</strong> actually allocates storage or provides the body of a function.</div></li></ul><hr><h3 class="">5. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">extern</code> Keyword</h3><div class="paragraph"><strong class="">Q:</strong> Describe <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">extern</code>.<br><strong class="">A:</strong><br><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">extern</code> <strong class="">declares</strong> a variable or function defined in <strong>another translation unit</strong>. The linker resolves the actual definition at link-time.</div><hr><h3 class="">6. Header Inclusion</h3><div class="paragraph"><strong class="">Q:</strong> True / False: <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">my_module.c</code> will not compile unless you include <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">my_module.h</code>.<br><strong class="">A:</strong> <strong class="">False</strong> – compilation only needs declarations; the header is conventional, not mandatory.</div><hr><h3 class="">7. Scope Labels</h3><div class="paragraph"><strong class="">Q:</strong> Label each identifier with Local / Program / Module scope.</div><div data-v-0909cf3c="" data-v-3a4aba44="" class="table markdown-table"><header data-v-0909cf3c="" class="table-actions" style="position: sticky; left: 0px; top: 50px;"><span data-v-0909cf3c="" class="table-title">Table</span> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-0909cf3c="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="">Copy</span></div></header> <div data-v-0909cf3c="" class="table-container"><table data-v-0909cf3c=""><thead data-v-0909cf3c=""><tr data-v-0909cf3c=""><th data-v-0909cf3c="" align="left">Identifier</th><th data-v-0909cf3c="" align="left" class="">Scope</th></tr></thead> <tbody data-v-0909cf3c=""><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">score</code></td><td data-v-0909cf3c="" align="left" class="">Program</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">direction</code></td><td data-v-0909cf3c="" align="left" class="">Module</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">score_update</code></td><td data-v-0909cf3c="" align="left" class="">Module</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">main</code></td><td data-v-0909cf3c="" align="left" class="">Program</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">run_game</code></td><td data-v-0909cf3c="" align="left" class="">Program</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">MAX_SCORE</code></td><td data-v-0909cf3c="" align="left" class="">Program</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">x</code></td><td data-v-0909cf3c="" align="left" class="">Local</td></tr></tbody></table></div></div><hr><h3 class="">8. Opaque Structure</h3><div class="paragraph"><strong class="">Q:</strong> Describe an opaque structure.<br><strong class="">A:</strong> An <strong class="">opaque structure</strong> is declared via a forward <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">struct</code> pointer whose full definition is <strong class="">hidden from the client</strong> (only visible in the implementation file).<br>Example:</div><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token comment">// list.h</span>
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">list</span> <span class="token operator">*</span>List<span class="token punctuation">;</span></code></pre></div></div> <div data-v-47a25a29=""></div><div class="paragraph">Clients can only use <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">List</code> pointers, never access internal fields.</div><hr><h3 class="">9. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">&lt;limits.h&gt;</code> Constants</h3><div class="paragraph"><strong class="">A:</strong> <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">INT_MAX</code>, <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">INT_MIN</code>, <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">LONG_MAX</code>, <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">CHAR_BIT</code>, etc.</div><hr><h3 class="">10. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">&lt;stdlib.h&gt;</code> Constants</h3><div class="paragraph"><strong class="">A:</strong> <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">NULL</code>, <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">EXIT_SUCCESS</code>, <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">EXIT_FAILURE</code>, <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">RAND_MAX</code>.</div><hr><h3 class="">11. Interface vs Implementation</h3><div class="paragraph"><strong>A:</strong></div><ul start="1"><li><div class="paragraph"><strong class="">Interface</strong> = public prototypes (header).</div></li><li><div class="paragraph"><strong class="">Implementation</strong> = actual code (source file).</div></li></ul><hr><h3 class="">12. Why Hide Data in an ADT?</h3><div class="paragraph"><strong class="">A:</strong> To enforce <strong>encapsulation</strong>, allow internal changes without breaking clients, and maintain invariants.</div><hr><h3 class="">13–15. Array Validity</h3><div data-v-0909cf3c="" data-v-3a4aba44="" class="table markdown-table"><header data-v-0909cf3c="" class="table-actions" style="position: sticky; left: 0px; top: 50px;"><span data-v-0909cf3c="" class="table-title">Table</span> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-0909cf3c="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="">Copy</span></div></header> <div data-v-0909cf3c="" class="table-container"><table data-v-0909cf3c=""><thead data-v-0909cf3c=""><tr data-v-0909cf3c=""><th data-v-0909cf3c="" align="left">Definition</th><th data-v-0909cf3c="" align="left">Valid?</th><th data-v-0909cf3c="" align="left" class="">Explanation</th></tr></thead> <tbody data-v-0909cf3c=""><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">char a[5] = "array";</code></td><td data-v-0909cf3c="" align="left" class="">❌</td><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">"array"</code> needs 6 bytes (5 chars + <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">\0</code>).</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">char a[5] = {0};</code></td><td data-v-0909cf3c="" align="left" class="">✅</td><td data-v-0909cf3c="" align="left" class="">All 5 bytes zero-initialized.</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">int a[3] = {0,1,2,3};</code></td><td data-v-0909cf3c="" align="left" class="">❌</td><td data-v-0909cf3c="" align="left" class="">4 initializers for 3 slots.</td></tr></tbody></table></div></div><hr><h3 class="">16. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">strlen</code> on <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">char a[5] = {0};</code></h3><div class="paragraph"><strong class="">A:</strong> Returns <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">0</code> – the first byte is <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">\0</code>.</div><hr><h3 class="">17. Big-O &amp; Absolute Speed</h3><div class="paragraph"><strong class="">Q:</strong> True / False: O(n²) always beats O(n log n).<br><strong class="">A:</strong> <strong class="">False</strong> – Big-O describes <strong>growth</strong>, not absolute speed; small n can reverse actual times.</div><hr><h3 class="">18. Runtime Ordering</h3><div class="paragraph"><strong class="">Expression:</strong> <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">100 000 + 0.0001 n + 0.001 log n</code><br><strong class="">Dominant term:</strong> <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">0.0001 n</code> → <strong class="">Θ(n)</strong>.</div><hr><h3 class="">19. Sorting Algorithms</h3><div class="paragraph"><strong>Q:</strong> Which is most efficient?</div><ul start="1"><li><div class="paragraph">a. Insertion</div></li><li><div class="paragraph">b. Selection</div></li><li><div class="paragraph">c. Quicksort</div></li><li><div class="paragraph">d. Same</div></li></ul><div class="paragraph"><strong class="">A:</strong> <strong class="">c. Quicksort</strong> – average Θ(n log n) vs Θ(n²) for the others.</div><hr><h3 class="">20–22. C String Myths</h3><div data-v-0909cf3c="" data-v-3a4aba44="" class="table markdown-table"><header data-v-0909cf3c="" class="table-actions" style="position: sticky; left: 0px; top: 50px;"><span data-v-0909cf3c="" class="table-title">Table</span> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-0909cf3c="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="">Copy</span></div></header> <div data-v-0909cf3c="" class="table-container"><table data-v-0909cf3c=""><thead data-v-0909cf3c=""><tr data-v-0909cf3c=""><th data-v-0909cf3c="" align="left">Statement</th><th data-v-0909cf3c="" align="left">True?</th><th data-v-0909cf3c="" align="left" class="">Explanation</th></tr></thead> <tbody data-v-0909cf3c=""><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class="">C has a native String type</td><td data-v-0909cf3c="" align="left" class="">❌</td><td data-v-0909cf3c="" align="left" class="">Uses <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">char *</code> / arrays.</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">strlen</code> counts the null terminator</td><td data-v-0909cf3c="" align="left" class="">❌</td><td data-v-0909cf3c="" align="left" class="">Does <strong data-v-0909cf3c="" class="">not</strong> include <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">\0</code>.</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class="">Character <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">'0'</code> is the null terminator</td><td data-v-0909cf3c="" align="left" class="">❌</td><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">'0'</code> is ASCII 48; null is <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">'\0'</code>.</td></tr></tbody></table></div></div><hr><h3 class="">23. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">strcmp</code> Results</h3><ul start="1"><li><div class="paragraph"><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">strcmp("","x")</code> → <strong class="">&lt; 0</strong> (empty &lt; any string)</div></li><li><div class="paragraph"><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">strcmp("2","1")</code> → <strong class="">&gt; 0</strong></div></li><li><div class="paragraph"><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">strcmp("abcd","abc")</code> → <strong class="">&gt; 0</strong></div></li></ul><hr><h3 class="">24. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">strlen(arr)</code></h3><div class="paragraph">Indeterminate; depends on contents of <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">arr</code>.</div><hr><h3 class="">25. Pointer Comparison Output</h3><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">char</span> s1<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"str"</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> s2<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"str"</span><span class="token punctuation">;</span>
+s1 <span class="token operator">==</span> s2 <span class="token operator">?</span> <span class="token string">"equal"</span> <span class="token operator">:</span> <span class="token string">"not equal"</span><span class="token punctuation">;</span></code></pre></div></div> <div data-v-47a25a29=""></div><div class="paragraph"><strong class="">A:</strong> Prints <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">"not equal"</code> – compares <strong>addresses</strong>, not content.</div><hr><h3 class="">26. Truncated Snippet</h3><div class="paragraph">Can’t parse; appears to be indexing a string literal.</div><hr><h3 class="">27. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">while (i &lt; strlen(s))</code></h3><div class="paragraph"><strong class="">Problem:</strong> <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">strlen</code> recalculated <strong class="">every iteration</strong> → <strong class="">O(n²)</strong>.<br><strong class="">Output:</strong> Prints each character <strong>once</strong>, then stops.</div><hr><h3 class="">28. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">strcpy(a, b)</code> with <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">const char* a</code></h3><div class="paragraph"><strong class="">Issue:</strong> Attempts to write to <strong class="">read-only memory</strong> → <strong>undefined behaviour / crash</strong>.</div><hr><h3 class="">29–30. Use-After-Free</h3><div data-v-0909cf3c="" data-v-3a4aba44="" class="table markdown-table"><header data-v-0909cf3c="" class="table-actions" style="position: sticky; left: 0px; top: 50px;"><span data-v-0909cf3c="" class="table-title">Table</span> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-0909cf3c="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="">Copy</span></div></header> <div data-v-0909cf3c="" class="table-container"><table data-v-0909cf3c=""><thead data-v-0909cf3c=""><tr data-v-0909cf3c=""><th data-v-0909cf3c="" align="left">Snippet</th><th data-v-0909cf3c="" align="left">Error Line</th><th data-v-0909cf3c="" align="left" class="">Explanation</th></tr></thead> <tbody data-v-0909cf3c=""><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class="">free(j); *j = 43;</td><td data-v-0909cf3c="" align="left" class=""><strong data-v-0909cf3c="" class="">Line 3</strong></td><td data-v-0909cf3c="" align="left" class="">Dereferencing freed pointer.</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class="">free(k); *j = 43;</td><td data-v-0909cf3c="" align="left" class=""><strong data-v-0909cf3c="" class="">Line 4</strong></td><td data-v-0909cf3c="" align="left" class="">Same via alias <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">k</code>.</td></tr></tbody></table></div></div><hr><h3 class="">31. Set Pointer to NULL After Free</h3><div class="paragraph"><strong class="">A:</strong> Prevents <strong class="">dangling-pointer dereference</strong>; later use will crash deterministically instead of silently corrupting memory.</div><hr><h3 class="">32. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">malloc</code> Failure</h3><div class="paragraph"><strong class="">A:</strong> <strong class="">c. Returns NULL</strong> – caller must check.</div><hr><h3 class="">33. Dangling Pointer</h3><div class="paragraph"><strong class="">A:</strong> A pointer that refers to memory that has been freed or gone out of scope.<br><strong class="">Example:</strong></div><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">free</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">// p now dangling</span></code></pre></div></div> <div data-v-47a25a29=""></div><hr><h3 class="">34. Stack vs Heap</h3><div data-v-0909cf3c="" data-v-3a4aba44="" class="table markdown-table"><header data-v-0909cf3c="" class="table-actions" style="position: sticky; left: 0px; top: 50px;"><span data-v-0909cf3c="" class="table-title">Table</span> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-0909cf3c="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="">Copy</span></div></header> <div data-v-0909cf3c="" class="table-container"><table data-v-0909cf3c=""><thead data-v-0909cf3c=""><tr data-v-0909cf3c=""><th data-v-0909cf3c="" align="left">Stack</th><th data-v-0909cf3c="" align="left" class="">Heap</th></tr></thead> <tbody data-v-0909cf3c=""><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class="">Automatic, LIFO, limited size, fast.</td><td data-v-0909cf3c="" align="left" class="">Dynamic, programmer-managed, large, slower.</td></tr></tbody></table></div></div><hr><h3 class="">35. Advantages of Heap</h3><ol start="1"><li><div class="paragraph"><strong class="">Dynamic sizing</strong> at runtime.</div></li><li><div class="paragraph"><strong class="">Lifetime independent</strong> of scope.</div></li></ol><hr><h3 class="">36. Destroy Linked List Bug</h3><div class="paragraph"><strong class="">Bug:</strong> <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">free(cur)</code> then access <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">cur-&gt;next</code> → <strong>use-after-free</strong>.<br><strong class="">Fix:</strong></div><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c">Node <span class="token operator">*</span>next <span class="token operator">=</span> cur<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+<span class="token function">free</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+cur <span class="token operator">=</span> next<span class="token punctuation">;</span></code></pre></div></div> <div data-v-47a25a29=""></div><hr><h3 class="">37–39. Dangling Pointer Checks</h3><div data-v-0909cf3c="" data-v-3a4aba44="" class="table markdown-table"><header data-v-0909cf3c="" class="table-actions" style="position: sticky; left: 0px; top: 50px;"><span data-v-0909cf3c="" class="table-title">Table</span> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-0909cf3c="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="">Copy</span></div></header> <div data-v-0909cf3c="" class="table-container"><table data-v-0909cf3c=""><thead data-v-0909cf3c=""><tr data-v-0909cf3c=""><th data-v-0909cf3c="" align="left">Code</th><th data-v-0909cf3c="" align="left">Dangling?</th><th data-v-0909cf3c="" align="left" class="">Explanation</th></tr></thead> <tbody data-v-0909cf3c=""><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">b = a;</code></td><td data-v-0909cf3c="" align="left" class="">❌</td><td data-v-0909cf3c="" align="left" class="">No dereference, just loses reference to second block.</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">a = malloc(...); a = malloc(...);</code></td><td data-v-0909cf3c="" align="left" class="">✅</td><td data-v-0909cf3c="" align="left" class="">First allocation orphaned.</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">realloc(a,...)</code></td><td data-v-0909cf3c="" align="left" class="">❌</td><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">realloc</code> either grows in place or moves &amp; frees old, so <strong data-v-0909cf3c="" class="">no</strong> dangling access.</td></tr></tbody></table></div></div><hr><h3 class="">40–41. Memory Leaks</h3><div data-v-0909cf3c="" data-v-3a4aba44="" class="table markdown-table"><header data-v-0909cf3c="" class="table-actions" style="position: sticky; left: 0px; top: 50px;"><span data-v-0909cf3c="" class="table-title">Table</span> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-0909cf3c="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="">Copy</span></div></header> <div data-v-0909cf3c="" class="table-container"><table data-v-0909cf3c=""><thead data-v-0909cf3c=""><tr data-v-0909cf3c=""><th data-v-0909cf3c="" align="left">Code</th><th data-v-0909cf3c="" align="left">Leak?</th><th data-v-0909cf3c="" align="left" class="">Explanation</th></tr></thead> <tbody data-v-0909cf3c=""><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">b = a;</code></td><td data-v-0909cf3c="" align="left" class="">✅</td><td data-v-0909cf3c="" align="left" class="">Original <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">b</code> block unreachable.</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">realloc(a,...)</code></td><td data-v-0909cf3c="" align="left" class="">❌</td><td data-v-0909cf3c="" align="left" class=""><code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">realloc</code> handles freeing old if moved.</td></tr></tbody></table></div></div><hr><h3 class="">42–46. Amortized Analysis</h3><div data-v-0909cf3c="" data-v-3a4aba44="" class="table markdown-table"><header data-v-0909cf3c="" class="table-actions" style="position: sticky; left: 0px; top: 50px;"><span data-v-0909cf3c="" class="table-title">Table</span> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-0909cf3c="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="">Copy</span></div></header> <div data-v-0909cf3c="" class="table-container"><table data-v-0909cf3c=""><thead data-v-0909cf3c=""><tr data-v-0909cf3c=""><th data-v-0909cf3c="" align="left">Statement</th><th data-v-0909cf3c="" align="left">True?</th><th data-v-0909cf3c="" align="left" class="">Explanation</th></tr></thead> <tbody data-v-0909cf3c=""><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class="">Stack push worst-case O(n)?</td><td data-v-0909cf3c="" align="left" class="">❌</td><td data-v-0909cf3c="" align="left" class="">Amortized O(1); worst-case resize is O(n) but rare.</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class="">O(1) amortized ⇒ worst-case ≤ O(n)?</td><td data-v-0909cf3c="" align="left" class="">✅</td><td data-v-0909cf3c="" align="left" class="">Amortized allows occasional O(n) spikes.</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class="">Amortized only for data structures?</td><td data-v-0909cf3c="" align="left" class="">❌</td><td data-v-0909cf3c="" align="left" class="">Works for any algorithmic sequence.</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class="">Amortized always equals worst-case?</td><td data-v-0909cf3c="" align="left" class="">❌</td><td data-v-0909cf3c="" align="left" class="">It’s an average.</td></tr><tr data-v-0909cf3c=""><td data-v-0909cf3c="" align="left" class="">Amortized always better?</td><td data-v-0909cf3c="" align="left" class="">❌</td><td data-v-0909cf3c="" align="left" class="">Could equal worst-case if every op expensive.</td></tr></tbody></table></div></div><hr><h3 class="">47. Address / Error for Each Print</h3><div class="paragraph"><em class="">(No pastebin provided; answers would list address or error per line.)</em></div><hr><h2 class="">Complexity Analysis</h2><h3 class="">1. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">is_prime</code></h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">c. O(√n)</strong> – loop runs up to <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">sqrt(n)</code>.</div><hr><h3 class="">2. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">subset_sums</code> (recursive)</h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">d. O(2ⁿ)</strong> – two recursive branches per element.</div><hr><h3 class="">3. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">cringe_search</code> (binary search)</h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">a. O(log n)</strong> – halves search space each step.</div><hr><h3 class="">4. Geometric-Series Pseudo-Code</h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">a. O(2ⁿ)</strong> – series grows exponentially.</div><hr><h3 class="">5. Iterative Fibonacci</h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">O(n)</strong> – single loop to <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">n</code>.</div><hr><h3 class="">6. Nested Loops <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">j /= 2</code></h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">O(n log n)</strong> – inner loop halves <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">j</code> each time.</div><hr><h3 class="">7. Exact Iterations</h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">n(n−1)/2</strong> – triangular number from nested loops.</div><hr><h3 class="">8. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">dumb_binary_search</code></h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">b. O((log n)²)</strong> – binary search inside binary search.</div><hr><h3 class="">9. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">weird(n, m)</code></h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">O(n²)</strong> – worst-case inner loop runs up to <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">i</code> times.</div><hr><h3 class="">10. (Missing body) – placeholder skipped.</h3><hr><h3 class="">11. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">weird_recurrence2</code></h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">a. O(n² log n)</strong> – each level does O(n²) work, depth log n.</div><hr><h3 class="">12. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">a_string_function</code></h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">a. O(n²)</strong> – <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">strlen</code> + <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">strcat</code> inside loop.</div><hr><h3 class="">13. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">a_string_function2</code></h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">c. O(n² m²)</strong> – nested loops with quadratic inner cost.</div><hr><h3 class="">14. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">two_ptr</code> Sliding Window</h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">b. O(n)</strong> – each element processed at most twice.</div><hr><h3 class="">15. <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">nxt_greater</code> with Stack</h3><div class="paragraph"><strong class="">Answer:</strong> <strong class="">a. O(n)</strong> – each element pushed &amp; popped once.</div><hr><h2 class="">Programming Questions</h2><h3 class="">1. Recursive Power (O(log p))</h3><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">pow</span><span class="token punctuation">(</span><span class="token keyword">int</span> b<span class="token punctuation">,</span> <span class="token keyword">int</span> p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>p <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> half <span class="token operator">=</span> <span class="token function">pow</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> p <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    half <span class="token operator">*=</span> half<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>p <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">?</span> half <span class="token operator">*</span> b <span class="token operator">:</span> half<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></div></div> <div data-v-47a25a29=""></div><h3 class="">2. Counting Sort for 1…1000</h3><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">sort</span><span class="token punctuation">(</span><span class="token keyword">int</span> A<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> cnt<span class="token punctuation">[</span><span class="token number">1001</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> cnt<span class="token punctuation">[</span>A<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> idx <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> v <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> v <span class="token operator">&lt;=</span> <span class="token number">1000</span><span class="token punctuation">;</span> <span class="token operator">++</span>v<span class="token punctuation">)</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>cnt<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token operator">--</span><span class="token punctuation">)</span> A<span class="token punctuation">[</span>idx<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> v<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></div></div> <div data-v-47a25a29=""></div><h3 class="">3. Balanced Brackets with Stack</h3><div class="paragraph">Use stack ADT: push open brackets, pop &amp; match closes. Return <code data-v-cad61513="" data-v-3a4aba44="" class="segment-code-inline">true</code> if stack empty at end.</div><h3 class="">4. Most-Frequent Character</h3><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">char</span> <span class="token function">most_frequent</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>s<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> freq<span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> freq<span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token punctuation">)</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span> best <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">256</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>freq<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&gt;</span> freq<span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token punctuation">)</span>best<span class="token punctuation">]</span><span class="token punctuation">)</span> best <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span>i<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> best<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></div></div> <div data-v-47a25a29=""></div><h3 class="">5. Generic Hash-Map Skeleton</h3><div class="paragraph">Implement chaining linked-list buckets for each operation (insert, search, remove, print, destroy).</div><h3 class="">6. LCA with Parent Pointers</h3><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span><span class="token function">find_lca</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span>n1<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span>n2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Walk upward collecting ancestors</span>
+    <span class="token comment">// Return first common node or NULL</span>
+<span class="token punctuation">}</span></code></pre></div></div> <div data-v-47a25a29=""></div><h3 class="">7. d-ary Tree k-th Element</h3><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">find_kth</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">DaryTreeNode</span> <span class="token operator">*</span>root<span class="token punctuation">,</span> <span class="token keyword">int</span> j<span class="token punctuation">,</span> <span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Convert (level, offset) to index via geometric series</span>
+<span class="token punctuation">}</span></code></pre></div></div> <div data-v-47a25a29=""></div><h3 class="">8. Substring Allocation</h3><div data-v-cad61513="" data-v-3a4aba44="" class="segment-code markdown-code"><header data-v-cad61513="" class="segment-code-header" style="position: sticky; left: 0px; top: 50px;"><div data-v-cad61513="" class="segment-code-header-content"><span data-v-cad61513="" class="segment-code-lang">c</span> <!----> <div data-v-182d5fe2="" data-v-92afdd37="" data-v-cad61513="" class="simple-button size-medium"><svg data-v-182d5fe2="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" name="Copy" class="simple-button-icon iconify" width="16" height="16" viewBox="0 0 1024 1024"><path d="M427.04896 379.12576a60.2112 60.2112 0 0 0-60.2112 60.2112v315.51488a60.2112 60.2112 0 0 0 60.2112 60.25216h315.51488a60.2112 60.2112 0 0 0 60.25216-60.2112v-315.55584a60.2112 60.2112 0 0 0-60.2112-60.2112H427.008z m-94.74048-34.48832a133.9392 133.9392 0 0 1 94.74048-39.23968h315.51488a133.98016 133.98016 0 0 1 133.98016 133.9392v315.51488a133.9392 133.9392 0 0 1-133.9392 133.98016H427.008a133.9392 133.9392 0 0 1-133.9392-133.9392v-315.55584c0-35.51232 14.09024-69.632 39.23968-94.69952z" fill="currentColor"></path><path d="M257.14688 233.472a36.16768 36.16768 0 0 0-35.96288 35.96288v364.05248a35.96288 35.96288 0 0 0 18.18624 31.21152 36.864 36.864 0 1 1-36.41344 64.1024A109.64992 109.64992 0 0 1 147.456 633.56928v-364.1344A109.89568 109.89568 0 0 1 257.14688 159.744h364.09344c20.56192 0 38.87104 5.48864 54.51776 16.83456 14.86848 10.77248 24.82176 25.10848 32.31744 38.5024a36.864 36.864 0 0 1-64.47104 35.84c-4.95616-8.97024-8.6016-12.86144-11.14112-14.66368-1.72032-1.2288-4.5056-2.78528-11.22304-2.78528h-364.1344z" fill="currentColor"></path></svg> <span data-v-182d5fe2="" class="">Copy</span></div></div></header> <div data-v-e2d1d10f="" data-v-cad61513="" class="syntax-highlighter light segment-code-content"><pre data-v-e2d1d10f="" class="language-c"><code class="language-c"><span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">substr</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>s<span class="token punctuation">,</span> <span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token keyword">int</span> j<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> len <span class="token operator">=</span> j <span class="token operator">-</span> i<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>out <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span>len <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">memcpy</span><span class="token punctuation">(</span>out<span class="token punctuation">,</span> s <span class="token operator">+</span> i<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    out<span class="token punctuation">[</span>len<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token char">'\0'</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> out<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></div></div> <div data-v-47a25a29=""></div><h3 class="">9. Vending Machine ADT</h3><div class="paragraph">Follow the header spec; implement stock, purchase, and transaction history with dynamic arrays or linked lists.</div><hr></div></div>
+
+	</body>
+</html>
