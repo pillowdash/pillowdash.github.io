@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PillowDash | Portfolio & Proofs</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        h1 { margin: 0; font-size: 2.2rem; color: var(--primary-color); }
+        h2 { border-bottom: 2px solid var(--primary-color); padding-bottom: 0.5rem; margin-top: 3rem; }
+        
+        .intro-text {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Project & Proof Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .proof-block {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .automation-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            display: block;
+            margin: 1rem auto;
+        }
+
+        .btn-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .btn-link:hover {
+            background-color: #1d4ed8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        code {
+            background: #fee2e2;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: #b91c1c;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>PillowDash</h1>
+    <p class="intro-text">Exploring RPA & Mathematical Foundations</p>
+</header>
+
+<div class="container">
+
+    <section>
+        <h2>Workflows & Automation</h2>
+        <div class="card">
+            <h3>Automation Anywhere Bot</h3>
+            <p>Developing scalable solutions using the <strong><a href="https://www.automationanywhere.com/products/enterprise/community-edition">Automation Anywhere Community Edition</a></strong>. This workflow demonstrates process logic for data handling.</p>
+            <img src="img/automationAnywhere.png" alt="Automation Anywhere Workflow Diagram" class="automation-img">
+            <p><small>Figure 1: Visual representation of the logic flow and bot structure.</small></p>
+	    <p><small><a href="https://www.youtube.com/watch?v=mMaWTqTFM4w" class="btn-link" target="_blank">YouTube Link.</a></small></p>
+        </div>
+    </section>
+
+    <section>
+        <h2>Calculus: $\epsilon-\delta$ Proofs</h2>
+        
+        <div class="card">
+            <h3>Limit of $1/x^3$ at $x=2$</h3>
+            <div class="proof-block">
+                $$\lim_{x\to 2} \frac{1}{x^3} = \frac{1}{8}$$
+            </div>
+            <p>Rigorous proof using the formal definition of a limit. We analyze the behavior as $x$ approaches the constant $a$.</p>
+        </div>
+
+        <div class="card">
+            <h3>General Limit of $1/x$</h3>
+            <div class="proof-block">
+                $$\lim_{x \to a} \frac{1}{x} = \frac{1}{a}$$
+            </div>
+            <p>Exploration of the $\epsilon-\delta$ relationship for rational functions.</p>
+            <a href="https://math.stackexchange.com/questions/1872265/epsilon-delta-proof-lim-limits-x-to-a-frac1x-frac1a" class="btn-link" target="_blank">View Detailed Solution</a>
+        </div>
+
+        <div class="card">
+            <h3>Rational Function Proof</h3>
+            <div class="proof-block">
+                $$\lim_{x\rightarrow -2} \frac{x-1}{x+1}=3$$
+            </div>
+            <p>Application of the triangle inequality and bounding techniques for denominators near a point.</p>
+            <a href="https://math.stackexchange.com/questions/1187971/using-epsilon-delta-definition-to-prove-that-lim-x-to-2-fracx-1x1" class="btn-link" target="_blank">Discussion Thread</a>
+        </div>
+
+        <div class="card">
+            <h3>The Unit Case</h3>
+            <div class="proof-block">
+                $$\lim_{x \to 1} \frac{1}{x} = 1$$
+            </div>
+            <p>A simplified case study highlighting the fundamental mechanics of the limit definition.</p>
+            <a href="https://math.stackexchange.com/questions/418961/epsilon-delta-proof-that-lim-limits-x-to-1-frac1x-1?noredirect=1&lq=1" class="btn-link" target="_blank">Step-by-Step Breakdown</a>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 PillowDash | Built for Documentation & Learning</p>
+    <p><a href="https://github.com/pillowdash" style="color: var(--text-muted);">GitHub Profile</a></p>
+</footer>
+
+</body>
+</html>
