@@ -17,30 +17,7 @@
             }
         }
     </script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        /* D3 Chart Styles */
-        .line-close { fill: none; stroke: steelblue; stroke-width: 1.5px; }
-        .line-mid { fill: none; stroke: #999; stroke-width: 1px; stroke-dasharray: 4,4; }
-        .band-area { fill: lightsteelblue; opacity: 0.3; }
-        .d3-tooltip {
-            position: absolute;
-            text-align: left;
-            padding: 8px;
-            font: 12px sans-serif;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            border-radius: 4px;
-            pointer-events: none;
-            opacity: 0;
-            z-index: 100;
-        }
-        .focus-circle {
-            fill: steelblue;
-            stroke: white;
-            stroke-width: 2px;
-        }
-
         .gradient-bg {
             background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #eef2ff 100%);
         }
@@ -319,191 +296,7 @@
                 </div>
             </div>
 
-            <!-- Analytics Dashboard Section -->
-            <div class="mb-12">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-lg flex items-center justify-center">
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-slate-800">Analytics Dashboard</h3>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-lg transition-all duration-300">
-                    <h4 class="text-lg font-semibold text-slate-800 mb-2">Apple Stock (AAPL) - Bollinger Bands</h4>
-                    <p class="text-slate-600 text-sm mb-4">Interactive D3.js chart using Bollinger Bands algorithm. Brush/select a region to zoom in. Double click to reset.</p>
-                    
-                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 overflow-x-auto w-full">
-                        <div id="chart-container" class="min-w-[800px] w-full h-[500px]"></div>
-                    </div>
-
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            // 1. Chart Dimensions & Margins
-                            const margin = { top: 20, right: 30, bottom: 30, left: 50 };
-                            const width = 800 - margin.left - margin.right;
-                            const height = 500 - margin.top - margin.bottom;
-
-                            const svg = d3.select("#chart-container")
-                              .append("svg")
-                                .attr("width", width + margin.left + margin.right)
-                                .attr("height", height + margin.top + margin.bottom)
-                              .append("g")
-                                .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
-                            // --- ADD A CLIP PATH ---
-                            svg.append("defs").append("clipPath")
-                              .attr("id", "clip")
-                              .append("rect")
-                              .attr("width", width)
-                              .attr("height", height);
-
-                            function addBollingerBands(data, n, k) {
-                              let sum = 0; let sum2 = 0;
-                              for (let i = 0; i < Math.min(n - 1, data.length); i++) {
-                                data[i].mid = null; data[i].upper = null; data[i].lower = null;
-                                sum += data[i].close; sum2 += data[i].close ** 2;
-                              }
-                              for (let i = n - 1; i < data.length; i++) {
-                                const val = data[i].close;
-                                sum += val; sum2 += val ** 2;
-                                const mean = sum / n;
-                                const stddev = Math.sqrt((sum2 - (sum ** 2) / n) / (n - 1));
-                                data[i].mid = mean;
-                                data[i].upper = mean + (stddev * k);
-                                data[i].lower = mean - (stddev * k);
-                                const val0 = data[i - n + 1].close;
-                                sum -= val0; sum2 -= val0 ** 2;
-                              }
-                            }
-
-                            const dataUrl = "https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv";
-
-                            d3.csv(dataUrl).then(rawData => {
-                              const data = rawData.map(d => ({
-                                date: new Date(d.Date),
-                                close: +d["AAPL.Close"]
-                              })).sort((a, b) => a.date - b.date);
-
-                              addBollingerBands(data, 20, 2);
-
-                              // 2. Set up Scales
-                              let xScale = d3.scaleTime()
-                                .domain(d3.extent(data, d => d.date))
-                                .range([0, width]);
-
-                              let yScale = d3.scaleLinear()
-                                .domain([
-                                  d3.min(data, d => d.lower || d.close) * 0.95, 
-                                  d3.max(data, d => d.upper || d.close) * 1.05
-                                ])
-                                .range([height, 0]);
-
-                              // 3. Draw the Axes
-                              const xAxis = svg.append("g")
-                                .attr("class", "x-axis")
-                                .attr("transform", `translate(0, ${height})`)
-                                .call(d3.axisBottom(xScale));
-
-                              const yAxis = svg.append("g")
-                                .attr("class", "y-axis")
-                                .call(d3.axisLeft(yScale).tickFormat(d => "$" + d));
-
-                              // 4. Create Generators
-                              const area = d3.area()
-                                .defined(d => d.upper !== null && d.lower !== null)
-                                .x(d => xScale(d.date))
-                                .y0(d => yScale(d.lower))
-                                .y1(d => yScale(d.upper));
-
-                              const lineMid = d3.line()
-                                .defined(d => d.mid !== null)
-                                .x(d => xScale(d.date))
-                                .y(d => yScale(d.mid));
-
-                              const lineClose = d3.line()
-                                .x(d => xScale(d.date))
-                                .y(d => yScale(d.close));
-
-                              // 5. Wrap lines in a clipped group
-                              const lineGroup = svg.append("g")
-                                .attr("clip-path", "url(#clip)"); 
-
-                              lineGroup.append("path").datum(data).attr("class", "band-area").attr("d", area);
-                              lineGroup.append("path").datum(data).attr("class", "line-mid").attr("d", lineMid);
-                              lineGroup.append("path").datum(data).attr("class", "line-close").attr("d", lineClose);
-
-                              // 6. Tooltip Setup
-                              const tooltip = d3.select("body").append("div").attr("class", "d3-tooltip");
-                              const focus = svg.append("g").style("display", "none");
-                              focus.append("circle").attr("class", "focus-circle").attr("r", 5);
-                              const bisectDate = d3.bisector(d => d.date).left;
-
-                              // --- BRUSH & ZOOM LOGIC ---
-
-                              const brush = d3.brushX()
-                                .extent([[0, 0], [width, height]])
-                                .on("end", updateChart); 
-
-                              const brushGroup = svg.append("g")
-                                .attr("class", "brush")
-                                .call(brush)
-                                .on("mouseover", () => { focus.style("display", null); tooltip.style("opacity", 1); })
-                                .on("mouseout", () => { focus.style("display", "none"); tooltip.style("opacity", 0); })
-                                .on("mousemove", function(event) {
-                                  const x0 = xScale.invert(d3.pointer(event, this)[0]);
-                                  const i = bisectDate(data, x0, 1);
-                                  const d0 = data[i - 1]; const d1 = data[i];
-                                  let d = d0;
-                                  if (d1) d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-
-                                  focus.select("circle").attr("transform", `translate(${xScale(d.date)}, ${yScale(d.close)})`);
-                                  tooltip.html(`
-                                      <strong>${d.date.toLocaleDateString()}</strong><br>
-                                      Close: $${d.close.toFixed(2)}<br>
-                                      <span style="color:#aaa">Mid: $${(d.mid ? d.mid.toFixed(2) : "N/A")}</span>
-                                    `)
-                                    .style("left", (event.pageX + 15) + "px")
-                                    .style("top", (event.pageY - 28) + "px");
-                                });
-
-                              function updateChart(event) {
-                                const extent = event.selection;
-                                if (!extent) return;
-
-                                xScale.domain([ xScale.invert(extent[0]), xScale.invert(extent[1]) ]);
-                                brushGroup.call(brush.move, null);
-
-                                xAxis.transition().duration(1000).call(d3.axisBottom(xScale));
-
-                                lineGroup.select(".band-area").transition().duration(1000).attr("d", area);
-                                lineGroup.select(".line-mid").transition().duration(1000).attr("d", lineMid);
-                                lineGroup.select(".line-close").transition().duration(1000).attr("d", lineClose);
-                              }
-
-                              svg.on("dblclick", function() {
-                                xScale.domain(d3.extent(data, d => d.date));
-                                xAxis.transition().duration(1000).call(d3.axisBottom(xScale));
-                                lineGroup.select(".band-area").transition().duration(1000).attr("d", area);
-                                lineGroup.select(".line-mid").transition().duration(1000).attr("d", lineMid);
-                                lineGroup.select(".line-close").transition().duration(1000).attr("d", lineClose);
-                              });
-                            });
-                        });
-                    </script>
-                    
-                    <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">React</span>
-                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">D3.js</span>
-                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">API</span>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <!-- Other Projects Section -->
+            <!-- Other Workflows Section -->
             <div class="flex items-center gap-3 mb-6">
                 <div class="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-lg flex items-center justify-center">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -532,13 +325,29 @@
 
                 <!-- Workflow Card 2 -->
                 <div class="group bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-lg hover:border-emerald-200 transition-all duration-300 card-hover">
-                    <div class="w-12 h-12 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-2">Analytics Dashboard</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Real-time metrics visualization with interactive charts and automated reporting.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">React</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">D3.js</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">API</span>
+                    </div>
+                </div>
+
+                <!-- Workflow Card 3 -->
+                <div class="group bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-lg hover:border-emerald-200 transition-all duration-300 card-hover">
+                    <div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-slate-800 mb-2">CI/CD Automation Pipeline</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Automated testing, building, and deployment with rollback capabilities using industry standard tooling.</p>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-2">CI/CD Pipeline</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Automated testing, building, and deployment with rollback capabilities.</p>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">GitHub Actions</span>
                         <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">Docker</span>
