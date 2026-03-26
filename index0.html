@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PillowDash | Portfolio & Proofs</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwindcss.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* D3 Chart Styles */
+        .line-close { fill: none; stroke: steelblue; stroke-width: 1.5px; }
+        .line-mid { fill: none; stroke: #999; stroke-width: 1px; stroke-dasharray: 4,4; }
+        .band-area { fill: lightsteelblue; opacity: 0.3; }
+        .d3-tooltip {
+            position: absolute;
+            text-align: left;
+            padding: 8px;
+            font: 12px sans-serif;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 4px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 100;
+        }
+        .focus-circle {
+            fill: steelblue;
+            stroke: white;
+            stroke-width: 2px;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #eef2ff 100%);
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .blob {
+            animation: blob 7s infinite;
+        }
+        @keyframes blob {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 glass border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200">
+                        <span class="text-white font-bold text-lg">P</span>
+                    </div>
+                    <span class="font-bold text-xl text-slate-800">PillowDash</span>
+                </div>
+                <nav class="hidden sm:flex items-center gap-1">
+                    <button onclick="showSection('proofs')" id="btn-proofs" class="px-4 py-2 rounded-lg text-sm font-medium transition-all bg-indigo-100 text-indigo-700">
+                        Proofs
+                    </button>
+                    <button onclick="showSection('workflows')" id="btn-workflows" class="px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-100">
+                        Workflows
+                    </button>
+                </nav>
+                <a href="https://github.com/pillowdash" target="_blank" rel="noopener noreferrer" 
+                   class="flex items-center gap-2 px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-800 transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10"></div>
+        <div class="absolute top-20 left-10 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 blob"></div>
+        <div class="absolute top-40 right-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 blob" style="animation-delay: 2s;"></div>
+        
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+            <div class="text-center">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium mb-6">
+                    <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
+                    Portfolio & Mathematical Proofs
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-6 leading-tight">
+                    Exploring the Beauty of
+                    <span class="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"> Mathematics</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-10">
+                    A collection of rigorous ε-δ proofs, automated workflows, and technical explorations. 
+                    Bridging theory with practical applications.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="showSection('proofs'); document.getElementById('main-content').scrollIntoView({behavior: 'smooth'})" 
+                            class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">
+                        View Proofs
+                    </button>
+                    <button onclick="showSection('workflows'); document.getElementById('main-content').scrollIntoView({behavior: 'smooth'})" 
+                            class="px-6 py-3 bg-white text-slate-700 font-medium rounded-xl hover:bg-slate-50 transition-colors border border-slate-200">
+                        Explore Workflows
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Navigation -->
+    <div class="sm:hidden sticky top-16 z-40 bg-white border-b border-slate-200 px-4 py-3">
+        <div class="flex gap-2">
+            <button onclick="showSection('proofs')" id="mobile-btn-proofs" class="flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-indigo-100 text-indigo-700">
+                Proofs
+            </button>
+            <button onclick="showSection('workflows')" id="mobile-btn-workflows" class="flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 bg-slate-100">
+                Workflows
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="main-content" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        
+        <!-- Proofs Section -->
+        <section id="proofs-section">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">Calculus: ε-δ Proofs</h2>
+                    <p class="text-slate-500 text-sm">Rigorous mathematical proofs using formal definitions</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Proof Card 1 -->
+                <div class="group bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-lg hover:border-indigo-200 transition-all duration-300 card-hover">
+                    <h3 class="text-lg font-semibold text-slate-800 mb-3 group-hover:text-indigo-600 transition-colors">
+                        Limit of 1/x³ at x=2
+                    </h3>
+                    <div class="bg-gradient-to-r from-slate-50 to-indigo-50 rounded-xl p-4 mb-4 text-center overflow-x-auto" id="formula-1"></div>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        Rigorous proof using the formal definition of a limit. We analyze the behavior as x approaches the constant a.
+                    </p>
+                </div>
+
+                <!-- Proof Card 2 -->
+                <div class="group bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-lg hover:border-indigo-200 transition-all duration-300 card-hover">
+                    <h3 class="text-lg font-semibold text-slate-800 mb-3 group-hover:text-indigo-600 transition-colors">
+                        General Limit of 1/x
+                    </h3>
+                    <div class="bg-gradient-to-r from-slate-50 to-indigo-50 rounded-xl p-4 mb-4 text-center overflow-x-auto" id="formula-2"></div>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        Exploration of the ε-δ relationship for rational functions.
+                    </p>
+                    <a href="https://math.stackexchange.com/questions/1872265/epsilon-delta-proof-lim-limits-x-to-a-frac1x-frac1a" 
+                       target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors">
+                        View Detailed Solution
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Proof Card 3 -->
+                <div class="group bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-lg hover:border-indigo-200 transition-all duration-300 card-hover">
+                    <h3 class="text-lg font-semibold text-slate-800 mb-3 group-hover:text-indigo-600 transition-colors">
+                        Rational Function Proof
+                    </h3>
+                    <div class="bg-gradient-to-r from-slate-50 to-indigo-50 rounded-xl p-4 mb-4 text-center overflow-x-auto" id="formula-3"></div>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        Application of the triangle inequality and bounding techniques for denominators near a point.
+                    </p>
+                    <a href="https://math.stackexchange.com/questions/1187971/using-epsilon-delta-definition-to-prove-that-lim-x-to-2-fracx-1x1" 
+                       target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors">
+                        Discussion Thread
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Proof Card 4 -->
+                <div class="group bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-lg hover:border-indigo-200 transition-all duration-300 card-hover">
+                    <h3 class="text-lg font-semibold text-slate-800 mb-3 group-hover:text-indigo-600 transition-colors">
+                        The Unit Case
+                    </h3>
+                    <div class="bg-gradient-to-r from-slate-50 to-indigo-50 rounded-xl p-4 mb-4 text-center overflow-x-auto" id="formula-4"></div>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        A simplified case study highlighting the fundamental mechanics of the limit definition.
+                    </p>
+                    <a href="https://math.stackexchange.com/questions/418961/epsilon-delta-proof-that-lim-limits-x-to-1-frac1x-1" 
+                       target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors">
+                        Step-by-Step Breakdown
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bottom navigation to switch tabs (Proofs section) -->
+            <div class="mt-12 text-center flex flex-wrap justify-center gap-4">
+                <button id="proofs-bottom-proofs-btn" onclick="switchTab('proofs')" class="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold shadow-lg transform transition-all duration-300">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>View Proofs</span>
+                </button>
+                <button id="proofs-bottom-workflows-btn" onclick="switchTab('workflows')" class="inline-flex items-center gap-2 bg-white/50 text-emerald-600 border-2 border-emerald-300 px-8 py-4 rounded-full font-semibold hover:bg-gradient-to-r hover:from-emerald-500 hover:to-teal-500 hover:text-white hover:border-transparent transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    <span>Explore Workflows</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- Workflows Section -->
+        <section id="workflows-section" class="hidden">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">Workflows & Automation</h2>
+                    <p class="text-slate-500 text-sm">Technical projects and automated systems</p>
+                </div>
+            </div>
+
+            <!-- Robotic Process Automation Section -->
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-gradient-to-br from-orange-400 to-red-500 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800">Robotic Process Automation</h3>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-lg hover:border-orange-200 transition-all duration-300">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-red-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-800 mb-2">Automation Anywhere Bot</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Developing scalable solutions using the 
+                                <a href="https://www.automationanywhere.com/products/enterprise/community-edition" 
+                                   target="_blank" rel="noopener noreferrer"
+                                   class="font-semibold text-orange-600 hover:text-orange-700 underline decoration-orange-300 hover:decoration-orange-500 transition-colors">
+                                    Automation Anywhere Community Edition
+                                </a>. 
+                                This workflow demonstrates process logic for data handling.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Workflow Diagram Image -->
+                    <div class="bg-gradient-to-r from-slate-50 to-orange-50 rounded-xl p-4 mb-4">
+                        <img src="img/automationAnywhere.png" 
+                             alt="Automation Anywhere Workflow Diagram" 
+                             class="w-full rounded-lg shadow-sm border border-slate-200"
+                             onerror="this.parentElement.innerHTML='<div class=\'flex items-center justify-center h-48 text-slate-400\'><svg class=\'w-12 h-12 mr-3\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\'></path></svg><span>Workflow diagram will appear here</span></div>'">
+                        <p class="text-slate-500 text-xs mt-3 text-center italic">
+                            Figure 1: Visual representation of the logic flow and bot structure.
+                        </p>
+                    </div>
+                    
+                    <!-- Tags and Links -->
+                    <div class="flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-orange-100 text-orange-700 text-xs font-medium rounded-full">RPA</span>
+                            <span class="px-3 py-1 bg-orange-100 text-orange-700 text-xs font-medium rounded-full">Automation Anywhere</span>
+                            <span class="px-3 py-1 bg-orange-100 text-orange-700 text-xs font-medium rounded-full">Bot Development</span>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=mMaWTqTFM4w" 
+                           target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors shadow-sm">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                            Watch Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Dashboard Section -->
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800">Analytics Dashboard</h3>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-lg transition-all duration-300">
+                    <h4 class="text-lg font-semibold text-slate-800 mb-2">Apple Stock (AAPL) - Bollinger Bands</h4>
+                    <p class="text-slate-600 text-sm mb-4">Interactive D3.js chart using Bollinger Bands algorithm. Brush/select a region to zoom in. Double click to reset.</p>
+                    
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 overflow-x-auto w-full">
+                        <div id="chart-container" class="min-w-[800px] w-full h-[500px]"></div>
+                    </div>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            // 1. Chart Dimensions & Margins
+                            const margin = { top: 20, right: 30, bottom: 30, left: 50 };
+                            const width = 800 - margin.left - margin.right;
+                            const height = 500 - margin.top - margin.bottom;
+
+                            const svg = d3.select("#chart-container")
+                              .append("svg")
+                                .attr("width", width + margin.left + margin.right)
+                                .attr("height", height + margin.top + margin.bottom)
+                              .append("g")
+                                .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+                            // --- ADD A CLIP PATH ---
+                            svg.append("defs").append("clipPath")
+                              .attr("id", "clip")
+                              .append("rect")
+                              .attr("width", width)
+                              .attr("height", height);
+
+                            function addBollingerBands(data, n, k) {
+                              let sum = 0; let sum2 = 0;
+                              for (let i = 0; i < Math.min(n - 1, data.length); i++) {
+                                data[i].mid = null; data[i].upper = null; data[i].lower = null;
+                                sum += data[i].close; sum2 += data[i].close ** 2;
+                              }
+                              for (let i = n - 1; i < data.length; i++) {
+                                const val = data[i].close;
+                                sum += val; sum2 += val ** 2;
+                                const mean = sum / n;
+                                const stddev = Math.sqrt((sum2 - (sum ** 2) / n) / (n - 1));
+                                data[i].mid = mean;
+                                data[i].upper = mean + (stddev * k);
+                                data[i].lower = mean - (stddev * k);
+                                const val0 = data[i - n + 1].close;
+                                sum -= val0; sum2 -= val0 ** 2;
+                              }
+                            }
+
+                            const dataUrl = "https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv";
+
+                            d3.csv(dataUrl).then(rawData => {
+                              const data = rawData.map(d => ({
+                                date: new Date(d.Date),
+                                close: +d["AAPL.Close"]
+                              })).sort((a, b) => a.date - b.date);
+
+                              addBollingerBands(data, 20, 2);
+
+                              // 2. Set up Scales
+                              let xScale = d3.scaleTime()
+                                .domain(d3.extent(data, d => d.date))
+                                .range([0, width]);
+
+                              let yScale = d3.scaleLinear()
+                                .domain([
+                                  d3.min(data, d => d.lower || d.close) * 0.95, 
+                                  d3.max(data, d => d.upper || d.close) * 1.05
+                                ])
+                                .range([height, 0]);
+
+                              // 3. Draw the Axes
+                              const xAxis = svg.append("g")
+                                .attr("class", "x-axis")
+                                .attr("transform", `translate(0, ${height})`)
+                                .call(d3.axisBottom(xScale));
+
+                              const yAxis = svg.append("g")
+                                .attr("class", "y-axis")
+                                .call(d3.axisLeft(yScale).tickFormat(d => "$" + d));
+
+                              // 4. Create Generators
+                              const area = d3.area()
+                                .defined(d => d.upper !== null && d.lower !== null)
+                                .x(d => xScale(d.date))
+                                .y0(d => yScale(d.lower))
+                                .y1(d => yScale(d.upper));
+
+                              const lineMid = d3.line()
+                                .defined(d => d.mid !== null)
+                                .x(d => xScale(d.date))
+                                .y(d => yScale(d.mid));
+
+                              const lineClose = d3.line()
+                                .x(d => xScale(d.date))
+                                .y(d => yScale(d.close));
+
+                              // 5. Wrap lines in a clipped group
+                              const lineGroup = svg.append("g")
+                                .attr("clip-path", "url(#clip)"); 
+
+                              lineGroup.append("path").datum(data).attr("class", "band-area").attr("d", area);
+                              lineGroup.append("path").datum(data).attr("class", "line-mid").attr("d", lineMid);
+                              lineGroup.append("path").datum(data).attr("class", "line-close").attr("d", lineClose);
+
+                              // 6. Tooltip Setup
+                              const tooltip = d3.select("body").append("div").attr("class", "d3-tooltip");
+                              const focus = svg.append("g").style("display", "none");
+                              focus.append("circle").attr("class", "focus-circle").attr("r", 5);
+                              const bisectDate = d3.bisector(d => d.date).left;
+
+                              // --- BRUSH & ZOOM LOGIC ---
+
+                              const brush = d3.brushX()
+                                .extent([[0, 0], [width, height]])
+                                .on("end", updateChart); 
+
+                              const brushGroup = svg.append("g")
+                                .attr("class", "brush")
+                                .call(brush)
+                                .on("mouseover", () => { focus.style("display", null); tooltip.style("opacity", 1); })
+                                .on("mouseout", () => { focus.style("display", "none"); tooltip.style("opacity", 0); })
+                                .on("mousemove", function(event) {
+                                  const x0 = xScale.invert(d3.pointer(event, this)[0]);
+                                  const i = bisectDate(data, x0, 1);
+                                  const d0 = data[i - 1]; const d1 = data[i];
+                                  let d = d0;
+                                  if (d1) d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+
+                                  focus.select("circle").attr("transform", `translate(${xScale(d.date)}, ${yScale(d.close)})`);
+                                  tooltip.html(`
+                                      <strong>${d.date.toLocaleDateString()}</strong><br>
+                                      Close: $${d.close.toFixed(2)}<br>
+                                      <span style="color:#aaa">Mid: $${(d.mid ? d.mid.toFixed(2) : "N/A")}</span>
+                                    `)
+                                    .style("left", (event.pageX + 15) + "px")
+                                    .style("top", (event.pageY - 28) + "px");
+                                });
+
+                              function updateChart(event) {
+                                const extent = event.selection;
+                                if (!extent) return;
+
+                                xScale.domain([ xScale.invert(extent[0]), xScale.invert(extent[1]) ]);
+                                brushGroup.call(brush.move, null);
+
+                                xAxis.transition().duration(1000).call(d3.axisBottom(xScale));
+
+                                lineGroup.select(".band-area").transition().duration(1000).attr("d", area);
+                                lineGroup.select(".line-mid").transition().duration(1000).attr("d", lineMid);
+                                lineGroup.select(".line-close").transition().duration(1000).attr("d", lineClose);
+                              }
+
+                              svg.on("dblclick", function() {
+                                xScale.domain(d3.extent(data, d => d.date));
+                                xAxis.transition().duration(1000).call(d3.axisBottom(xScale));
+                                lineGroup.select(".band-area").transition().duration(1000).attr("d", area);
+                                lineGroup.select(".line-mid").transition().duration(1000).attr("d", lineMid);
+                                lineGroup.select(".line-close").transition().duration(1000).attr("d", lineClose);
+                              });
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+
+            <!-- Other Workflows Section -->
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-lg flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-slate-800">Other Projects</h3>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Workflow Card 1 -->
+                <div class="group bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-lg hover:border-emerald-200 transition-all duration-300 card-hover">
+                    <div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-2">Automated Data Pipeline</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">End-to-end data processing workflow with validation, transformation, and storage.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">Python</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">ETL</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">Automation</span>
+                    </div>
+                </div>
+
+                <!-- Workflow Card 2 -->
+                <div class="group md:col-span-2 lg:col-span-3 bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-lg hover:border-emerald-200 transition-all duration-300 card-hover">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-2">Analytics Dashboard</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Real-time metrics visualization with interactive charts and automated reporting.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">React</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">D3.js</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">API</span>
+                    </div>
+                </div>
+
+                <!-- Workflow Card 3 -->
+                <div class="group bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-lg hover:border-emerald-200 transition-all duration-300 card-hover">
+                    <div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-2">CI/CD Pipeline</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Automated testing, building, and deployment with rollback capabilities.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">GitHub Actions</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">Docker</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">AWS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom navigation to switch tabs -->
+            <div class="mt-12 text-center flex flex-wrap justify-center gap-4">
+                <button id="bottom-proofs-btn" onclick="switchTab('proofs')" class="inline-flex items-center gap-2 bg-white/50 text-indigo-600 border-2 border-indigo-300 px-8 py-4 rounded-full font-semibold hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 hover:text-white hover:border-transparent transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
+                    </svg>
+                    <span>View Proofs</span>
+                </button>
+                <button id="bottom-workflows-btn" onclick="switchTab('workflows')" class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-8 py-4 rounded-full font-semibold shadow-lg transform transition-all duration-300">
+                    <span>Explore Workflows</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">P</span>
+                    </div>
+                    <span class="font-bold text-xl">PillowDash</span>
+                </div>
+                <p class="text-slate-400 text-sm">
+                    © 2024 PillowDash. All rights reserved.
+                </p>
+                <div class="flex items-center gap-4">
+                    <a href="https://github.com/pillowdash" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- KaTeX Script -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script>
+        // Render formulas
+        document.addEventListener('DOMContentLoaded', function() {
+            const formulas = [
+                { id: 'formula-1', tex: '\\lim_{x\\to 2} \\frac{1}{x^3} = \\frac{1}{8}' },
+                { id: 'formula-2', tex: '\\lim_{x \\to a} \\frac{1}{x} = \\frac{1}{a}' },
+                { id: 'formula-3', tex: '\\lim_{x\\rightarrow -2} \\frac{x-1}{x+1}=3' },
+                { id: 'formula-4', tex: '\\lim_{x \\to 1} \\frac{1}{x} = 1' }
+            ];
+
+            formulas.forEach(function(formula) {
+                const element = document.getElementById(formula.id);
+                if (element && window.katex) {
+                    katex.render(formula.tex, element, { throwOnError: false, displayMode: true });
+                }
+            });
+        });
+
+        // Section switching
+        function showSection(section) {
+            updateTabState(section);
+        }
+
+        // Switch tab with scroll
+        function switchTab(section) {
+            updateTabState(section);
+            document.getElementById('main-content').scrollIntoView({behavior: 'smooth'});
+        }
+
+        // Update all tab button states
+        function updateTabState(section) {
+            const proofsSection = document.getElementById('proofs-section');
+            const workflowsSection = document.getElementById('workflows-section');
+            const btnProofs = document.getElementById('btn-proofs');
+            const btnWorkflows = document.getElementById('btn-workflows');
+            const mobileBtnProofs = document.getElementById('mobile-btn-proofs');
+            const mobileBtnWorkflows = document.getElementById('mobile-btn-workflows');
+            
+            // Bottom buttons in Proofs section
+            const proofsBottomProofsBtn = document.getElementById('proofs-bottom-proofs-btn');
+            const proofsBottomWorkflowsBtn = document.getElementById('proofs-bottom-workflows-btn');
+            
+            // Bottom buttons in Workflows section
+            const bottomProofsBtn = document.getElementById('bottom-proofs-btn');
+            const bottomWorkflowsBtn = document.getElementById('bottom-workflows-btn');
+
+            // Active styles
+            const activeProofsBtnStyle = 'inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold shadow-lg transform transition-all duration-300';
+            const inactiveProofsBtnStyle = 'inline-flex items-center gap-2 bg-white/50 text-indigo-600 border-2 border-indigo-300 px-8 py-4 rounded-full font-semibold hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 hover:text-white hover:border-transparent transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1';
+            
+            const activeWorkflowsBtnStyle = 'inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-8 py-4 rounded-full font-semibold shadow-lg transform transition-all duration-300';
+            const inactiveWorkflowsBtnStyle = 'inline-flex items-center gap-2 bg-white/50 text-emerald-600 border-2 border-emerald-300 px-8 py-4 rounded-full font-semibold hover:bg-gradient-to-r hover:from-emerald-500 hover:to-teal-500 hover:text-white hover:border-transparent transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1';
+
+            if (section === 'proofs') {
+                // Show/hide sections
+                proofsSection.classList.remove('hidden');
+                workflowsSection.classList.add('hidden');
+                
+                // Top navigation
+                btnProofs.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-all bg-indigo-100 text-indigo-700';
+                btnWorkflows.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-100';
+                mobileBtnProofs.className = 'flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-indigo-100 text-indigo-700';
+                mobileBtnWorkflows.className = 'flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 bg-slate-100';
+                
+                // Bottom buttons in Proofs section (visible)
+                proofsBottomProofsBtn.className = activeProofsBtnStyle;
+                proofsBottomWorkflowsBtn.className = inactiveWorkflowsBtnStyle;
+                
+                // Bottom buttons in Workflows section (hidden but update anyway)
+                bottomProofsBtn.className = activeProofsBtnStyle;
+                bottomWorkflowsBtn.className = inactiveWorkflowsBtnStyle;
+            } else {
+                // Show/hide sections
+                proofsSection.classList.add('hidden');
+                workflowsSection.classList.remove('hidden');
+                
+                // Top navigation
+                btnProofs.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-100';
+                btnWorkflows.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-all bg-indigo-100 text-indigo-700';
+                mobileBtnProofs.className = 'flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 bg-slate-100';
+                mobileBtnWorkflows.className = 'flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-indigo-100 text-indigo-700';
+                
+                // Bottom buttons in Workflows section (visible)
+                bottomProofsBtn.className = inactiveProofsBtnStyle;
+                bottomWorkflowsBtn.className = activeWorkflowsBtnStyle;
+                
+                // Bottom buttons in Proofs section (hidden but update anyway)
+                proofsBottomProofsBtn.className = inactiveProofsBtnStyle;
+                proofsBottomWorkflowsBtn.className = activeWorkflowsBtnStyle;
+            }
+        }
+    </script>
+</body>
+</html>
