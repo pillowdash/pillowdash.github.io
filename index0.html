@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PillowDash | Portfolio & Proofs</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --text: #0f172a;
+        --muted: #64748b;
+        --border: #e2e8f0;
+        --card: #ffffff;
+        --red: #dc2626;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        min-width: 320px;
+        background:
+          radial-gradient(circle at top left, rgba(99, 102, 241, 0.12), transparent 28%),
+          radial-gradient(circle at top right, rgba(244, 114, 182, 0.1), transparent 22%),
+          linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        color: var(--text);
+      }
+      a { color: inherit; text-decoration: none; }
+      img { display: block; max-width: 100%; }
+      button { font: inherit; }
+      [hidden] { display: none !important; }
+      .container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+      .header {
+        position: sticky; top: 0; z-index: 30;
+        border-bottom: 1px solid rgba(226,232,240,.9);
+        background: rgba(255,255,255,.9);
+        backdrop-filter: blur(10px);
+      }
+      .header-row {
+        min-height: 68px;
+        display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      }
+      .brand, .footer-brand { display: flex; align-items: center; gap: 12px; }
+      .brand-badge, .footer-badge {
+        width: 40px; height: 40px; border-radius: 16px; display: grid; place-items: center;
+        font-weight: 700; color: #fff; background: linear-gradient(180deg, #8b5cf6, #7c3aed);
+        box-shadow: 0 10px 28px rgba(124,58,237,.28);
+      }
+      .brand-name { font-size: 1.15rem; font-weight: 600; letter-spacing: -.02em; }
+      .tabs { display: flex; align-items: center; gap: 8px; }
+      .tab-btn {
+        border: 0; background: transparent; color: #475569; cursor: pointer;
+        padding: 10px 20px; border-radius: 12px; transition: .2s ease;
+      }
+      .tab-btn:hover { background: #f1f5f9; }
+      .tab-btn.active { background: #e0e7ff; color: #4338ca; }
+      .github-btn {
+        display: inline-flex; align-items: center; gap: 10px;
+        background: #0f172a; color: #fff; padding: 11px 20px; border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(15,23,42,.12);
+      }
+      .hero { padding: 40px 0 32px; }
+      .hero-panel {
+        border-radius: 36px;
+        background: linear-gradient(90deg, rgba(99,102,241,.12), rgba(255,255,255,.58), rgba(244,114,182,.12));
+        padding: 56px 24px;
+        text-align: center;
+      }
+      .pill {
+        display: inline-flex; align-items: center; gap: 10px;
+        background: rgba(224,231,255,.86); color: #4338ca;
+        padding: 10px 20px; border-radius: 999px; font-size: .95rem; font-weight: 500;
+      }
+      .pill-dot { width: 10px; height: 10px; border-radius: 999px; background: #6366f1; }
+      .hero h1 {
+        margin: 22px auto 0; max-width: 980px;
+        font-size: clamp(2.7rem, 7vw, 5.2rem); line-height: 1.04; letter-spacing: -.04em;
+      }
+      .gradient-text {
+        background: linear-gradient(90deg, #4f46e5, #9333ea);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .hero p {
+        margin: 22px auto 0; max-width: 840px; color: #475569;
+        font-size: 1.02rem; line-height: 1.8;
+      }
+      .hero-actions {
+        margin-top: 30px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+      }
+      .primary-btn, .secondary-btn {
+        border: 0; cursor: pointer; border-radius: 18px; padding: 16px 28px;
+      }
+      .primary-btn {
+        background: linear-gradient(180deg, #5b4df5, #4f46e5); color: #fff;
+        box-shadow: 0 14px 34px rgba(79,70,229,.28);
+      }
+      .secondary-btn { background: #fff; color: #334155; border: 1px solid var(--border); }
+      .content { padding-bottom: 40px; }
+      .section-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 22px; }
+      .section-header h2, .subsection-title { margin: 0; font-size: 2rem; letter-spacing: -.03em; }
+      .section-header p { margin: 4px 0 0; color: var(--muted); }
+      .mini-icon {
+        width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center;
+        color: #fff; box-shadow: 0 10px 22px rgba(15,23,42,.12); flex: 0 0 auto;
+      }
+      .teal { background: linear-gradient(180deg, #34d399, #14b8a6); }
+      .orange { background: linear-gradient(180deg, #fb923c, #ef4444); }
+      .purple { background: linear-gradient(180deg, #8b5cf6, #7c3aed); }
+      .indigo { background: linear-gradient(180deg, #a78bfa, #6366f1); }
+      .blue { background: linear-gradient(180deg, #60a5fa, #6366f1); }
+      .card {
+        background: var(--card); border: 1px solid var(--border); border-radius: 24px;
+        box-shadow: 0 10px 30px rgba(15,23,42,.05);
+      }
+      .proof-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+      .proof-card { padding: 28px; min-height: 100%; display: flex; flex-direction: column; gap: 20px; }
+      .proof-card h3 { margin: 0; font-size: 1.15rem; }
+      .formula {
+        min-height: 112px; border-radius: 18px; background: #f1f5f9;
+        display: grid; place-items: center; padding: 18px; text-align: center;
+        overflow-x: auto; color: #0f172a;
+      }
+      .formula-inline {
+        display: inline-flex; align-items: center; gap: .55rem;
+        font-family: "Times New Roman", "Cambria Math", Cambria, Georgia, serif;
+        font-size: clamp(1.6rem, 2.8vw, 2.15rem);
+        line-height: 1; white-space: nowrap;
+      }
+      .formula-limit { display: inline-flex; flex-direction: column; align-items: center; margin-right: .15rem; line-height: .95; }
+      .formula-lim { font-style: italic; font-size: 1em; }
+      .formula-under { font-size: .46em; margin-top: -.12rem; }
+      .formula-frac {
+        display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+        min-width: 1.45em; line-height: 1.05;
+      }
+      .formula-frac > span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 .12em .08em; }
+      .formula-frac > span:last-child { padding-top: .08em; }
+      .formula-frac-wide { min-width: 2.6em; }
+      .formula-equals { margin: 0 .05em; }
+      .proof-card p, .workflow-head p, .project-card p { margin: 0; color: #475569; line-height: 1.8; }
+      .link-row { color: #4f46e5; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; }
+      .tags { display: flex; flex-wrap: wrap; gap: 10px; }
+      .tag {
+        display: inline-flex; align-items: center; padding: 6px 14px;
+        border-radius: 999px; font-size: .82rem; font-weight: 600;
+      }
+      .tag-purple { background: #f3e8ff; color: #9333ea; }
+      .tag-orange { background: #ffedd5; color: #ea580c; }
+      .tag-indigo { background: #e0e7ff; color: #4f46e5; }
+      .workflow-card { padding: 24px 28px; }
+      .workflow-head { display: flex; gap: 16px; align-items: flex-start; }
+      .workflow-head h4, .project-card h3 { margin: 0; font-size: 1.2rem; }
+      .workflow-image { margin-top: 20px; overflow: hidden; border: 1px solid var(--border); border-radius: 18px; background: #f8fafc; }
+      .caption { margin: 12px 0 0; color: #94a3b8; text-align: center; font-style: italic; font-size: .92rem; }
+      .bottom-row {
+        margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border);
+        display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: center;
+      }
+      .watch-btn {
+        display: inline-flex; align-items: center; gap: 10px;
+        background: var(--red); color: #fff; padding: 12px 18px; border-radius: 10px; font-weight: 600;
+      }
+      .subsection-title { font-size: 1.3rem; }
+      .subsection-block { display: grid; gap: 18px; margin-top: 12px; }
+      .light-link { color: #f97316; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+      .analytics-chart-wrap {
+        margin-top: 18px; border: 1px solid var(--border); border-radius: 20px; background: #f8fafc; padding: 16px;
+      }
+      .chart-panel { border: 1px solid var(--border); border-radius: 18px; background: #fff; padding: 8px; position: relative; }
+      .chart-head {
+        margin-bottom: 12px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: center;
+      }
+      .chart-head p { margin: 0; }
+      .chart-meta { font-size: .8rem; color: #64748b; display: flex; gap: 14px; flex-wrap: wrap; }
+      .chart-meta span { display: inline-flex; align-items: center; gap: 6px; }
+      .dot { width: 10px; height: 10px; border-radius: 999px; display: inline-block; }
+      .dot-price { background: #3b82f6; }
+      .dot-avg { background: #94a3b8; }
+      .dot-band { background: #93c5fd; }
+      #chart-tooltip {
+        position: absolute; z-index: 10; pointer-events: none; display: none;
+        border: 1px solid var(--border); background: #fff; border-radius: 12px; padding: 10px 12px;
+        box-shadow: 0 16px 30px rgba(15,23,42,.12); font-size: .78rem;
+      }
+      .project-grid { margin-top: 6px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+      .project-card { padding: 24px; }
+      .project-icon { margin-bottom: 18px; }
+      .bottom-nav { margin-top: 14px; display: flex; justify-content: center; }
+      .bottom-nav-inner { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+      .footer-action {
+        display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+        min-width: 188px; border-radius: 999px; padding: 14px 24px; font-size: .96rem; font-weight: 600;
+        cursor: pointer;
+      }
+      .footer-action.primary {
+        border: 0; color: #fff; background: linear-gradient(180deg, #8b5cf6, #7c3aed);
+        box-shadow: 0 16px 34px rgba(124,58,237,.22);
+      }
+      .footer-action.secondary {
+        border: 2px solid #4ade80; background: #fff; color: #059669;
+      }
+      .footer-check {
+        display: inline-grid; place-items: center; width: 18px; height: 18px;
+        border-radius: 999px; border: 1px solid rgba(255,255,255,.6); font-size: 10px;
+      }
+      .footer {
+        padding: 30px 0 34px; display: flex; justify-content: space-between; align-items: center; gap: 16px; color: #64748b;
+      }
+      .footer-title { color: #0f172a; font-weight: 600; font-size: .95rem; }
+      .footer-sub { font-size: .78rem; }
+      .footer-github {
+        margin-left: auto; display: inline-flex; align-items: center; justify-content: center;
+        width: 40px; height: 40px; border-radius: 999px; color: #64748b; transition: .2s ease;
+      }
+      .footer-github:hover { background: #f1f5f9; color: #0f172a; }
+      .mobile-tabs { display: none; margin-top: 18px; justify-content: center; gap: 8px; }
+      @media (min-width: 901px) {
+        .bottom-nav-inner { flex-direction: row; justify-content: center; }
+      }
+      @media (max-width: 900px) {
+        .tabs { display: none; }
+        .mobile-tabs { display: flex; }
+        .proof-grid, .project-grid { grid-template-columns: 1fr; }
+        .footer { flex-direction: column; text-align: center; }
+        .footer-github { margin-left: 0; }
+      }
+      @media (max-width: 640px) {
+        .container { width: min(1120px, calc(100% - 20px)); }
+        .hero-panel { padding: 42px 18px; }
+        .workflow-card, .proof-card, .project-card { padding: 20px; }
+        .header-row { gap: 10px; }
+        .github-btn { padding: 11px 14px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header-row">
+        <div class="brand">
+          <div class="brand-badge">P</div>
+          <div class="brand-name">PillowDash</div>
+        </div>
+        <nav class="tabs">
+          <button class="tab-btn active" data-tab-target="workflows">Workflows</button>
+          <button class="tab-btn" data-tab-target="proofs">Proofs</button>
+        </nav>
+        <a class="github-btn" href="https://github.com/pillowdash/pillowdash.github.io" target="_blank" rel="noreferrer" aria-label="GitHub repository">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.67.5 12.04c0 5.1 3.3 9.42 7.87 10.95.58.11.79-.26.79-.57 0-.28-.01-1.22-.02-2.21-3.2.7-3.88-1.38-3.88-1.38-.53-1.35-1.28-1.71-1.28-1.71-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.04 1.78 2.73 1.26 3.39.97.1-.76.4-1.27.72-1.56-2.55-.29-5.23-1.29-5.23-5.72 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.14 1.17a10.8 10.8 0 0 1 5.72 0c2.18-1.48 3.14-1.17 3.14-1.17.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.08 0 4.45-2.68 5.43-5.24 5.72.41.35.78 1.03.78 2.08 0 1.5-.01 2.71-.01 3.08 0 .31.21.69.8.57 4.56-1.53 7.86-5.85 7.86-10.95C23.5 5.67 18.35.5 12 .5Z"></path></svg>
+          GitHub
+        </a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <div class="hero-panel">
+          <div class="pill"><span class="pill-dot"></span> Portfolio &amp; Mathematical Proofs</div>
+          <h1>Exploring the Beauty of <span class="gradient-text">Mathematics</span></h1>
+          <p>A collection of rigorous ε-δ proofs, automated workflows, and technical explorations. Bridging theory with practical applications.</p>
+          <div class="hero-actions">
+            <button class="primary-btn" data-tab-target="proofs">View Proofs</button>
+            <button class="secondary-btn" data-tab-target="workflows">Explore Workflows</button>
+          </div>
+          <div class="mobile-tabs">
+            <button class="tab-btn active" data-tab-target="workflows">Workflows</button>
+            <button class="tab-btn" data-tab-target="proofs">Proofs</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="container content">
+      <section id="proofs-panel" hidden>
+        <div class="section-header">
+          <div class="mini-icon purple">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z"></path></svg>
+          </div>
+          <div>
+            <h2>Calculus: ε-δ Proofs</h2>
+            <p>Rigorous mathematical proofs using formal definitions</p>
+          </div>
+        </div>
+
+        <div class="proof-grid">
+          <article class="card proof-card">
+            <div>
+              <h3>Limit of 1/x³ at x=2</h3>
+              <div class="formula">
+                <div class="formula-inline">
+                  <span class="formula-limit"><span class="formula-lim">lim</span><span class="formula-under">x→2</span></span>
+                  <span class="formula-frac"><span>1</span><span>x<sup>3</sup></span></span>
+                  <span class="formula-equals">=</span>
+                  <span class="formula-frac"><span>1</span><span>8</span></span>
+                </div>
+              </div>
+              <p>Rigorous proof using the formal definition of a limit. We analyze the behavior as x approaches the constant a.</p>
+            </div>
+            <div>
+              <div style="color:#94a3b8;font-size:.9rem;font-weight:500;">Formal derivation preview</div>
+              <div class="tags" style="margin-top:14px;">
+                <span class="tag tag-purple">Calculus</span>
+                <span class="tag tag-purple">ε-δ</span>
+                <span class="tag tag-purple">Limits</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card proof-card">
+            <div>
+              <h3>General Limit of 1/x</h3>
+              <div class="formula">
+                <div class="formula-inline">
+                  <span class="formula-limit"><span class="formula-lim">lim</span><span class="formula-under">x→a</span></span>
+                  <span class="formula-frac"><span>1</span><span>x</span></span>
+                  <span class="formula-equals">=</span>
+                  <span class="formula-frac"><span>1</span><span>a</span></span>
+                </div>
+              </div>
+              <p>Exploration of the ε-δ relationship for rational functions.</p>
+            </div>
+            <div>
+              <a class="link-row" href="https://math.stackexchange.com/questions/1187971/using-epsilon-delta-definition-to-prove-that-lim-x-to-2-fracx-1x1" target="_blank" rel="noreferrer">
+                View Detailed Solution
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              </a>
+              <div class="tags" style="margin-top:14px;">
+                <span class="tag tag-purple">Rational</span>
+                <span class="tag tag-purple">Formal Proof</span>
+                <span class="tag tag-purple">Analysis</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card proof-card">
+            <div>
+              <h3>Rational Function Proof</h3>
+              <div class="formula">
+                <div class="formula-inline">
+                  <span class="formula-limit"><span class="formula-lim">lim</span><span class="formula-under">x→2</span></span>
+                  <span class="formula-frac formula-frac-wide"><span>x − 1</span><span>x + 1</span></span>
+                  <span class="formula-equals">=</span>
+                  <span>3</span>
+                </div>
+              </div>
+              <p>Application of the triangle inequality and bounding techniques for denominators near a point.</p>
+            </div>
+            <div>
+              <a class="link-row" href="https://math.stackexchange.com/questions/1187971/using-epsilon-delta-definition-to-prove-that-lim-x-to-2-fracx-1x1" target="_blank" rel="noreferrer">
+                Discussion Thread
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              </a>
+              <div class="tags" style="margin-top:14px;">
+                <span class="tag tag-purple">Triangle Inequality</span>
+                <span class="tag tag-purple">Bounds</span>
+                <span class="tag tag-purple">Limits</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card proof-card">
+            <div>
+              <h3>The Unit Case</h3>
+              <div class="formula">
+                <div class="formula-inline">
+                  <span class="formula-limit"><span class="formula-lim">lim</span><span class="formula-under">x→1</span></span>
+                  <span class="formula-frac"><span>1</span><span>x</span></span>
+                  <span class="formula-equals">=</span>
+                  <span>1</span>
+                </div>
+              </div>
+              <p>A simplified case study highlighting the fundamental mechanics of the limit definition.</p>
+            </div>
+            <div>
+              <a class="link-row" href="https://math.stackexchange.com/questions/418961/epsilon-delta-proof-that-lim-limits-x-to-1-frac1x-1" target="_blank" rel="noreferrer">
+                Step-by-Step Breakdown
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              </a>
+              <div class="tags" style="margin-top:14px;">
+                <span class="tag tag-purple">Foundations</span>
+                <span class="tag tag-purple">Case Study</span>
+                <span class="tag tag-purple">Definitions</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <button class="footer-action secondary" data-tab-target="workflows">← Explore Workflows</button>
+            <button class="footer-action primary" data-tab-target="proofs"><span class="footer-check">✓</span>View Proofs</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="workflows-panel">
+        <div class="section-header">
+          <div class="mini-icon teal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M5.64 18.36A9 9 0 103.51 9.5L4 9m16 6-1 .5"></path></svg>
+          </div>
+          <div>
+            <h2>Workflows &amp; Automation</h2>
+            <p>Technical projects and automated systems</p>
+          </div>
+        </div>
+
+        <div class="subsection-block">
+          <div class="section-header" style="margin-bottom:0;">
+            <div class="mini-icon orange">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L15 12l-5.25-5M4 19h16a1 1 0 001-1V6a1 1 0 00-1-1H4a1 1 0 00-1 1v12a1 1 0 001 1z"></path></svg>
+            </div>
+            <div><h3 class="subsection-title">Robotic Process Automation</h3></div>
+          </div>
+
+          <article class="card workflow-card">
+            <div class="workflow-head">
+              <div class="mini-icon orange">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l.7 2.154a1 1 0 00.95.69h2.264c.969 0 1.371 1.24.588 1.81l-1.832 1.331a1 1 0 00-.364 1.118l.7 2.154c.3.921-.755 1.688-1.538 1.118l-1.832-1.331a1 1 0 00-1.176 0l-1.832 1.331c-.783.57-1.838-.197-1.539-1.118l.7-2.154a1 1 0 00-.363-1.118L6.547 7.58c-.783-.57-.38-1.81.588-1.81H9.4a1 1 0 00.95-.69l.699-2.154z"></path></svg>
+              </div>
+              <div>
+                <h4>Automation Anywhere Bot</h4>
+                <p>Developing scalable solutions using the <a class="light-link" href="https://www.automationanywhere.com/" target="_blank" rel="noreferrer">Automation Anywhere Community Edition</a>. This workflow demonstrates process logic for data handling.</p>
+              </div>
+            </div>
+            <div class="workflow-image">
+              <img src="https://pillowdash.github.io/img/automationAnywhere.png" alt="Automation Anywhere Workflow Diagram" />
+            </div>
+            <p class="caption">Figure 1: Visual representation of the logic flow and bot structure.</p>
+            <div class="bottom-row">
+              <div class="tags">
+                <span class="tag tag-orange">RPA</span>
+                <span class="tag tag-orange">Automation Anywhere</span>
+                <span class="tag tag-orange">Bot Development</span>
+              </div>
+              <a class="watch-btn" href="https://www.youtube.com/watch?v=mMaWTqTFM4w" target="_blank" rel="noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                Watch Demo
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <div class="subsection-block">
+          <div class="section-header" style="margin-bottom:0;">
+            <div class="mini-icon indigo">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M7 7V5a2 2 0 012-2h6a2 2 0 012 2v2m-1 4-4 4m0 0-4-4m4 4V9"></path></svg>
+            </div>
+            <div><h3 class="subsection-title">WooCommerce Workflows</h3></div>
+          </div>
+
+          <article class="card workflow-card">
+            <div class="workflow-head">
+              <div class="mini-icon indigo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H6.4M7 13l-1.2 6M7 13l1.5-8m8.5 14a1 1 0 100-2 1 1 0 000 2zm-8 0a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+              </div>
+              <div>
+                <h4><a class="light-link" href="https://woocommerce.com/" target="_blank" rel="noreferrer">WooCommerce</a> Transaction Workflow (Stripe Integration)</h4>
+                <p>Develop and test a complete e-commerce transaction flow, including payment processing, refund handling, and promotional logic. This workflow ensures accurate synchronization between WooCommerce, <a class="light-link" href="https://docs.stripe.com/sandboxes" target="_blank" rel="noreferrer">Stripe</a> Sandbox, and backend database systems.</p>
+              </div>
+            </div>
+            <div class="bottom-row">
+              <div class="tags">
+                <span class="tag tag-purple">WooCommerce</span>
+                <span class="tag tag-purple">E-commerce</span>
+                <span class="tag tag-purple">Workflow</span>
+              </div>
+              <a class="watch-btn" href="https://www.youtube.com/watch?v=MNfxCPcQe_s" target="_blank" rel="noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                Watch Demo
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <div class="subsection-block">
+          <div class="section-header" style="margin-bottom:0;">
+            <div class="mini-icon blue">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12v5m5-9v9m5-13v13M5 21h14"></path></svg>
+            </div>
+            <div><h3 class="subsection-title">Analytics Dashboard</h3></div>
+          </div>
+          <article class="card workflow-card">
+            <div>
+              <h4>Apple Stock (AAPL) - Bollinger Bands</h4>
+              <p>Interactive D3.js chart using Bollinger Bands algorithm. Brush/select a region to zoom in. Double click to reset.</p>
+            </div>
+            <div class="analytics-chart-wrap" id="chart-container">
+              <div class="chart-head">
+                <div>
+                  <p style="font-size:.9rem;font-weight:600;color:#0f172a;">Analytics Dashboard</p>
+                  <p style="font-size:.8rem;color:#64748b;">AAPL close price with Bollinger Bands, brush zoom, and double-click reset.</p>
+                </div>
+                <div class="chart-meta">
+                  <span><span class="dot dot-price"></span>Price</span>
+                  <span><span class="dot dot-avg"></span>Moving Avg</span>
+                  <span><span class="dot dot-band"></span>Bands</span>
+                </div>
+              </div>
+              <div class="chart-panel">
+                <div id="chart-tooltip"></div>
+                <svg id="aapl-chart" viewBox="0 0 980 430" style="width:100%;height:auto;display:block;" role="img" aria-label="AAPL stock chart with Bollinger Bands"></svg>
+              </div>
+            </div>
+            <div class="tags" style="margin-top:14px;">
+              <span class="tag tag-indigo">React</span>
+              <span class="tag tag-indigo">D3.js</span>
+              <span class="tag tag-indigo">API</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="section-header" style="margin-top: 8px; margin-bottom: 18px;">
+          <div class="mini-icon teal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6M7 7h10M7 17h10M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/></svg>
+          </div>
+          <div>
+            <h3 class="subsection-title">Other Projects</h3>
+          </div>
+        </div>
+
+        <div class="project-grid">
+          <article class="card project-card">
+            <div class="mini-icon teal project-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M5.64 18.36A9 9 0 103.51 9.5L4 9m16 6-1 .5"/></svg>
+            </div>
+            <h3>Automated Data Pipeline</h3>
+            <p>End-to-end data processing workflow with validation, transformation, and storage.</p>
+            <div class="tags" style="margin-top:14px;">
+              <span class="tag tag-indigo">Python</span>
+              <span class="tag tag-indigo">ETL</span>
+              <span class="tag tag-indigo">Automation</span>
+            </div>
+          </article>
+
+          <article class="card project-card">
+            <div class="mini-icon purple project-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+            </div>
+            <h3>CI/CD Automation Pipeline</h3>
+            <p>Automated testing, building, and deployment with rollback capabilities using industry standard tooling.</p>
+            <div class="tags" style="margin-top:14px;">
+              <span class="tag tag-indigo">GitHub Actions</span>
+              <span class="tag tag-indigo">Docker</span>
+              <span class="tag tag-indigo">AWS</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <button class="footer-action secondary" data-tab-target="workflows">← Explore Workflows</button>
+            <button class="footer-action primary" data-tab-target="proofs"><span class="footer-check">✓</span>View Proofs</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer-brand">
+          <div class="footer-badge">P</div>
+          <div>
+            <div class="footer-title">PillowDash</div>
+            <div class="footer-sub">Portfolio &amp; Proofs</div>
+          </div>
+        </div>
+        <div>© 2024 PillowDash. All rights reserved.</div>
+        <a class="footer-github" href="https://github.com/pillowdash/pillowdash.github.io" target="_blank" rel="noreferrer" aria-label="GitHub repository">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.67.5 12.04c0 5.1 3.3 9.42 7.87 10.95.58.11.79-.26.79-.57 0-.28-.01-1.22-.02-2.21-3.2.7-3.88-1.38-3.88-1.38-.53-1.35-1.28-1.71-1.28-1.71-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.04 1.78 2.73 1.26 3.39.97.1-.76.4-1.27.72-1.56-2.55-.29-5.23-1.29-5.23-5.72 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.14 1.17a10.8 10.8 0 0 1 5.72 0c2.18-1.48 3.14-1.17 3.14-1.17.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.08 0 4.45-2.68 5.43-5.24 5.72.41.35.78 1.03.78 2.08 0 1.5-.01 2.71-.01 3.08 0 .31.21.69.8.57 4.56-1.53 7.86-5.85 7.86-10.95C23.5 5.67 18.35.5 12 .5Z"></path></svg>
+        </a>
+      </footer>
+    </main>
+
+    <script>
+      const proofPanel = document.getElementById('proofs-panel');
+      const workflowPanel = document.getElementById('workflows-panel');
+      const tabButtons = Array.from(document.querySelectorAll('[data-tab-target]'));
+
+      function setTab(tab) {
+        const proofsActive = tab === 'proofs';
+        proofPanel.hidden = !proofsActive;
+        workflowPanel.hidden = proofsActive;
+        tabButtons.forEach((btn) => {
+          if (btn.classList.contains('tab-btn')) {
+            btn.classList.toggle('active', btn.dataset.tabTarget === tab);
+          }
+        });
+      }
+
+      tabButtons.forEach((btn) => {
+        btn.addEventListener('click', () => setTab(btn.dataset.tabTarget));
+      });
+
+      setTab('workflows');
+
+      async function drawChart() {
+        const svg = d3.select('#aapl-chart');
+        const tooltip = d3.select('#chart-tooltip');
+        const container = document.getElementById('chart-container');
+        const parseDate = d3.timeParse('%Y-%m-%d');
+        const csvUrl = 'https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv';
+
+        try {
+          const text = await fetch(csvUrl).then((r) => r.text());
+          const rows = d3.csvParse(text);
+          const data = rows.map((row) => ({
+            date: parseDate(row.Date) || new Date(row.Date),
+            close: +row['AAPL.Close'],
+            upper: +row.up,
+            lower: +row.dn,
+            average: +row.mavg,
+          })).filter((d) => !Number.isNaN(d.date.getTime()) && [d.close, d.upper, d.lower, d.average].every((v) => !Number.isNaN(v)));
+
+          const width = 980;
+          const height = 430;
+          const margin = { top: 16, right: 18, bottom: 100, left: 58 };
+          const contextHeight = 62;
+          const contextTop = height - 70;
+          const innerWidth = width - margin.left - margin.right;
+          const innerHeight = height - margin.top - margin.bottom;
+
+          svg.selectAll('*').remove();
+
+          const defs = svg.append('defs');
+          const bandGradient = defs.append('linearGradient').attr('id', 'band-gradient').attr('x1', '0%').attr('x2', '0%').attr('y1', '0%').attr('y2', '100%');
+          bandGradient.append('stop').attr('offset', '0%').attr('stop-color', '#60a5fa').attr('stop-opacity', 0.32);
+          bandGradient.append('stop').attr('offset', '100%').attr('stop-color', '#60a5fa').attr('stop-opacity', 0.06);
+          const priceGradient = defs.append('linearGradient').attr('id', 'price-gradient').attr('x1', '0%').attr('x2', '100%').attr('y1', '0%').attr('y2', '0%');
+          priceGradient.append('stop').attr('offset', '0%').attr('stop-color', '#6366f1');
+          priceGradient.append('stop').attr('offset', '100%').attr('stop-color', '#2563eb');
+
+          const chart = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+          const context = svg.append('g').attr('transform', `translate(${margin.left},${contextTop})`);
+
+          const x = d3.scaleTime().domain(d3.extent(data, (d) => d.date)).range([0, innerWidth]);
+          const xMini = d3.scaleTime().domain(x.domain()).range([0, innerWidth]);
+          const y = d3.scaleLinear().domain([(d3.min(data, (d) => d.lower) || 0) * 0.985, (d3.max(data, (d) => d.upper) || 0) * 1.015]).nice().range([innerHeight, 0]);
+          const yMini = d3.scaleLinear().domain(y.domain()).range([contextHeight, 0]);
+
+          const area = d3.area().x((d) => x(d.date)).y0((d) => y(d.lower)).y1((d) => y(d.upper)).curve(d3.curveMonotoneX);
+          const areaMini = d3.area().x((d) => xMini(d.date)).y0((d) => yMini(d.lower)).y1((d) => yMini(d.upper)).curve(d3.curveMonotoneX);
+          const line = d3.line().x((d) => x(d.date)).y((d) => y(d.close)).curve(d3.curveMonotoneX);
+          const avgLine = d3.line().x((d) => x(d.date)).y((d) => y(d.average)).curve(d3.curveMonotoneX);
+          const lineMini = d3.line().x((d) => xMini(d.date)).y((d) => yMini(d.close)).curve(d3.curveMonotoneX);
+
+          const yAxis = d3.axisLeft(y).ticks(6).tickSize(-innerWidth).tickFormat((v) => `$${v}`);
+          const xAxis = d3.axisBottom(x).ticks(6).tickSizeOuter(0);
+
+          chart.append('g')
+            .call(yAxis)
+            .call((g) => g.select('.domain').remove())
+            .call((g) => g.selectAll('line').attr('stroke', 'rgba(148,163,184,0.22)'))
+            .call((g) => g.selectAll('text').attr('fill', '#64748b').attr('font-size', 12));
+
+          const xAxisGroup = chart.append('g')
+            .attr('transform', `translate(0,${innerHeight})`)
+            .call(xAxis)
+            .call((g) => g.select('.domain').attr('stroke', 'rgba(148,163,184,0.24)'))
+            .call((g) => g.selectAll('line').attr('stroke', 'rgba(148,163,184,0.24)'))
+            .call((g) => g.selectAll('text').attr('fill', '#64748b').attr('font-size', 12));
+
+          const bandPath = chart.append('path').datum(data).attr('fill', 'url(#band-gradient)').attr('stroke', 'none').attr('d', area);
+          const avgPath = chart.append('path').datum(data).attr('fill', 'none').attr('stroke', '#94a3b8').attr('stroke-width', 1.5).attr('stroke-dasharray', '5 6').attr('d', avgLine);
+          const pricePath = chart.append('path').datum(data).attr('fill', 'none').attr('stroke', 'url(#price-gradient)').attr('stroke-width', 2.6).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('d', line);
+
+          context.append('path').datum(data).attr('fill', 'rgba(99,102,241,0.08)').attr('d', areaMini);
+          context.append('path').datum(data).attr('fill', 'none').attr('stroke', 'rgba(79,70,229,0.85)').attr('stroke-width', 1.5).attr('d', lineMini);
+          context.append('g')
+            .attr('transform', `translate(0,${contextHeight})`)
+            .call(d3.axisBottom(xMini).ticks(6).tickSizeOuter(0))
+            .call((g) => g.select('.domain').attr('stroke', 'rgba(148,163,184,0.2)'))
+            .call((g) => g.selectAll('line').attr('stroke', 'rgba(148,163,184,0.2)'))
+            .call((g) => g.selectAll('text').attr('fill', '#94a3b8').attr('font-size', 11));
+
+          const focus = chart.append('g').style('display', 'none');
+          focus.append('line').attr('class', 'focus-line').attr('y1', 0).attr('y2', innerHeight).attr('stroke', 'rgba(15,23,42,0.28)').attr('stroke-dasharray', '4 5');
+          focus.append('circle').attr('r', 4.5).attr('fill', '#fff').attr('stroke', '#4f46e5').attr('stroke-width', 2.5);
+
+          const bisect = d3.bisector((d) => d.date).center;
+
+          function redraw(domain) {
+            x.domain(domain);
+            xAxisGroup.call(xAxis).call((g) => g.selectAll('text').attr('fill', '#64748b').attr('font-size', 12));
+            bandPath.attr('d', area);
+            avgPath.attr('d', avgLine);
+            pricePath.attr('d', line);
+          }
+
+          chart.append('rect')
+            .attr('width', innerWidth)
+            .attr('height', innerHeight)
+            .attr('fill', 'transparent')
+            .style('cursor', 'crosshair')
+            .on('mouseenter', () => {
+              focus.style('display', null);
+              tooltip.style('display', 'block');
+            })
+            .on('mouseleave', () => {
+              focus.style('display', 'none');
+              tooltip.style('display', 'none');
+            })
+            .on('mousemove', function(event) {
+              const [mx] = d3.pointer(event, this);
+              const index = bisect(data, x.invert(mx));
+              const point = data[index];
+              if (!point) return;
+              const cx = x(point.date);
+              const cy = y(point.close);
+              const containerWidth = container.getBoundingClientRect().width;
+              focus.attr('transform', `translate(${cx},${cy})`);
+              focus.select('.focus-line').attr('x1', 0).attr('x2', 0).attr('transform', `translate(0,${-cy})`);
+              tooltip.style('display', 'block');
+              tooltip.style('left', `${Math.min(Math.max(cx + margin.left + 16, 12), containerWidth - 170)}px`);
+              tooltip.style('top', `${Math.max(cy + margin.top - 10, 8)}px`);
+              tooltip.html(`<div style="font-weight:600;color:#0f172a;">${d3.timeFormat('%b %d, %Y')(point.date)}</div><div style="margin-top:4px;">Close: <span style="color:#0f172a;">$${point.close.toFixed(2)}</span></div><div style="color:#64748b;">Band: $${point.lower.toFixed(2)} – $${point.upper.toFixed(2)}</div>`);
+            });
+
+          const brush = d3.brushX().extent([[0, 0], [innerWidth, contextHeight]]).on('brush end', (event) => {
+            const selection = event.selection;
+            if (!selection) return;
+            redraw([xMini.invert(selection[0]), xMini.invert(selection[1])]);
+          });
+
+          const brushGroup = context.append('g').call(brush);
+          brushGroup.call(brush.move, xMini.range());
+
+          svg.on('dblclick', () => {
+            redraw(xMini.domain());
+            brushGroup.call(brush.move, xMini.range());
+          });
+        } catch (error) {
+          container.insertAdjacentHTML('beforeend', '<p style="padding:10px 2px 0;color:#ef4444;font-size:.82rem;">Unable to load the AAPL dataset for the dashboard.</p>');
+        }
+      }
+
+      drawChart();
+    </script>
+  </body>
+</html>
