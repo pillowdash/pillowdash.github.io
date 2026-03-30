@@ -74,11 +74,11 @@
                     <span class="font-bold text-xl text-slate-800">PillowDash</span>
                 </div>
                 <nav class="hidden sm:flex items-center gap-1">
-                    <button onclick="showSection('proofs')" id="btn-proofs" class="px-4 py-2 rounded-lg text-sm font-medium transition-all bg-indigo-100 text-indigo-700">
-                        Proofs
-                    </button>
-                    <button onclick="showSection('workflows')" id="btn-workflows" class="px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-100">
+                    <button onclick="showSection('workflows')" id="btn-workflows" class="px-4 py-2 rounded-lg text-sm font-medium transition-all bg-indigo-100 text-indigo-700">
                         Workflows
+                    </button>
+                    <button onclick="showSection('proofs')" id="btn-proofs" class="px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-100">
+                        Proofs
                     </button>
                 </nav>
                 <a href="https://github.com/pillowdash" target="_blank" rel="noopener noreferrer" 
@@ -113,13 +113,13 @@
                     Bridging theory with practical applications.
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <button onclick="showSection('proofs'); document.getElementById('main-content').scrollIntoView({behavior: 'smooth'})" 
-                            class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">
-                        View Proofs
-                    </button>
                     <button onclick="showSection('workflows'); document.getElementById('main-content').scrollIntoView({behavior: 'smooth'})" 
                             class="px-6 py-3 bg-white text-slate-700 font-medium rounded-xl hover:bg-slate-50 transition-colors border border-slate-200">
                         Explore Workflows
+                    </button>
+                    <button onclick="showSection('proofs'); document.getElementById('main-content').scrollIntoView({behavior: 'smooth'})" 
+                            class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">
+                        View Proofs
                     </button>
                 </div>
             </div>
@@ -142,7 +142,7 @@
     <main id="main-content" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         
         <!-- Proofs Section -->
-        <section id="proofs-section">
+        <section id="proofs-section" class="hidden">
             <div class="flex items-center gap-3 mb-8">
                 <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -227,23 +227,23 @@
 
             <!-- Bottom navigation to switch tabs (Proofs section) -->
             <div class="mt-12 text-center flex flex-wrap justify-center gap-4">
-                <button id="proofs-bottom-proofs-btn" onclick="switchTab('proofs')" class="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold shadow-lg transform transition-all duration-300">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span>View Proofs</span>
-                </button>
                 <button id="proofs-bottom-workflows-btn" onclick="switchTab('workflows')" class="inline-flex items-center gap-2 bg-white/50 text-emerald-600 border-2 border-emerald-300 px-8 py-4 rounded-full font-semibold hover:bg-gradient-to-r hover:from-emerald-500 hover:to-teal-500 hover:text-white hover:border-transparent transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                     <span>Explore Workflows</span>
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                     </svg>
                 </button>
+                <button id="proofs-bottom-proofs-btn" onclick="switchTab('proofs')" class="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold shadow-lg transform transition-all duration-300">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>View Proofs</span>
+                </button>
             </div>
         </section>
 
         <!-- Workflows Section -->
-        <section id="workflows-section" class="hidden">
+        <section id="workflows-section">
             <div class="flex items-center gap-3 mb-8">
                 <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
