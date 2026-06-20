@@ -247,7 +247,7 @@ sudo nvme list</code></pre>
 nvme1n1   1T   new storage disk</code></pre>
     <p>Be very careful: the device name may be different. In the commands below, I will assume the new SSD is:</p>
     <pre><code>/dev/nvme1n1</code></pre>
-    <p><strong>Do not run formatting commands until you are 100% sure.</strong></p>
+    <p><strong><font color=red>Do not run formatting commands until you are 100% sure.</font></strong></p>
 
     <h2>2. Partition and format the new SSD</h2>
     <p>For simple, reliable Linux backup storage, I suggest <strong>ext4</strong> <font color=red>!!!!!Be 100% sure you are putting the new SSD name not the existing SSD name in the steps to proceed each line</font>.</p>
@@ -277,8 +277,12 @@ sudo blkid /dev/nvme1n1p1</code></pre>
     <p>Edit <code>/etc/fstab</code>:</p>
     <pre><code># Open the filesystem table file in the vim text editor to configure persistent mounting
 sudo vim /etc/fstab</code></pre>
-    <p>Add this line, replacing the UUID with your actual <font color=red>UUID</font>:</p>
+    <p>Add this line at the end of <code>/etc/fstab</code>, replacing the UUID with your actual <font color=red>UUID</font>:</p>
     <pre><code>UUID=abcd-1234-xxxx /mnt/storage ext4 defaults,noatime,nodev,nosuid 0 2</code></pre>
+    <p>Save <code>/etc/fstab</code> after adding the line. (There is backup file named fstab.bak  under home directory)</p> 
+    <pre><code># Compare /etc/fstab with backup file 
+vimdiff /etc/fstab ~/fstab.bak</code></pre>
+
     <p>Then test:</p>
     <pre><code># Mount all filesystems specified in /etc/fstab to verify the new configuration is valid
 sudo mount -a
