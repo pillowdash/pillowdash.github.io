@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yealink W76P IP Conflict Resolution Guide</title>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background-color: #eef2f5;
+        color: #2c3e50;
+        line-height: 1.6;
+        margin: 0;
+        padding: 40px 20px;
+    }
+    .container {
+        max-width: 850px;
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 50px 60px;
+        border-radius: 10px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    }
+    header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    h1 {
+        color: #1a252f;
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 28px;
+    }
+    .subtitle {
+        color: #7f8c8d;
+        font-size: 16px;
+        margin-top: 0;
+    }
+    h2 {
+        color: #2980b9;
+        font-size: 22px;
+        border-bottom: 2px solid #ecf0f1;
+        padding-bottom: 8px;
+        margin-top: 40px;
+    }
+    h3 {
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 25px;
+    }
+    p, li {
+        font-size: 15px;
+        color: #4a5568;
+    }
+    .info-box {
+        background-color: #f4f9fc;
+        border-left: 5px solid #3498db;
+        padding: 15px 20px;
+        margin: 25px 0;
+        border-radius: 0 6px 6px 0;
+    }
+    .warning-box {
+        background-color: #fff9e6;
+        border-left: 5px solid #f39c12;
+        padding: 15px 20px;
+        margin: 25px 0;
+        border-radius: 0 6px 6px 0;
+    }
+    .note-box {
+        background-color: #e8f5e9;
+        border-left: 5px solid #4caf50;
+        padding: 15px 20px;
+        margin: 15px 0 25px 0;
+        border-radius: 0 6px 6px 0;
+        font-size: 14px;
+    }
+    code {
+        background-color: #f1f2f6;
+        border: 1px solid #dfe4ea;
+        padding: 3px 6px;
+        border-radius: 4px;
+        font-family: 'Courier New', Courier, monospace;
+        color: #c0392b;
+        font-size: 14px;
+    }
+    ol {
+        padding-left: 25px;
+    }
+    li {
+        margin-bottom: 12px;
+    }
+    .phase-block {
+        margin-bottom: 35px;
+    }
+    .step-title {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    .img-container {
+        text-align: center;
+        margin: 30px 0;
+    }
+    .img-container img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        max-height: 400px;
+    }
+    .img-caption {
+        font-size: 13px;
+        color: #7f8c8d;
+        margin-top: 8px;
+        font-style: italic;
+    }
+    .footer {
+        margin-top: 50px;
+        text-align: center;
+        color: #95a5a6;
+        font-size: 13px;
+        border-top: 1px solid #ecf0f1;
+        padding-top: 20px;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Yealink W76P IP Conflict Resolution Guide</h1>
+            <p class="subtitle">Complete Diagnostic and Resolution Procedures for DHCP/Static IP Collisions</p>
+        </header>
+
+        <div class="info-box">
+            <strong>System Architecture & The Cause of the Conflict</strong>
+            <p>The Yealink W76P is a DECT phone system comprised of two main components: a wireless handset (W56H) and a base station (W70B). The handset communicates wirelessly with the base station, while the <strong>base station</strong> connects directly to your internal network via an Ethernet cable.</p>
+            <p>Because the base station handles all the network traffic, it is assigned the IP address. If the base station was previously configured with a <strong>Static IP</strong> that falls within your router's active DHCP pool, the router may attempt to assign that exact same IP to a desktop computer. This creates an IP collision, causing the router to drop one or both devices from the network.</p>
+        </div>
+
+        <div class="img-container">
+            <img src="https://c1.neweggimages.com/productimage/nb640/AJ7WD2202140U1GML5D.jpg" alt="Yealink W70B Base Station">
+            <div class="img-caption">Yealink W70B Base Station Unit</div>
+        </div>
+        
+        <div class="note-box">
+            <strong>Note on the Base Station:</strong> The base station is the physical unit that connects directly to the internal network router or switch via an Ethernet cable. The circular button in the very center is the <strong>Paging Button</strong> (used for pairing handsets and performing factory resets). The three LED indicators on the side display the status of Power, Network Connection, and Handset Registration.
+        </div>
+
+        <div class="phase-block">
+            <h2>Phase 1: Identify the Conflicting IPs</h2>
+            <p>Confirm the IP addresses of both the offline computer and the Yealink base station to verify the conflict.</p>
+            <ol>
+                <li><span class="step-title">Get the Computer's IP:</span> On the affected Windows computer, open the Start menu, type <code>cmd</code>, and press Enter to open the Command Prompt. Type <code>ipconfig</code> and press Enter. Look for the <strong>IPv4 Address</strong> (e.g., <code>192.168.1.50</code>) and write it down.</li>
+                <li><span class="step-title">Get the Base Station's IP:</span> Turn on the Yealink wireless handset. Press the <strong>OK</strong> button (the center button on the directional pad). Navigate to <strong>Status</strong> > <strong>Base</strong>. Scroll down to view the base station's IPv4 address.</li>
+                <li><span class="step-title">Verify:</span> If both IP addresses are identical, you have confirmed the source of the conflict.</li>
+            </ol>
+        </div>
+
+        <div class="phase-block">
+            <h2>Phase 2: Reconfigure the Base Station (Web Interface)</h2>
+            <p>The cleanest way to resolve the conflict is to log into the base station and switch its network setting from Static IP to DHCP. This forces the device to ask the router for a safe, available address.</p>
+            <ol>
+                <li><span class="step-title">Connect:</span> Plug the base station into the network (even if it temporarily knocks the computer offline). Using a separate computer connected to the same network, open a web browser.</li>
+                <li><span class="step-title">Access the Portal:</span> Type the Yealink base station's IP address into the browser's address bar (e.g., <code>http://192.168.1.50</code>) and hit Enter.</li>
+                <li><span class="step-title">Log In:</span> You will be prompted for credentials. The default Yealink login is Username: <code>admin</code> and Password: <code>admin</code>.</li>
+                <li><span class="step-title">Modify Network Settings:</span> On the left-hand menu, navigate to <strong>Network</strong>, then click <strong>Basic</strong>.</li>
+                <li><span class="step-title">Enable DHCP:</span> Locate the <strong>IPv4 Config</strong> section. Change the mode from <strong>Static IP</strong> to <strong>DHCP</strong>.</li>
+                <li><span class="step-title">Save & Reboot:</span> Click <strong>Confirm</strong> or <strong>Save</strong> at the bottom of the screen. The base station will reboot and pull a new, safe IP address, resolving the conflict.</li>
+            </ol>
+        </div>
+
+        <div class="phase-block">
+            <h2>Phase 3: The Bulletproof Router Fix (Optional)</h2>
+            <p>For long-term network stability, it is highly recommended to assign IP addresses directly through the router's settings.</p>
+            <ol>
+                <li>Log into the clinic's network router using its gateway IP address.</li>
+                <li>Navigate to the <strong>DHCP Client List</strong> or <strong>Attached Devices</strong> section.</li>
+                <li>Locate the Yealink phone and the affected computer using their MAC addresses.</li>
+                <li>Create a <strong>DHCP Reservation</strong> (Static Lease) for both devices. Let the computer keep its current IP, and assign the Yealink base station an IP address safely outside the DHCP assignment pool (e.g., <code>.200</code> or higher).</li>
+            </ol>
+        </div>
+
+        <div class="phase-block">
+            <h2>Phase 4: Factory Reset (The Nuclear Option)</h2>
+            <p>If the <code>admin</code> password for the Yealink web portal was changed by a previous IT administrator and you cannot log in, you must perform a hardware factory reset to clear the static IP.</p>
+            
+            <div class="warning-box">
+                <strong>Warning:</strong> A factory reset wipes all settings, including the RingCentral provisioning. Once reset, the phone will need to be re-provisioned to the RingCentral system to make and receive calls.
+            </div>
+
+            <ol>
+                <li><span class="step-title">Disconnect Power:</span> Unplug the power cable from the base station (or the Ethernet cable if it is using Power over Ethernet). Ensure no indicator lights are on.</li>
+                <li><span class="step-title">Hold Paging Button:</span> Locate the physical circular paging button (shown in the image above) on the front of the base station. Press and hold it down.</li>
+                <li><span class="step-title">Reconnect Power:</span> While continuing to hold the paging button, plug the power (or Ethernet) back in.</li>
+                <li><span class="step-title">Wait for Solid Lights:</span> Keep holding the button for roughly 15-20 seconds until all three LED lights turn <strong>solid green</strong>.</li>
+                <li><span class="step-title">Release:</span> Release the button. The base station will restart with factory defaults, clearing the IP conflict and defaulting back to DHCP.</li>
+            </ol>
+        </div>
+
+        <div class="footer">
+            <p>Have fun.</p>
+        </div>
+    </div>
+</body>
+</html>
