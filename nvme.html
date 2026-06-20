@@ -234,7 +234,7 @@
     <p>Then add the two trusted users to this group.</p>
 
     <hr>
-    <p><font>IMPORTANT: Make a note for the steps you have done</font color=red></p>
+    <p><font color=red>IMPORTANT: Make a note for the steps you have done</font></p>
     <h2>1. Identify the new NVMe safely</h2>
     <p>After installing the SSD, boot Linux and run:</p>
     <pre><code># List all block devices with columns for name, size, model, serial, filesystem type, and mount points
@@ -251,7 +251,7 @@ nvme1n1   1T   new storage disk</code></pre>
 
     <h2>2. Partition and format the new SSD</h2>
     <p>For simple, reliable Linux backup storage, I suggest <strong>ext4</strong> <font>!!!!!Be 100% sure you are putting the new SSD name not the existing SSD name in the steps to proceed each line</font color=red>.</p>
-    <p><font>!!!!!STOP IF YOU ARE NOT SURE!!!!!</font color=red>.</p>
+    <p><font color=red>!!!!!STOP IF YOU ARE NOT SURE!!!!!</font>.</p>
 
     <pre><code># Create a new GPT partition table on the specified NVMe drive
 sudo parted /dev/nvme1n1 --script mklabel gpt
