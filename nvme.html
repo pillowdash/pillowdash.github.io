@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVMe Backup & Storage Plan</title>
+    <style>
+        /* Global reset & base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f6f9fc;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #1e293b;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 2.5rem 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #0b2b44;
+            margin-bottom: 0.5rem;
+            border-bottom: 4px solid #e2edf7;
+            padding-bottom: 0.75rem;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #1a4a6f;
+            margin-top: 2.5rem;
+            margin-bottom: 0.75rem;
+            border-left: 6px solid #3b82f6;
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e4b6e;
+            margin-top: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p, li {
+            margin-bottom: 0.75rem;
+        }
+
+        ul, ol {
+            padding-left: 1.8rem;
+            margin-bottom: 1.25rem;
+        }
+
+        li {
+            margin-bottom: 0.4rem;
+        }
+
+        strong {
+            color: #0b2b44;
+        }
+
+        a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code blocks */
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.25rem 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: "Fira Code", "JetBrains Mono", "Cascadia Code", monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 1.25rem 0;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        code {
+            font-family: "Fira Code", "JetBrains Mono", "Cascadia Code", monospace;
+            font-size: 0.9em;
+            background: #eef3f8;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            color: #1e293b;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: 0.9rem;
+        }
+
+        /* Directory tree styling */
+        .tree {
+            background: #f1f5f9;
+            padding: 1.25rem 1.75rem;
+            border-radius: 12px;
+            font-family: "Fira Code", "JetBrains Mono", monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #0b2b44;
+            margin: 1.25rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tree .dir {
+            color: #1e4b6e;
+            font-weight: 500;
+        }
+        .tree .comment {
+            color: #64748b;
+            font-style: italic;
+        }
+
+        /* Tables for simple info */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid #d1d9e6;
+            padding: 0.6rem 1rem;
+            text-align: left;
+        }
+
+        th {
+            background: #e9f0f8;
+            font-weight: 600;
+            color: #0b2b44;
+        }
+
+        /* Blockquotes / notes */
+        blockquote {
+            background: #f1f8ff;
+            border-left: 6px solid #3b82f6;
+            padding: 0.75rem 1.5rem;
+            margin: 1.25rem 0;
+            border-radius: 0 12px 12px 0;
+            color: #1e3a5f;
+        }
+
+        blockquote strong {
+            color: #1a4a6f;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px dashed #dce5ef;
+            margin: 2.5rem 0;
+        }
+
+        .important-box {
+            background: #fef9e7;
+            border-left: 6px solid #f59e0b;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.25rem 0;
+        }
+
+        .important-box strong {
+            color: #b45309;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .container {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            pre {
+                font-size: 0.8rem;
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>NVMe Backup &amp; Storage Plan</h1>
+
+    <p>— mounting the new 1 TB NVMe at <code>/mnt/storage</code> is a good plan. I would structure it as <strong>dedicated backup + shared storage</strong>, with controlled group permissions.</p>
+
+    <div class="important-box">
+        <strong>Important note:</strong> because the main SSD is <strong>2 TB</strong> and the backup SSD is <strong>1 TB</strong>, do <strong>not</strong> plan this as a full disk clone unless the used data is well below 1 TB. Use it for selected backups: <code>/home</code>, important configs, Docker volumes, project folders, databases, Mattermost data, etc.
+    </div>
+
+    <h2>Recommended layout</h2>
+
+    <div class="tree">
+        <span class="dir">/mnt/storage/</span><br>
+        ├──────────── <span class="dir">shared/</span>              <span class="comment"># files shared by selected users</span><br>
+        ├──────────── <span class="dir">backups/</span>             <span class="comment"># automated system/application backups</span><br>
+        │      ├────────────────── <span class="dir">home/</span><br>
+        │      ├────────────────── <span class="dir">etc/</span><br>
+        │      ├────────────────── <span class="dir">docker/</span><br>
+        │      ├────────────────── <span class="dir">databases/</span><br>
+        │      └────────────────── <span class="dir">logs/</span><br>
+        └──────────── <span class="dir">staging/</span>             <span class="comment"># temporary copy/import area</span>
+    </div>
+
+    <p>Use a Linux group such as:</p>
+    <pre><code>backupgroup</code></pre>
+    <p>Then add the two trusted users to this group.</p>
+
+    <hr>
+
+    <h2>1. Identify the new NVMe safely</h2>
+    <p>After installing the SSD, boot Linux and run:</p>
+    <pre><code>lsblk -o NAME,SIZE,MODEL,SERIAL,FSTYPE,MOUNTPOINTS</code></pre>
+    <p>Also useful:</p>
+    <pre><code>sudo nvme list</code></pre>
+    <p>You may see something like:</p>
+    <pre><code>nvme0n1   2T   existing system disk
+    nvme1n1   1T   new storage disk</code></pre>
+    <p>Be very careful: the device name may be different. In the commands below, I will assume the new SSD is:</p>
+    <pre><code>/dev/nvme1n1</code></pre>
+    <p><strong>Do not run formatting commands until you are 100% sure.</strong></p>
+
+    <h2>2. Partition and format the new SSD</h2>
+    <p>For simple, reliable Linux backup storage, I suggest <strong>ext4</strong>.</p>
+    <pre><code>sudo parted /dev/nvme1n1 --script mklabel gpt
+    sudo parted /dev/nvme1n1 --script mkpart primary ext4 0% 100%
+    sudo mkfs.ext4 -L storage1tb /dev/nvme1n1p1</code></pre>
+    <p>Check it:</p>
+    <pre><code>lsblk -f</code></pre>
+    <p>You should see something like:</p>
+    <pre><code>nvme1n1p1  ext4  storage1tb  &lt;UUID&gt;</code></pre>
+
+    <h2>3. Mount it at <code>/mnt/storage</code></h2>
+    <p>Create the mount point:</p>
+    <pre><code>sudo mkdir -p /mnt/storage</code></pre>
+    <p>Get the <font color=red>UUID</font>:</p>
+    <pre><code>sudo blkid /dev/nvme1n1p1</code></pre>
+    <p>Example output:</p>
+    <pre><code>/dev/nvme1n1p1: LABEL="storage1tb" UUID="abcd-1234-..." TYPE="ext4"</code></pre>
+    <p>Edit <code>/etc/fstab</code>:</p>
+    <pre><code>sudo vim /etc/fstab</code></pre>
+    <p>Add this line, replacing the UUID with your actual <font color=red>UUID</font>:</p>
+    <pre><code>UUID=abcd-1234-xxxx /mnt/storage ext4 defaults,noatime,nodev,nosuid 0 2</code></pre>
+    <p>Then test:</p>
+    <pre><code>sudo mount -a
+    df -h /mnt/storage</code></pre>
+    <p>If no error appears and <code>/mnt/storage</code> shows about 900+ GB usable space, the mount is good.</p>
+
+    <h2>4. Create the group and add users</h2>
+    <p>Create the group:</p>
+    <pre><code>sudo groupadd backupgroup</code></pre>
+    <p>Add two users to it. Replace <code>user1</code> and <code>user2</code> with the real Linux usernames:</p>
+    <pre><code>sudo usermod -aG backupgroup user1
+    sudo usermod -aG backupgroup user2</code></pre>
+    <p>Example:</p>
+    <pre><code>sudo usermod -aG backupgroup andrew
+    sudo usermod -aG backupgroup tiger</code></pre>
+    <p>Users must log out and log back in for group membership to apply.</p>
+    <p>Check:</p>
+    <pre><code>groups andrew
+    groups tiger</code></pre>
+
+    <h2>5. Create folders with proper permissions</h2>
+    <p>Create the directory structure:</p>
+    <pre><code>sudo mkdir -p /mnt/storage/shared
+    sudo mkdir -p /mnt/storage/backups/home
+    sudo mkdir -p /mnt/storage/backups/etc
+    sudo mkdir -p /mnt/storage/backups/docker
+    sudo mkdir -p /mnt/storage/backups/databases
+    sudo mkdir -p /mnt/storage/backups/logs
+    sudo mkdir -p /mnt/storage/staging</code></pre>
+    <p>Set ownership:</p>
+    <pre><code>sudo chown -R root:backupgroup /mnt/storage</code></pre>
+    <p>Set permissions:</p>
+    <pre><code>sudo chmod 2770 /mnt/storage/shared
+    sudo chmod 2770 /mnt/storage/staging
+    sudo chmod 2770 /mnt/storage/backups
+    sudo chmod 2770 /mnt/storage/backups/*</code></pre>
+    <p>The <code>2</code> in <code>2770</code> is important. It means new files created inside these folders inherit the group <code>backupgroup</code>.</p>
+    <p>Optional but recommended: use default ACLs so new files are group-writable:</p>
+    <pre><code>sudo setfacl -R -m g:backupgroup:rwx /mnt/storage/shared
+    sudo setfacl -R -m d:g:backupgroup:rwx /mnt/storage/shared
+
+    sudo setfacl -R -m g:backupgroup:rwx /mnt/storage/staging
+    sudo setfacl -R -m d:g:backupgroup:rwx /mnt/storage/staging</code></pre>
+    <p>For backups, I would be more careful. Usually only root or a backup service should write there. Users can read if needed, but not casually modify backup history.</p>
+    <p>A safer backup permission model:</p>
+    <pre><code>sudo chown -R root:backupgroup /mnt/storage/backups
+    sudo chmod -R 2750 /mnt/storage/backups</code></pre>
+    <p>That means:</p>
+    <ul>
+        <li><strong>root</strong>: full control</li>
+        <li><strong>backupgroup</strong>: read/enter</li>
+        <li><strong>others</strong>: no access</li>
+    </ul>
+    <p>For shared files:</p>
+    <pre><code>sudo chmod 2770 /mnt/storage/shared</code></pre>
+    <p>That means:</p>
+    <ul>
+        <li><strong>owner/root</strong>: full control</li>
+        <li><strong>backupgroup</strong>: full control</li>
+        <li><strong>others</strong>: no access</li>
+    </ul>
+
+    <h2>6. Recommended backup approach</h2>
+    <p>For simple local backups, start with <code>rsync</code>.</p>
+    <p>Create a backup script:</p>
+    <pre><code>sudo vim /usr/local/sbin/local-backup.sh</code></pre>
+    <p>Paste:</p>
+    <pre><code>#!/bin/bash
+    set -euo pipefail
+
+    DEST="/mnt/storage/backups"
+    DATE="$(date +%F_%H-%M-%S)"
+    LOG="$DEST/logs/backup-$DATE.log"
+
+    mkdir -p "$DEST/home" "$DEST/etc" "$DEST/docker" "$DEST/logs"
+
+    echo "Backup started at $(date)" | tee -a "$LOG"
+
+    rsync -aAXHv --delete \
+      --exclude='.cache/' \
+      --exclude='Downloads/' \
+      /home/ "$DEST/home/current/" | tee -a "$LOG"
+
+    rsync -aAXHv /etc/ "$DEST/etc/current/" | tee -a "$LOG"
+
+    if command -v docker >/dev/null 2>&1; then
+      docker ps --format '{{.Names}}' > "$DEST/docker/running-containers-$DATE.txt" || true
+      docker volume ls > "$DEST/docker/docker-volumes-$DATE.txt" || true
+    fi
+
+    echo "Backup finished at $(date)" | tee -a "$LOG"</code></pre>
+    <p>Make it executable:</p>
+    <pre><code>sudo chmod +x /usr/local/sbin/local-backup.sh</code></pre>
+    <p>Test it manually:</p>
+    <pre><code>sudo /usr/local/sbin/local-backup.sh</code></pre>
+    <p>Check:</p>
+    <pre><code>ls -lah /mnt/storage/backups</code></pre>
+
+    <h2>7. Schedule automatic backup</h2>
+    <p>Use cron:</p>
+    <pre><code>sudo crontab -e</code></pre>
+    <p>Add this for daily backup at 2:30 AM:</p>
+    <pre><code>30 2 * * * /usr/local/sbin/local-backup.sh</code></pre>
+    <p>Check logs later:</p>
+    <pre><code>ls -lah /mnt/storage/backups/logs</code></pre>
+
+    <h2>8. Better backup option: Restic or Borg</h2>
+    <p>For a more professional backup system, I would use <strong>restic</strong> or <strong>borgbackup</strong> instead of plain <code>rsync</code>.</p>
+    <p>Why?</p>
+    <p>Plain <code>rsync</code> gives you a mirror. If a file is deleted or corrupted and rsync runs, the backup can also lose that file.</p>
+    <p>Restic/Borg gives you:</p>
+    <ul>
+        <li>snapshots</li>
+        <li>deduplication</li>
+        <li>retention policy</li>
+        <li>compression</li>
+        <li>optional encryption</li>
+        <li>easy restore by date</li>
+    </ul>
+    <p>A good design would be:</p>
+    <pre><code>/mnt/storage/restic-repo</code></pre>
+    <p>Then backup:</p>
+    <ul>
+        <li><code>/home</code></li>
+        <li><code>/etc</code></li>
+        <li><code>/opt</code></li>
+        <li><code>/srv</code></li>
+        <li>important Docker volumes</li>
+        <li>Mattermost/PostgreSQL dumps</li>
+    </ul>
+    <p>For a clinic/server environment, I would prefer <strong>restic</strong> or <strong>borg</strong> long-term.</p>
+
+    <h2>9. Docker / database backup warning</h2>
+    <p>If this Linux box will run things like Mattermost, PostgreSQL, MariaDB, OSCAR, or other Docker services, do <strong>not</strong> only copy raw database files while the database is running.</p>
+    <p>Better:</p>
+    <ul>
+        <li><strong>PostgreSQL</strong> → <code>pg_dump</code></li>
+        <li><strong>MariaDB/MySQL</strong> → <code>mysqldump</code></li>
+        <li><strong>Docker volumes</strong> → backup after dump, or stop service briefly</li>
+    </ul>
+    <p>Example PostgreSQL dump style:</p>
+    <pre><code>docker exec postgres-container pg_dumpall -U postgres > /mnt/storage/backups/databases/postgres-$(date +%F).sql</code></pre>
+    <p>Mattermost usually uses PostgreSQL, so you should back up both:</p>
+    <ul>
+        <li>Mattermost config/data files</li>
+        <li>PostgreSQL database dump</li>
+        <li>uploaded files directory</li>
+        <li>Docker compose file</li>
+        <li><code>.env</code> file</li>
+    </ul>
+
+    <h2>10. My recommended final plan</h2>
+    <p>Use this setup:</p>
+    <ul>
+        <li><strong>Disk mount:</strong> <code>/mnt/storage</code></li>
+        <li><strong>Filesystem:</strong> ext4</li>
+        <li><strong>Group:</strong> backupgroup</li>
+        <li><strong>Shared writable folder:</strong> <code>/mnt/storage/shared</code> – owner <code>root:backupgroup</code>, permission <code>2770</code></li>
+        <li><strong>Backup folder:</strong> <code>/mnt/storage/backups</code> – owner <code>root:backupgroup</code>, permission <code>2750</code></li>
+        <li><strong>Backup method:</strong> start with rsync, later upgrade to restic or borg</li>
+        <li><strong>Schedule:</strong> daily backup at 2:30 AM</li>
+        <li><strong>Backup targets:</strong> <code>/home</code>, <code>/etc</code>, <code>/opt</code>, <code>/srv</code>, Docker compose files, database dumps, important project folders</li>
+        <li><strong>Do not:</strong> treat the 1 TB disk as a full mirror of the 2 TB system SSD</li>
+    </ul>
+
+    <p>For your case, I would use:</p>
+    <pre><code>/mnt/storage/shared</code></pre>
+    <p>for human-accessible shared storage, and:</p>
+    <pre><code>/mnt/storage/backups</code></pre>
+    <p>for automated backups only. That separation is cleaner and safer.</p>
+
+</div>
+</body>
+</html>
