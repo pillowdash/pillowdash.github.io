@@ -237,83 +237,130 @@
 
     <h2>1. Identify the new NVMe safely</h2>
     <p>After installing the SSD, boot Linux and run:</p>
-    <pre><code>lsblk -o NAME,SIZE,MODEL,SERIAL,FSTYPE,MOUNTPOINTS</code></pre>
+    <pre><code># List all block devices with columns for name, size, model, serial, filesystem type, and mount points
+lsblk -o NAME,SIZE,MODEL,SERIAL,FSTYPE,MOUNTPOINTS</code></pre>
     <p>Also useful:</p>
-    <pre><code>sudo nvme list</code></pre>
+    <pre><code># List all connected NVMe solid state drives and their specific namespaces
+sudo nvme list</code></pre>
     <p>You may see something like:</p>
     <pre><code>nvme0n1   2T   existing system disk
-    nvme1n1   1T   new storage disk</code></pre>
+nvme1n1   1T   new storage disk</code></pre>
     <p>Be very careful: the device name may be different. In the commands below, I will assume the new SSD is:</p>
     <pre><code>/dev/nvme1n1</code></pre>
     <p><strong>Do not run formatting commands until you are 100% sure.</strong></p>
 
     <h2>2. Partition and format the new SSD</h2>
     <p>For simple, reliable Linux backup storage, I suggest <strong>ext4</strong>.</p>
-    <pre><code>sudo parted /dev/nvme1n1 --script mklabel gpt
-    sudo parted /dev/nvme1n1 --script mkpart primary ext4 0% 100%
-    sudo mkfs.ext4 -L storage1tb /dev/nvme1n1p1</code></pre>
+    <pre><code># Create a new GPT partition table on the specified NVMe drive
+sudo parted /dev/nvme1n1 --script mklabel gpt
+# Create a single primary partition spanning 100% of the available drive space
+sudo parted /dev/nvme1n1 --script mkpart primary ext4 0% 100%
+# Format the newly created partition with the ext4 filesystem and assign it the label "storage1tb"
+sudo mkfs.ext4 -L storage1tb /dev/nvme1n1p1</code></pre>
     <p>Check it:</p>
-    <pre><code>lsblk -f</code></pre>
+    <pre><code># List block devices along with their active filesystem types and UUIDs
+lsblk -f</code></pre>
     <p>You should see something like:</p>
     <pre><code>nvme1n1p1  ext4  storage1tb  &lt;UUID&gt;</code></pre>
 
     <h2>3. Mount it at <code>/mnt/storage</code></h2>
     <p>Create the mount point:</p>
-    <pre><code>sudo mkdir -p /mnt/storage</code></pre>
+    <pre><code># Create the mount point directory, creating parent directories if necessary (-p)
+sudo mkdir -p /mnt/storage</code></pre>
     <p>Get the <font color=red>UUID</font>:</p>
-    <pre><code>sudo blkid /dev/nvme1n1p1</code></pre>
+    <pre><code># Retrieve the UUID and filesystem attributes of the new partition
+sudo blkid /dev/nvme1n1p1</code></pre>
     <p>Example output:</p>
     <pre><code>/dev/nvme1n1p1: LABEL="storage1tb" UUID="abcd-1234-..." TYPE="ext4"</code></pre>
     <p>Edit <code>/etc/fstab</code>:</p>
-    <pre><code>sudo vim /etc/fstab</code></pre>
+    <pre><code># Open the filesystem table file in the vim text editor to configure persistent mounting
+sudo vim /etc/fstab</code></pre>
     <p>Add this line, replacing the UUID with your actual <font color=red>UUID</font>:</p>
     <pre><code>UUID=abcd-1234-xxxx /mnt/storage ext4 defaults,noatime,nodev,nosuid 0 2</code></pre>
     <p>Then test:</p>
-    <pre><code>sudo mount -a
-    df -h /mnt/storage</code></pre>
+    <pre><code># Mount all filesystems specified in /etc/fstab to verify the new configuration is valid
+sudo mount -a
+# Display disk space usage for the new mount point in human-readable format (-h)
+df -h /mnt/storage</code></pre>
     <p>If no error appears and <code>/mnt/storage</code> shows about 900+ GB usable space, the mount is good.</p>
 
     <h2>4. Create the group and add users</h2>
     <p>Create the group:</p>
-    <pre><code>sudo groupadd backupgroup</code></pre>
-    <p>Add two users to it. Replace <code>user1</code> and <code>user2</code> with the real Linux usernames:</p>
-    <pre><code>sudo usermod -aG backupgroup user1
-    sudo usermod -aG backupgroup user2</code></pre>
+    <pre><code># Create a new system group named "backupgroup"
+sudo groupadd backupgroup</code></pre>
+    
+    <p>To identify the exact usernames of the regular users on your system before adding them, you can list them using either of these commands:</p>
+    <pre><code># Option A: List the home directories (usually corresponds to actual human user accounts)
+ls -1 /home
+
+# Option B: Filter the passwd file for regular users (typically with a User ID of 1000 or greater)
+awk -F: '$3 >= 1000 && $3 != 65534 {print $1}' /etc/passwd</code></pre>
+
+    <p>Add the two users to the group. Replace <code>user1</code> and <code>user2</code> with the real Linux usernames you identified above:</p>
+    <pre><code># Append (-a) user1 to the newly created backupgroup (-G)
+sudo usermod -aG backupgroup user1
+# Append (-a) user2 to the newly created backupgroup (-G)
+sudo usermod -aG backupgroup user2</code></pre>
     <p>Example:</p>
-    <pre><code>sudo usermod -aG backupgroup andrew
-    sudo usermod -aG backupgroup tiger</code></pre>
-    <p>Users must log out and log back in for group membership to apply.</p>
+    <pre><code># Example: Add the user 'andrew' to the backupgroup
+sudo usermod -aG backupgroup andrew
+# Example: Add the user 'tiger' to the backupgroup
+sudo usermod -aG backupgroup tiger</code></pre>
+    
+    <p>Normally, a user must log out (terminate the SSH session) and log back in for group changes to take effect. If you want to apply the new group to your <strong>current</strong> terminal session immediately without logging out, you can switch user to yourself:</p>
+    <pre><code># Example: Start a new login shell as your user 'andrew'(if you logged in as 'andrew') to immediately apply the new group to the current session
+su - tiger
+
+# Alternatively, you can use newgrp to temporarily log into the new group in the current shell
+newgrp backupgroup</code></pre>
+    
     <p>Check:</p>
-    <pre><code>groups andrew
-    groups tiger</code></pre>
+    <pre><code># Verify the group memberships for the user 'andrew'
+groups andrew
+# Verify the group memberships for the user 'tiger'
+groups tiger
+
+# Verify the active group memberships for the current session
+groups</code></pre>
 
     <h2>5. Create folders with proper permissions</h2>
     <p>Create the directory structure:</p>
-    <pre><code>sudo mkdir -p /mnt/storage/shared
-    sudo mkdir -p /mnt/storage/backups/home
-    sudo mkdir -p /mnt/storage/backups/etc
-    sudo mkdir -p /mnt/storage/backups/docker
-    sudo mkdir -p /mnt/storage/backups/databases
-    sudo mkdir -p /mnt/storage/backups/logs
-    sudo mkdir -p /mnt/storage/staging</code></pre>
+    <pre><code># Create the base directory structure for shared files, backups, and staging
+sudo mkdir -p /mnt/storage/shared
+sudo mkdir -p /mnt/storage/backups/home
+sudo mkdir -p /mnt/storage/backups/etc
+sudo mkdir -p /mnt/storage/backups/docker
+sudo mkdir -p /mnt/storage/backups/databases
+sudo mkdir -p /mnt/storage/backups/logs
+sudo mkdir -p /mnt/storage/staging</code></pre>
     <p>Set ownership:</p>
-    <pre><code>sudo chown -R root:backupgroup /mnt/storage</code></pre>
+    <pre><code># Recursively change the owner to root and the group to "backupgroup" for all files and directories in storage
+sudo chown -R root:backupgroup /mnt/storage</code></pre>
     <p>Set permissions:</p>
-    <pre><code>sudo chmod 2770 /mnt/storage/shared
-    sudo chmod 2770 /mnt/storage/staging
-    sudo chmod 2770 /mnt/storage/backups
-    sudo chmod 2770 /mnt/storage/backups/*</code></pre>
+    <pre><code># Set permissions to rwxrws--- (owner and group full access, SetGID bit set to force group inheritance)
+sudo chmod 2770 /mnt/storage/shared
+sudo chmod 2770 /mnt/storage/staging
+sudo chmod 2770 /mnt/storage/backups
+sudo chmod 2770 /mnt/storage/backups/*</code></pre>
     <p>The <code>2</code> in <code>2770</code> is important. It means new files created inside these folders inherit the group <code>backupgroup</code>.</p>
-    <p>Optional but recommended: use default ACLs so new files are group-writable:</p>
-    <pre><code>sudo setfacl -R -m g:backupgroup:rwx /mnt/storage/shared
-    sudo setfacl -R -m d:g:backupgroup:rwx /mnt/storage/shared
+    
+    <p>Optional but recommended: use default ACLs so new files are group-writable. <br>
+    <em>Note: If the <code>setfacl</code> command is not found, install it via <code>sudo apt install acl</code> (Debian/Ubuntu) or <code>sudo dnf install acl</code> (RHEL/CentOS).</em></p>
+    <pre><code># Set Access Control Lists (ACLs) to ensure existing files grant read/write/execute permissions to backupgroup
+sudo setfacl -R -m g:backupgroup:rwx /mnt/storage/shared
+# Set default ACLs to ensure newly created files inherit group read/write/execute permissions
+sudo setfacl -R -m d:g:backupgroup:rwx /mnt/storage/shared
 
-    sudo setfacl -R -m g:backupgroup:rwx /mnt/storage/staging
-    sudo setfacl -R -m d:g:backupgroup:rwx /mnt/storage/staging</code></pre>
+# Apply the same standard ACLs to the staging directory
+sudo setfacl -R -m g:backupgroup:rwx /mnt/storage/staging
+# Apply the same default ACLs to the staging directory
+sudo setfacl -R -m d:g:backupgroup:rwx /mnt/storage/staging</code></pre>
     <p>For backups, I would be more careful. Usually only root or a backup service should write there. Users can read if needed, but not casually modify backup history.</p>
     <p>A safer backup permission model:</p>
-    <pre><code>sudo chown -R root:backupgroup /mnt/storage/backups
-    sudo chmod -R 2750 /mnt/storage/backups</code></pre>
+    <pre><code># Ensure the backups folder is owned by root and the backupgroup
+sudo chown -R root:backupgroup /mnt/storage/backups
+# Set permissions so root has full access, the group can read/enter, and others have no access (2750)
+sudo chmod -R 2750 /mnt/storage/backups</code></pre>
     <p>That means:</p>
     <ul>
         <li><strong>root</strong>: full control</li>
@@ -321,7 +368,8 @@
         <li><strong>others</strong>: no access</li>
     </ul>
     <p>For shared files:</p>
-    <pre><code>sudo chmod 2770 /mnt/storage/shared</code></pre>
+    <pre><code># Apply full group access and SetGID to the shared directory
+sudo chmod 2770 /mnt/storage/shared</code></pre>
     <p>That means:</p>
     <ul>
         <li><strong>owner/root</strong>: full control</li>
@@ -332,46 +380,60 @@
     <h2>6. Recommended backup approach</h2>
     <p>For simple local backups, start with <code>rsync</code>.</p>
     <p>Create a backup script:</p>
-    <pre><code>sudo vim /usr/local/sbin/local-backup.sh</code></pre>
+    <pre><code># Create and open a new shell script file for the backup routine using vim
+sudo vim /usr/local/sbin/local-backup.sh</code></pre>
     <p>Paste:</p>
     <pre><code>#!/bin/bash
-    set -euo pipefail
+# Exit immediately if a command exits with a non-zero status, treat unset variables as an error, and catch pipe failures
+set -euo pipefail
 
-    DEST="/mnt/storage/backups"
-    DATE="$(date +%F_%H-%M-%S)"
-    LOG="$DEST/logs/backup-$DATE.log"
+DEST="/mnt/storage/backups"
+DATE="$(date +%F_%H-%M-%S)"
+LOG="$DEST/logs/backup-$DATE.log"
 
-    mkdir -p "$DEST/home" "$DEST/etc" "$DEST/docker" "$DEST/logs"
+# Create required backup subdirectories if they don't exist
+mkdir -p "$DEST/home" "$DEST/etc" "$DEST/docker" "$DEST/logs"
 
-    echo "Backup started at $(date)" | tee -a "$LOG"
+# Log the exact start time of the script to the log file
+echo "Backup started at $(date)" | tee -a "$LOG"
 
-    rsync -aAXHv --delete \
-      --exclude='.cache/' \
-      --exclude='Downloads/' \
-      /home/ "$DEST/home/current/" | tee -a "$LOG"
+# Sync home directory, preserving permissions/attributes, and excluding cache and downloads directories
+rsync -aAXHv --delete \
+  --exclude='.cache/' \
+  --exclude='Downloads/' \
+  /home/ "$DEST/home/current/" | tee -a "$LOG"
 
-    rsync -aAXHv /etc/ "$DEST/etc/current/" | tee -a "$LOG"
+# Sync system configuration files from /etc
+rsync -aAXHv /etc/ "$DEST/etc/current/" | tee -a "$LOG"
 
-    if command -v docker >/dev/null 2>&1; then
-      docker ps --format '{{.Names}}' > "$DEST/docker/running-containers-$DATE.txt" || true
-      docker volume ls > "$DEST/docker/docker-volumes-$DATE.txt" || true
-    fi
+# Export docker container names and volume lists if the docker command is available
+if command -v docker >/dev/null 2>&1; then
+  docker ps --format '{{.Names}}' > "$DEST/docker/running-containers-$DATE.txt" || true
+  docker volume ls > "$DEST/docker/docker-volumes-$DATE.txt" || true
+fi
 
-    echo "Backup finished at $(date)" | tee -a "$LOG"</code></pre>
+# Log the completion time of the script
+echo "Backup finished at $(date)" | tee -a "$LOG"</code></pre>
     <p>Make it executable:</p>
-    <pre><code>sudo chmod +x /usr/local/sbin/local-backup.sh</code></pre>
+    <pre><code># Make the newly created backup script executable
+sudo chmod +x /usr/local/sbin/local-backup.sh</code></pre>
     <p>Test it manually:</p>
-    <pre><code>sudo /usr/local/sbin/local-backup.sh</code></pre>
+    <pre><code># Execute the backup script manually to verify it runs without errors
+sudo /usr/local/sbin/local-backup.sh</code></pre>
     <p>Check:</p>
-    <pre><code>ls -lah /mnt/storage/backups</code></pre>
+    <pre><code># List the contents of the backups directory to verify the backup completed successfully
+ls -lah /mnt/storage/backups</code></pre>
 
     <h2>7. Schedule automatic backup</h2>
     <p>Use cron:</p>
-    <pre><code>sudo crontab -e</code></pre>
+    <pre><code># Edit the cron table for the root user to schedule automated tasks
+sudo crontab -e</code></pre>
     <p>Add this for daily backup at 2:30 AM:</p>
-    <pre><code>30 2 * * * /usr/local/sbin/local-backup.sh</code></pre>
+    <pre><code># Cron job syntax: run the local-backup.sh script every day at exactly 2:30 AM
+30 2 * * * /usr/local/sbin/local-backup.sh</code></pre>
     <p>Check logs later:</p>
-    <pre><code>ls -lah /mnt/storage/backups/logs</code></pre>
+    <pre><code># List the log files to ensure scheduled backups are running properly
+ls -lah /mnt/storage/backups/logs</code></pre>
 
     <h2>8. Better backup option: Restic or Borg</h2>
     <p>For a more professional backup system, I would use <strong>restic</strong> or <strong>borgbackup</strong> instead of plain <code>rsync</code>.</p>
@@ -407,8 +469,12 @@
         <li><strong>MariaDB/MySQL</strong> → <code>mysqldump</code></li>
         <li><strong>Docker volumes</strong> → backup after dump, or stop service briefly</li>
     </ul>
-    <p>Example PostgreSQL dump style:</p>
-    <pre><code>docker exec postgres-container pg_dumpall -U postgres > /mnt/storage/backups/databases/postgres-$(date +%F).sql</code></pre>
+    <p>To find the exact name of your database container before running the backup command, list your active containers:</p>
+    <pre><code># Display a clean table of all running containers with their names and images
+docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}"</code></pre>
+    <p>Example PostgreSQL dump style (replace <code>postgres-container</code> with the actual name you found above):</p>
+    <pre><code># Execute a full database dump from within the running PostgreSQL container and save it to the backups folder
+docker exec postgres-container pg_dumpall -U postgres > /mnt/storage/backups/databases/postgres-$(date +%F).sql</code></pre>
     <p>Mattermost usually uses PostgreSQL, so you should back up both:</p>
     <ul>
         <li>Mattermost config/data files</li>
